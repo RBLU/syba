@@ -1,0 +1,23 @@
+<div class="container-fluid">
+  <div class="row">
+    <left class="col-xs-4">
+      <ul class="list-group">
+        <li ng-repeat="batch in vm.batches" ng-click="vm.select(batch)" class="list-group-item">{{batch.name}}</li>
+      </ul>
+    </left>
+    <main class="col-xs-8" ng-if="vm.selected">
+      <div class="row">
+        <div class="col-xs-6">Batch: {{vm.selected.name}}
+        </div>
+        <div class="col-xs-6">
+          Lauf: <select ng-model="vm.run" ng-options="myrun as vm.getRunName(myrun) for myrun in vm.selected.runs" class="form-control" >
+          </select>
+        </div>
+      </div>
+      <div class="row">
+        <h2>Kennzahlen</h2>
+        <Kennzahlen batchlauf="vm.run"></Kennzahlen>
+      </div>
+    </main>
+  </div>
+</div>

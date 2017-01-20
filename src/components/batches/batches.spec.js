@@ -1,7 +1,7 @@
-import FormsModule from './forms';
-import FormsController from './forms.controller';
+import FormsModule from './batches';
+import FormsController from './batches.controller';
 import FormsComponent from './forms.component';
-import FormsTemplate from './forms.html';
+import FormsTemplate from './batches.html';
 
 describe('Forms', () => {
   let makeController;
