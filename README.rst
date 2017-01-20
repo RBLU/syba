@@ -18,7 +18,9 @@ Stack
 Prerequisits
 ------------
 
-Install node.js: tested with Version 6.9.4
+
+Install node.js: (https://nodejs.org/en/) tested with Version 6.9.4
+Install git: https://git-scm.com/downloads
 
 Install a few dependencies globally::
 
@@ -27,7 +29,13 @@ Install a few dependencies globally::
   $ npm install -g webpack-dev-server
   $ npm install -g eslint
 
-Install project dependencies:
+
+
+Download project::
+
+  $ git clone https://github.com/RBLU/syba
+
+Install project dependencies::
 
   $ cd syba
   $ npm install
