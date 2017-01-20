@@ -1,26 +1,11 @@
 Syrius Business Batch Monitoring
 
-Stack
------
-
-- NPM
-- Webpack
-- Angular 1.6
-- Angular UI Router (with self-registering components)
-- ES 6 / Babel (Module Loading)
-- SASS
-- Jade
-- Tests
-  - Karma (Test Runner, http://karma-runner.github.io/)
-  - Mocha (Test Framework, http://mochajs.org/)
-  - Chai (BDD/TSS assertion library, http://chaijs.com/)
-
 Prerequisits
 ------------
 
 
-Install node.js: (https://nodejs.org/en/) tested with Version 6.9.4
-Install git: https://git-scm.com/downloads
+- Install node.js: (https://nodejs.org/en/) tested with Version 6.9.4
+- Install git: https://git-scm.com/downloads
 
 Install a few dependencies globally::
 
@@ -59,6 +44,21 @@ Linting::
 
   $ npm run lint
 
+
+Stack
+-----
+
+- NPM
+- Webpack
+- Angular 1.6
+- Angular UI Router (with self-registering components)
+- ES 6 / Babel (Module Loading)
+- SASS
+- Jade
+- Tests
+  - Karma (Test Runner, http://karma-runner.github.io/)
+  - Mocha (Test Framework, http://mochajs.org/)
+  - Chai (BDD/TSS assertion library, http://chaijs.com/)
 
 
 Old README
