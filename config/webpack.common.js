@@ -7,12 +7,13 @@ module.exports = {
   entry: './src/app.js',
   output: {
     path: path.join(__dirname, '..', 'dist'),
-    filename: 'bundle.js'
+    filename: 'bundle.js',
+      publicPath: ''
   },
   plugins: [
     new HtmlWebpackPlugin({
       title: 'Webpack Starter Angular - kitconcept',
-      template: 'src/index.html',
+      template: 'src/index.ejs',
       minify: {
         collapseWhitespace: true,
         removeComments: true,
@@ -44,5 +45,5 @@ module.exports = {
         loader: 'url?limit=10000&minetype=image/svg+xml' }
     ]
   },
-  devtool: 'eval-source-map'
+  devtool: 'inline-source-map'
 };
