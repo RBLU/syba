@@ -27,6 +27,10 @@ Install a few dependencies globally::
   $ npm install -g webpack-dev-server
   $ npm install -g eslint
 
+Install projet dependencies:
+
+  $ cd syba
+  $ npm install
 
 Development
 -----------
