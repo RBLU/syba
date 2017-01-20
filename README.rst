@@ -1,16 +1,11 @@
-.. image:: https://travis-ci.org/kitconcept/webpack-starter-angular.svg?branch=master
-    :target: https://travis-ci.org/kitconcept/webpack-starter-angular
-
-
-Webpack Starter Angular
-=======================
+Syrius Business Batch Monitoring
 
 Stack
 -----
 
 - NPM
 - Webpack
-- Angular 1.5
+- Angular 1.6
 - Angular UI Router (with self-registering components)
 - ES 6 / Babel (Module Loading)
 - SASS
@@ -20,34 +15,10 @@ Stack
   - Mocha (Test Framework, http://mochajs.org/)
   - Chai (BDD/TSS assertion library, http://chaijs.com/)
 
-
-Requirements
-------------
-
-ToDo:
-
-- SASS variables
-- Angular New Router -> http://www.heise.de/developer/artikel/AngularJS-1-x-und-2-0-mit-dem-Component-Router-parallel-betreiben-2679282.html
-
-Done:
-
-- DONE: ES 6 with Angular 1.4
-- DONE: Bundling
-- DONE: Delivering static files separately -> Possible via https://webpack.github.io/docs/stylesheets.html#separate-css-bundle
-- DONE: Splitting large files -> Possible via https://webpack.github.io/docs/code-splitting.html
-- DONE: SASS support
-- DONE: Angular UI Router
-- DONE: Self-registering components
-- DONE: Jade support
-
-Planed:
-
-- ES7 Decorators (@Component())
-- Typescript?
-
-
 Prerequisits
 ------------
+
+Install node.js: tested with Version 6.9.4
 
 Install a few dependencies globally::
 
@@ -75,6 +46,11 @@ Run tests::
 Linting::
 
   $ npm run lint
+
+
+
+Old README
+=======================================================
 
 
 HTML Webpack Plugin
