@@ -6,26 +6,22 @@ class KennzahlenController {
       {
         name: 'Laufzeit',
         value: 234,
-        minValue: 40,
-        maxValue: 300,
+        settings: [0,0,280,410],
+        minMaxHist: [40, 420],
         medValue: 200,
         stdAbw: 40,
-        lowError: 0,
-        lowWarning: 0,
-        highWarning: 300,
-        highError: 400
+        min: 0,
+        max: 500
       },
       {
         name: 'Items',
-        value: 2344,
-        minValue: 0,
-        maxValue: 4234,
+        value: 2800,
+        settings: [1000, 2000, 3000, 4000],
+        minMaxHist: [1920,4234],
         medValue: 2344,
         stdAbw: 120,
-        lowError: 1000,
-        lowWarning: 2000,
-        highWarning: 3000,
-        highError: 4000
+        min: 0,
+        max: 5000
       }
     ];
   }

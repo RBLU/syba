@@ -108,9 +108,7 @@ class BatchesController {
     };
 
     $scope.$watch('vm.selected', (newbatch, old) => {
-      console.log('changed' + JSON.stringify(newbatch));
       if (newbatch && newbatch.runs) {
-        console.log(newbatch.runs[0].boid);
         this.run = newbatch.runs[0];
       }
     });
