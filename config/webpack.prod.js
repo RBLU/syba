@@ -6,7 +6,6 @@ const commonConfig = require('./webpack.common.js');
 const WebpackMd5Hash = require('webpack-md5-hash');
 const DedupePlugin = require('webpack/lib/optimize/DedupePlugin');
 const UglifyJsPlugin = require('webpack/lib/optimize/UglifyJsPlugin');
-const ngAnnotatePlugin = require('ng-annotate-webpack-plugin');
 
 
 module.exports = webpackMerge(commonConfig, {
@@ -76,11 +75,6 @@ module.exports = webpackMerge(commonConfig, {
    * See: http://webpack.github.io/docs/configuration.html#plugins
    */
   plugins: [
-
-    new ngAnnotatePlugin({
-      add: true,
-      // other ng-annotate options here
-    }),
 
     /**
      * Plugin: WebpackMd5Hash
