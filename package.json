@@ -40,8 +40,6 @@
     "karma-sourcemap-loader": "0.3.7",
     "karma-webpack": "2.0.1",
     "mocha": "~3.2.0",
-    "ng-annotate-loader": "^0.2.0",
-    "ng-annotate-webpack-plugin": "^0.2.1-pre",
     "node-sass": "~4.3.0",
     "raw-loader": "~0.5.1",
     "rimraf": "~2.5.2",
