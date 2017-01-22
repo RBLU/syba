@@ -1,5 +1,5 @@
 class GithubController {
-
+  /* @ngInject */
   constructor(githubService) {
     this.result = {};
     this.service = githubService;

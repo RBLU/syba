@@ -1,5 +1,5 @@
 class GithubService {
-
+  /* @ngInject */
   constructor($http, $sce) {
     this.$http = $http;
     this.$sce = $sce;
@@ -9,8 +9,7 @@ class GithubService {
     var githubUrl = 'https://api.github.com';
     return this.$http({
       method: 'JSONP',
-      url: this.$sce.trustAsResourceUrl(githubUrl + '/users/' +
-      githubUsername)
+      url: this.$sce.trustAsResourceUrl(githubUrl + '/users/' + githubUsername)
     }).then(function(response) {
       // this callback will be called asynchronously
       // when the response is available

@@ -6,7 +6,7 @@ import githubService from './github.service';
 let githubModule = angular.module('github', [
   uiRouter
 ])
-
+/* @ngInject */
 .config(($stateProvider) => {
   $stateProvider
     .state('github', {

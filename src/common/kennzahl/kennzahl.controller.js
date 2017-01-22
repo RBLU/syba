@@ -2,6 +2,7 @@ import * as d3 from 'd3';
 import angular from 'angular';
 
 class KennzahlController {
+  /* @ngInject */
   constructor($scope, $element) {
     this.name = 'kennzahl';
 
