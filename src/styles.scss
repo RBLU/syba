@@ -61,7 +61,7 @@ div {
 			font-family: $font-stack;
 			font-size: 16px;
 			color: $color00;
-			background: $color13 url(images/ui-bg_glass_003366_1x400.png) 50% 50% repeat-x;
+			background: linear-gradient(to top, #144372 0%,#144372 50%,#003366 50%,#003366 50%,#194775 53%,#1e4b78 54%,#1e4b78 100%);
 			border-top-left-radius: 5px;
 			border-top-right-radius: 5px;
 			border-bottom-left-radius: 5px;
@@ -89,7 +89,7 @@ ul {
 		border-bottom-right-radius: 0px;
 	}
 	&:hover {
-		background: $color11 url(images/ui-bg_glass_A9C7E6_1x400.png) 50% 50% repeat-x;
+		background: linear-gradient(to top, #144372 0%,#144372 50%,#003366 50%,#003366 50%,#194775 53%,#1e4b78 54%,#1e4b78 100%);
 		cursor: pointer;
 	}
 }
@@ -109,7 +109,7 @@ ul {
 		.active {
 			a { 
 				color: $color13;
-				background: $color11 url(images/ui-bg_glass_A9C7E6_1x400.png) 50% 50% repeat-x;
+				background: linear-gradient(to top, #144372 0%,#144372 50%,#003366 50%,#003366 50%,#194775 53%,#1e4b78 54%,#1e4b78 100%) ;
 			}
 		}
 		li {
