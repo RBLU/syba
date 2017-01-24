@@ -1,10 +1,137 @@
+///////////////
+/* 2do */
+///////////////
+/*
+- Hintergrundbilder ersetzen durch Code von http://colorzilla.com/gradient-editor/
+		//@import "compass";		// for mixing "background-image"
+		// source: http://colorzilla.com/gradient-editor/
+		//@include background-image(linear-gradient(top, #144372 0%,#144372 50%,#003366 50%,#003366 50%,#194775 53%,#1e4b78 54%,#1e4b78 100%));
+
+*/
+
+///////////////
+/* VARIABLES */
+///////////////
+
+$font-stack:    Arial, Helvetica, sans-serif;
+$color00:		#FFFFFF; 		// default: white
+$color11:		#A9C7E6; 		// bright blue
+$color12: 		#266CAE; 		// medium blue
+$color13:		#003366; 		// dark blue
+$color21:		#E9E9E9; 		// bright grey 
+$color22:		#E1E1E1; 		// medium grey 
+$color23:		#A1A1A1; 		// dark grey 
+$color99:		#000000; 		// default: black
+
+$padhor:		30px;			// horizontal padding (left&right)
+
+/////////////////////
+/* GENERAL DESIGNS */
+/////////////////////
+
 body {
     padding-top: 80px;
 }
 
 left {
+	min-width: 300px;
+	.col-xs-4 {
+		width: 20%;
+		padding-left: $padhor;
+	}
 }
 
 main {
+	.col-xs-8 {
+	width: 80%;
+    	padding-left: $padhor;
+    	padding-right: $padhor;
+	}
 }
+
+
+div {
+		.container {            // NAVBAR-Section
+			width: 100%;
+			padding-top: 10px;
+			padding-left: $padhor;
+			padding-right: $padhor;
+		}
+		.navbar-collapse {
+			font-family: $font-stack;
+			font-size: 16px;
+			color: $color00;
+			background: $color13 url(images/ui-bg_glass_003366_1x400.png) 50% 50% repeat-x;
+			border-top-left-radius: 5px;
+			border-top-right-radius: 5px;
+			border-bottom-left-radius: 5px;
+			border-bottom-right-radius: 5px;
+		}
+
+}
+
+ul {
+	.list-group {
+	}
+}
+
+
+.list-group-item {
+	border-width: 0px;
+	border-color: $color11;
+	border-right-width: 1px;
+	&:first-child {
+		border-top-left-radius: 5px;
+		border-top-right-radius: 0px;
+	}
+	&:last-child {
+		border-bottom-left-radius: 5px;
+		border-bottom-right-radius: 0px;
+	}
+	&:hover {
+		background: $color11 url(images/ui-bg_glass_A9C7E6_1x400.png) 50% 50% repeat-x;
+		cursor: pointer;
+	}
+}
+
+///////////////////
+/* NAVIGATION BAR*/
+///////////////////
+
+
+.navbar-inverse {
+	width: 100%;
+	background: $color00;
+	color: $color99;
+    border-width: 0px;
+	
+	.navbar-nav {
+		.active {
+			a { 
+				color: $color13;
+				background: $color11 url(images/ui-bg_glass_A9C7E6_1x400.png) 50% 50% repeat-x;
+			}
+		}
+		li {
+			a { 
+				color: $color11;
+				&:hover {
+					color: $color00;
+				}
+			}
+		}
+	}
+}
+
+
+////////////////
+/* FIGURES BAR*/
+////////////////
+
+rect {
+	.stdabw {
+		background-color: $color00;
+	} 
+}
+
 
