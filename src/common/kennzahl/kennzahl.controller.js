@@ -33,11 +33,11 @@ class KennzahlController {
         .append('rect')
         .attr('class', function(d,i ) {
           if (i == 0 || i == 4) {
-            return 'settings kz-settings-error';
+            return 'settings error';
           } else if (i == 2) {
-            return 'settings kz-settings-normal';
+            return 'settings normal';
           } else {
-            return 'settings kz-settings-warning';
+            return 'settings warning';
           }
         })
         .attr('x', (d, i) => {
@@ -51,7 +51,11 @@ class KennzahlController {
           return 0;
         })
         .attr('width', (d, i) => {
-          return xScale(d);
+          if (i == 0) {
+            return xScale(d);
+          }  else {
+            return xScale(d -  this.kz.settings[i - 1]);
+          }
         })
         .attr('height', (d, i) => {
           return 30;
