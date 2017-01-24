@@ -1,4 +1,15 @@
 ///////////////
+/* 2do */
+///////////////
+/*
+- Hintergrundbilder ersetzen durch Code von http://colorzilla.com/gradient-editor/
+		//@import "compass";		// for mixing "background-image"
+		// source: http://colorzilla.com/gradient-editor/
+		//@include background-image(linear-gradient(top, #144372 0%,#144372 50%,#003366 50%,#003366 50%,#194775 53%,#1e4b78 54%,#1e4b78 100%));
+
+*/
+
+///////////////
 /* VARIABLES */
 ///////////////
 
@@ -110,6 +121,17 @@ ul {
 			}
 		}
 	}
+}
+
+
+////////////////
+/* FIGURES BAR*/
+////////////////
+
+rect {
+	.stdabw {
+		background-color: $color00;
+	} 
 }
 
 
