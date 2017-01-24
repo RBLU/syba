@@ -100,9 +100,72 @@ class BatchesController {
         ]
       }
     ];
+
+    this.kennzahlen = [
+      {
+        name: 'Laufzeit',
+        id: '324234',
+        description: 'Misst die zeitliche Dauer eines Laufes in Sekunden',
+        history: [
+          {
+            lauf: '89875',
+            start: moment().subtract(1, 'day').toDate(),
+            value: '234'
+          },
+          {
+            lauf: '89875',
+            start: moment().subtract(2, 'day').toDate(),
+            value: '223'
+          },
+          {
+            lauf: '89875',
+            start: moment().subtract(3, 'day').toDate(),
+            value: '290'
+          },
+          {
+            lauf: '89875',
+            start: moment().subtract(4, 'day').toDate(),
+            value: '265'
+          },
+          {
+            lauf: '89875',
+            start: moment().subtract(5, 'day').toDate(),
+            value: '450'
+          },
+          {
+            lauf: '89875',
+            start: moment().subtract(6, 'day').toDate(),
+            value: '330'
+          },
+          {
+            lauf: '89875',
+            start: moment().subtract(7, 'day').toDate(),
+            value: '320'
+          },
+          {
+            lauf: '89875',
+            start: moment().subtract(8, 'day').toDate(),
+            value: '267'
+          }
+        ]
+
+      },
+      {
+        name: 'Workitems',
+        id: '5676734',
+        description: 'Misst die Anzahl selektierter Workitems eines Laufes',
+        history: [
+
+        ]
+      }
+    ];
+
+
     this.select  = (batch) => {
       this.selected = batch;
     };
+
+    this.selectedKz = this.kennzahlen[0];
 
     this.getRunName = (run) => {
       return moment(run.start).format('lll') + ' (' + run.boid + ')';

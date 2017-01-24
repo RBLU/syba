@@ -1,0 +1,17 @@
+
+.settings {
+  filter: drop-shadow(10px 10px 5px rgba(0,0,0,0.75));
+
+  &.kz-settings-error {
+    fill: #FF0000;
+  }
+
+  &.kz-settings-warning {
+    fill: #FFFF00;
+  }
+
+  &.kz-settings-normal {
+    fill: #00FF00;
+
+  }
+}
