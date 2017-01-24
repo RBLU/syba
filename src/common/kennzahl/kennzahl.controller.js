@@ -31,7 +31,15 @@ class KennzahlController {
         .data(this.kz.settings)
         .enter()
         .append('rect')
-        .attr('class', 'settings')
+        .attr('class', function(d,i ) {
+          if (i == 0 || i == 4) {
+            return 'settings kz-settings-error';
+          } else if (i == 2) {
+            return 'settings kz-settings-normal';
+          } else {
+            return 'settings kz-settings-warning';
+          }
+        })
         .attr('x', (d, i) => {
           if (i == 0) {
             return 0;
@@ -48,15 +56,7 @@ class KennzahlController {
         .attr('height', (d, i) => {
           return 30;
         })
-        .attr('fill', (d, i) => {
-          if (i == 0 || i == 4) {
-            return 'red';
-          } else if (i == 2) {
-            return 'green';
-          } else {
-            return 'yellow';
-          }
-        });
+
 
       g.selectAll('text .settings')
         .data(this.kz.settings)
