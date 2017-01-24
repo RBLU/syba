@@ -106,7 +106,7 @@ class BatchesController {
         name: 'Laufzeit',
         id: '324234',
         description: 'Misst die zeitliche Dauer eines Laufes in Sekunden',
-        settings: [0 , 0,280,410],
+        settings: [0 , 0,360,410],
         history: [
           {
             lauf: '89875',
