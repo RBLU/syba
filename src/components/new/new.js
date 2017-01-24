@@ -5,7 +5,7 @@ import newComponent from './new.component';
 let newModule = angular.module('new', [
   uiRouter
 ])
-
+/* @ngInject */
 .config(($stateProvider) => {
   $stateProvider
     .state('new', {

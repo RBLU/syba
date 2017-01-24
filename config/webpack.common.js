@@ -25,7 +25,12 @@ module.exports = {
   ],
   module: {
     loaders: [
-      { test: /\.js$/, loader: 'babel-loader', exclude: /node_modules/ },
+      { test: /\.js$/,
+        loader: ['babel-loader'],
+        exclude: /node_modules/,
+        query: {
+          plugins: ["angularjs-annotate"]
+        }},
       { test: /\.css$/, loader: 'style-loader!css-loader' },
       { test: /\.scss$/, loaders: ['style', 'css?sourceMap', 'sass?sourceMap']},
       { test: /\.html$/, loader: 'raw' },

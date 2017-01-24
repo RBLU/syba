@@ -6,6 +6,7 @@ let BatchesModule = angular.module('Batches', [
   uiRouter
 ])
 
+/* @ngInject */
 .config(($stateProvider) => {
   $stateProvider
     .state('batches', {

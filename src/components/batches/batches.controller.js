@@ -3,6 +3,7 @@ import moment from 'moment';
 moment.locale('de_ch');
 
 class BatchesController {
+  /* @ngInject */
   constructor($scope) {
     this.batches = [
       {
