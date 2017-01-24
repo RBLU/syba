@@ -7,7 +7,7 @@ class KennzahlController {
     this.name = 'kzhistorygraph';
 
     this.$onInit = () => {
-      let svg = d3.select("svg")
+      let svg = d3.select($element.find('svg')[0])
           .attr('height', 560)
           .attr('width', 500),
         margin = {top: 20, right: 20, bottom: 60, left: 50},
@@ -33,7 +33,9 @@ class KennzahlController {
         d3.axisBottom(xScale)
           .tickFormat((d) => {
             return moment(d).format('D.M. HH:mm');
-          });
+          })
+          .tickSizeInner(-height);
+
 
       g.append("g")
         .attr("transform", "translate(0," + height + ")")
@@ -45,9 +47,6 @@ class KennzahlController {
         .attr("dy", ".35em")
         .attr("transform", "rotate(45)")
         .style("text-anchor", "start");
-       // .select(".domain")
-
-      //      .remove();
 
       g.append("g")
         .call(d3.axisLeft(yScale))
