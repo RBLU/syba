@@ -1,13 +1,15 @@
 import moment from 'moment';
+import _ from 'lodash';
 
 moment.locale('de_ch');
 
 class BatchesController {
   /* @ngInject */
-  constructor($scope) {
+  constructor($scope, $stateParams) {
     this.batches = [
       {
         name: 'EV Inkasso monatlich',
+        boid: '1121212121',
         runs: [
           {
             boid: '12341234',
@@ -21,6 +23,7 @@ class BatchesController {
       },
       {
         name: 'EV Inkasso Mutationen',
+        boid: '212341234',
         runs: [
           {
             boid: '42341234',
@@ -34,6 +37,7 @@ class BatchesController {
       },
       {
         name: 'Police EV Drucken TEV',
+        boid: '387139271',
         runs: [
           {
             boid: '12341234',
@@ -46,6 +50,7 @@ class BatchesController {
       },
       {
         name: 'Police EV Drucken monatlich',
+        boid: '48123741',
         runs: [
           {
             boid: '12341234',
@@ -60,6 +65,7 @@ class BatchesController {
       },
       {
         name: 'Police EV Drucken JAWE',
+        boid: '58123741',
         runs: [
           {
             boid: '32341234',
@@ -74,6 +80,7 @@ class BatchesController {
       },
       {
         name: 'Eclaim Import',
+        boid: '613241324',
         runs: [
           {
             boid: '62341234',
@@ -88,6 +95,7 @@ class BatchesController {
       },
       {
         name: 'Leistungsabrechnung',
+        boid: '723424',
         runs: [
           {
             boid: '241234',
@@ -161,6 +169,14 @@ class BatchesController {
         ]
       }
     ];
+
+    if ($stateParams && $stateParams.batchId) {
+      this.selected = _.find(this.batches, (batch) => {return batch.boid === $stateParams.batchId})
+    }
+
+    if ($stateParams && $stateParams.tab) {
+      this.activetab = +$stateParams.tab;
+    }
 
 
     this.select  = (batch) => {

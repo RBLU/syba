@@ -29,9 +29,6 @@ class KennzahlController {
       yScale.domain(d3.extent(this.kz.history, function(d) { return d.value; }));
       yScaleRects.domain(d3.extent(this.kz.history, function(d) { return d.value; }));
 
-      console.log(yScaleRects(this.kz.settings[0]));
-
-
       // create the rects for the background color
       // 1st red one
       g.append('rect')

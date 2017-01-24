@@ -2,13 +2,16 @@
   <div class="row">
     <left class="col-xs-4">
       <ul class="list-group">
-        <li ng-repeat="batch in vm.batches" ng-click="vm.select(batch)" class="list-group-item">{{batch.name}}</li>
+        <li ng-repeat="batch in vm.batches" class="list-group-item">
+          <a ui-sref="batches({batchId: batch.boid})">
+          {{batch.name}}
+          </a>
+        </li>
       </ul>
     </left>
     <main class="col-xs-8" ng-if="vm.selected">
 
-
-      <uib-tabset active="active">
+      <uib-tabset active="vm.activetab">
         <uib-tab index="0" heading="{{vm.selected.name}}">
           <div col="row">
             <div class="col-xs-12">
@@ -24,7 +27,7 @@
             </div>
           </div>
         </uib-tab>
-        <uib-tab>
+        <uib-tab index="1">
           <uib-tab-heading>
             <i class="glyphicon glyphicon-stats"></i>&nbsp;History
           </uib-tab-heading>
@@ -50,7 +53,7 @@
 
 
         </uib-tab>
-        <uib-tab heading="Log">
+        <uib-tab heading="Log" index="2">
           Log
         </uib-tab>
       </uib-tabset>
