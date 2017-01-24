@@ -1,10 +1,28 @@
 
 kzhistorygraph {
   min-height: 500px;
+
+  .axis {
+    line {
+      stroke: lightgray;
+    }
+  }
+
+  rect {
+    fill-opacity: 0.17;
+  }
+  .error {
+    fill: red;
+  }
+
+  .warning {
+    fill: yellow;
+  }
+
+  .normal {
+    fill: green;
+  }
+
 }
 
-.axis {
-  line {
-    stroke: lightgray;
-  }
-}
+

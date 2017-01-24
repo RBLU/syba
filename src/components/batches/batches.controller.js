@@ -106,6 +106,7 @@ class BatchesController {
         name: 'Laufzeit',
         id: '324234',
         description: 'Misst die zeitliche Dauer eines Laufes in Sekunden',
+        settings: [0 , 0,280,410],
         history: [
           {
             lauf: '89875',
@@ -153,6 +154,7 @@ class BatchesController {
       {
         name: 'Workitems',
         id: '5676734',
+        settings: [1000, 2000, 3000, 4000],
         description: 'Misst die Anzahl selektierter Workitems eines Laufes',
         history: [
 

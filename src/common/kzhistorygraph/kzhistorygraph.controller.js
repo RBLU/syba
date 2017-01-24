@@ -22,12 +22,58 @@ class KennzahlController {
       var yScale = d3.scaleLinear()
         .rangeRound([height, 0]);
 
+      var yScaleRects = d3.scaleLinear()
+        .rangeRound([0, height])
+
+      xScale.domain(d3.extent(this.kz.history, function(d) { return d.start; }));
+      yScale.domain(d3.extent(this.kz.history, function(d) { return d.value; }));
+      yScaleRects.domain(d3.extent(this.kz.history, function(d) { return d.value; }));
+
+      console.log(yScaleRects(this.kz.settings[0]));
+
+
+      // create the rects for the background color
+      // 1st red one
+      g.append('rect')
+        .attr('x', 0)
+        .attr('width', width)
+        .attr('y', height-yScaleRects(this.kz.settings[0]))
+        .attr('height', Math.max(0, yScaleRects(this.kz.settings[0])))
+        .attr('class', 'error');
+
+      g.append('rect')
+        .attr('x', 0)
+        .attr('width', width)
+        .attr('y', height-yScaleRects(this.kz.settings[1]))
+        .attr('height', Math.max(0, yScaleRects(this.kz.settings[1])-yScaleRects(this.kz.settings[0])))
+        .attr('class', 'warning');
+
+      g.append('rect')
+        .attr('x', 0)
+        .attr('width', width)
+        .attr('y', height-yScaleRects(this.kz.settings[2]))
+        .attr('height', yScaleRects(this.kz.settings[2])-Math.max(0,yScaleRects(this.kz.settings[1])))
+        .attr('class', 'normal');
+
+      g.append('rect')
+        .attr('x', 0)
+        .attr('width', width)
+        .attr('y', height-yScaleRects(this.kz.settings[3]))
+        .attr('height', yScaleRects(this.kz.settings[3])-yScaleRects(this.kz.settings[2]))
+        .attr('class', 'warning');
+
+      g.append('rect')
+        .attr('x', 0)
+        .attr('width', width)
+        .attr('y', 0)
+        .attr('height', height-yScaleRects(this.kz.settings[3]))
+        .attr('class', 'error');
+
+      // create the line function, maps data to x/y coordinates
       var line = d3.line()
         .x(function(d) { return xScale(d.start); })
         .y(function(d) { return yScale(d.value); });
 
-      xScale.domain(d3.extent(this.kz.history, function(d) { return d.start; }));
-      yScale.domain(d3.extent(this.kz.history, function(d) { return d.value; }));
 
       let xAxis =
         d3.axisBottom(xScale)
@@ -35,6 +81,8 @@ class KennzahlController {
             return moment(d).format('D.M. HH:mm');
           })
           .tickSizeInner(-height);
+
+
 
 
       g.append("g")
@@ -66,6 +114,7 @@ class KennzahlController {
         .attr("stroke-linecap", "round")
         .attr("stroke-width", 1.5)
         .attr("d", line);
+
 
     }
 
