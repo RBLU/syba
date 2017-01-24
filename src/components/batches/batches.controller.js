@@ -5,7 +5,7 @@ moment.locale('de_ch');
 
 class BatchesController {
   /* @ngInject */
-  constructor($scope, $stateParams) {
+  constructor($scope, $stateParams, $state) {
     this.batches = [
       {
         name: 'EV Inkasso monatlich',
@@ -177,6 +177,15 @@ class BatchesController {
     if ($stateParams && $stateParams.tab) {
       this.activetab = +$stateParams.tab;
     }
+
+    this.tabChanged = (newIndex) => {
+      $state.go('batches', {batchId: this.selected.boid, tab: newIndex },
+        {
+          location: 'replace',
+          inherit: false,
+          notify: false
+        })
+    };
 
 
     this.select  = (batch) => {
