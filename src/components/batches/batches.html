@@ -48,8 +48,11 @@
             </div>
           </div>
         </uib-tab>
+
         <uib-tab heading="Log" index="2" select="vm.tabChanged(2)">
-          Log
+          <ul class="list-group">
+            <li class="list-group-item" ng-repeat="run in vm.selected.runs" ng-click="go('/batches', '({tab=0})')">{{vm.selected.name}}: {{run.boid}} start: {{run.start | date }}</li>
+          </ul>
         </uib-tab>
       </uib-tabset>
     </main>

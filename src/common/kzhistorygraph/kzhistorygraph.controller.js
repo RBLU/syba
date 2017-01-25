@@ -130,10 +130,7 @@ class KennzahlController {
           .attr("d", line);
 
       });
-
     }
-
-
   }
 }
 
