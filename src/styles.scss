@@ -13,7 +13,9 @@
 /* VARIABLES */
 ///////////////
 
-$font-stack:    Arial, Helvetica, sans-serif;
+$font-stack:    Helvetica, Arial, sans-serif;
+$font-size: 	16px;
+
 $color00:		#FFFFFF; 		// default: white
 $color11:		#A9C7E6; 		// bright blue
 $color12: 		#266CAE; 		// medium blue
@@ -21,7 +23,13 @@ $color13:		#003366; 		// dark blue
 $color21:		#E9E9E9; 		// bright grey 
 $color22:		#E1E1E1; 		// medium grey 
 $color23:		#A1A1A1; 		// dark grey 
+$color41:		#93c47D;		// status: normal
+$color42:		#FFE599;		// status: warning
+$color43:		#E06666;		// status: error
 $color99:		#000000; 		// default: black
+
+$lcolor11:		linear-gradient(to top, #b7d0ea 0%,#b7d0ea 50%,#a9c7e6 50%,#bed5ec 54%,#bed5ec 100%);	// Basis: $color11
+$lcolor13:		linear-gradient(to top, #144372 0%,#144372 50%,#003366 50%,#003366 50%,#194775 53%,#1e4b78 54%,#1e4b78 100%);	// Basis: $color13
 
 $padhor:		30px;			// horizontal padding (left&right)
 
@@ -30,74 +38,165 @@ $padhor:		30px;			// horizontal padding (left&right)
 /////////////////////
 
 body {
-  padding-top: 80px;
+	width: 100%;
+  	padding-top: 80px;
+	font-family: $font-stack;
+	font-size: $font-size;
 }
 
 left {
-	min-width: 300px;
-	.col-xs-4 {
-		width: 20%;
-		padding-left: $padhor;
+	&.col-xs-4 {	// menu left
+		width: 25%;
+		padding-left: 0px;
+    	padding-right: 0px;
 	}
 }
 
 main {
-	.col-xs-8 {
-	width: 80%;
+	&.col-xs-8 {	// content frame
+		width: 75%;
     	padding-left: $padhor;
-    	padding-right: $padhor;
+    	padding-right: 0px;
 	}
 }
 
+h2 {
+	font-weight: 300;
+	font-size: 24px;
+	color: $color13;
+}
+
+h3 {
+	font-weight: 200;
+	font-size: 20px;
+	color: $color13;
+}
 
 div {
-		.container {            // NAVBAR-Section
+		&.row {
+			margin-left: 0px;
+			margin-right: 0px;
+		}
+		&.ng-scope {
+			margin-top: 10px;
+		}
+		&.tab-pane.ng-scope.active {
+			float: left;
+		}
+		&.container-fluid {
+			width: 100%;
+		}
+		&.container {            // NAVBAR-Section
 			width: 100%;
 			padding-top: 10px;
 			padding-left: $padhor;
 			padding-right: $padhor;
 		}
-		.navbar-collapse {
+		&.navbar-collapse {
 			font-family: $font-stack;
 			font-size: 16px;
 			color: $color00;
-			background: linear-gradient(to top, #144372 0%,#144372 50%,#003366 50%,#003366 50%,#194775 53%,#1e4b78 54%,#1e4b78 100%);
+			background: $lcolor13;
 			border-top-left-radius: 5px;
 			border-top-right-radius: 5px;
 			border-bottom-left-radius: 5px;
 			border-bottom-right-radius: 5px;
 		}
-
+		&.col-xs-3 {	// dropdown-frame for history-graph
+			width: auto;
+			padding-left: 0px;
+			padding-right: 30px;
+		}
+		&.col-xs-9 {
+			padding-left: 0px;
+			padding-right: 0px;
+			vertical-align: bottomline;
+		}
+		&.col-xs-12 {	// reporting and frame with batchrun-dropdown
+			padding-left: 0px;
+		}
 }
 
 ul {
-	.list-group {
+	&.nav.nav-tabs {
+		border-color: $color11;
+		
+		li {
+			&.active { // active tabs
+				a {
+					color: $color13;
+					border-color: $color11;
+					border-bottom-color: transparent;
+					&:hover {				
+						background: $color00;
+						border-bottom-color: transparent;
+					}
+				}
+			}
+			a {
+				&:hover { // Mouseover inactive tabs
+					border-color: $color11;
+					background: $lcolor11;
+				}
+			}
+		}
 	}
 }
 
+select {
+	&.form-control {	// dropdown-box with batchruns or graph-selction
+		width: auto;
+	}
+}
+
+
+////////////////////////
+/* TABLE WITH BATCHES */
+////////////////////////
 
 .list-group-item {
 	border-width: 0px;
 	border-color: $color11;
 	border-right-width: 1px;
+	padding-left: 48px;
 	&:first-child {
 		border-top-left-radius: 5px;
 		border-top-right-radius: 0px;
+		border-bottom-left-radius: 5px;
+		border-bottom-right-radius: 0px;
 	}
 	&:last-child {
+		border-top-left-radius: 5px;
+		border-top-right-radius: 0px;
 		border-bottom-left-radius: 5px;
 		border-bottom-right-radius: 0px;
 	}
 	&:hover {
-		background: linear-gradient(to top, #144372 0%,#144372 50%,#003366 50%,#003366 50%,#194775 53%,#1e4b78 54%,#1e4b78 100%);
-		cursor: pointer;
+		border-top-left-radius: 5px;
+		border-bottom-left-radius: 5px;
+		background: $lcolor11;
+		cursor: auto;
 	}
 }
 
-///////////////////
-/* NAVIGATION BAR*/
-///////////////////
 
+
+a {
+	color: $color12;
+	text-decoration: none;
+	&.ng-binding {
+		&:hover {
+			color: $color00;
+			//background: $lcolor11;
+			text-decoration: none;
+		}
+	}
+}
+
+
+////////////////////
+/* NAVIGATION BAR */
+////////////////////
 
 .navbar-inverse {
 	width: 100%;
@@ -109,7 +208,7 @@ ul {
 		.active {
 			a { 
 				color: $color13;
-				background: linear-gradient(to top, #144372 0%,#144372 50%,#003366 50%,#003366 50%,#194775 53%,#1e4b78 54%,#1e4b78 100%) ;
+				background: $lcolor11;
 			}
 		}
 		li {
@@ -123,26 +222,44 @@ ul {
 	}
 }
 
+span{
+	&.glyphicon {	// flag-icon left in the navbar
+		color: $color11;
+		&:hover {
+			color: $color00;
+		}
+	}
+}
 
-////////////////
-/* FIGURES BAR*/
-////////////////
+///////////////////////////////////
+/* FIGURES BAR AND HISTORY GRAPH */
+///////////////////////////////////
 
-rect {
-	.stdabw {
-		background-color: $color00;
+rect{
+	&.stdabw {
+		fill: $color12;
 	} 
+	&.history {
+		fill: $color12;
+	} 
+	&.error {
+  		fill: $color43;
+	}
+	&.warning {
+  		fill: $color42;
+	}
+	&.normal {
+  	fill: $color41;
+	}
 }
 
-.error {
-  fill: #FF0000;
+circle {
+	fill: $color13;
 }
 
-.warning {
-  fill: #FFFF00;
+svg {
+	width: 800px;
 }
 
-.normal {
-  fill: #00FF00;
 
-}
+

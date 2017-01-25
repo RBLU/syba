@@ -1,28 +1,49 @@
 
+
+///////////////
+/* VARIABLES */
+///////////////
+
+$font-stack:    Helvetica, Arial, sans-serif;
+
+$color00:		#FFFFFF; 		// default: white
+$color11:		#A9C7E6; 		// bright blue
+$color12: 		#266CAE; 		// medium blue
+$color13:		#003366; 		// dark blue
+$color21:		#E9E9E9; 		// bright grey 
+$color22:		#E1E1E1; 		// medium grey 
+$color23:		#A1A1A1; 		// dark grey 
+$color41:		#93c47D;		// status: normal
+$color42:		#FFE599;		// status: warning
+$color43:		#E06666;		// status: error
+$color99:		#000000; 		// default: black
+
+
+
 kzhistorygraph {
   min-height: 500px;
 
   .axis {
-    line {
-      stroke: lightgray;
+    line {	// helpers
+      stroke: $color11;
     }
+  }
+  
+  path {	// graph
+	stroke: $color12;
+	width: 20;
+	&.domain {	// axis
+		stroke: $color13;
+	} 
+  }
+ 
+  g.tick {
+	font-size: 12px;
   }
 
   rect {
-    fill-opacity: 0.17;
+    fill-opacity: 0.2;
   }
-  .error {
-    fill: red;
-  }
-
-  .warning {
-    fill: yellow;
-  }
-
-  .normal {
-    fill: green;
-  }
-
 }
 
 
