@@ -20,7 +20,6 @@ class KennzahlController {
           return;
         }
 
-        console.log(kz);
 
         // clear the elements inside of the directive
         g.selectAll('*').remove();
