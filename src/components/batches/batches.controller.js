@@ -162,10 +162,79 @@ class BatchesController {
       {
         name: 'Workitems',
         id: '5676734',
-        settings: [1000, 2000, 3000, 4000],
+        settings: [1000, 1500, 3000, 4000],
         description: 'Misst die Anzahl selektierter Workitems eines Laufes',
         history: [
-
+          {
+            lauf: '89875',
+            start: moment().subtract(1, 'day').toDate(),
+            value: '1234'
+          },
+          {
+            lauf: '89876',
+            start: moment().subtract(2, 'day').toDate(),
+            value: '2344'
+          },
+          {
+            lauf: '89877',
+            start: moment().subtract(3, 'day').toDate(),
+            value: '1901'
+          },
+          {
+            lauf: '89877',
+            start: moment().subtract(3, 'day').subtract(1, 'hour').toDate(),
+            value: '1200'
+          },
+          {
+            lauf: '89877',
+            start: moment().subtract(3, 'day').subtract(2, 'hour').toDate(),
+            value: '1400'
+          },
+          {
+            lauf: '89877',
+            start: moment().subtract(3, 'day').subtract(5, 'hour').toDate(),
+            value: '2021'
+          },
+          {
+            lauf: '89878',
+            start: moment().subtract(4, 'day').toDate(),
+            value: '1834'
+          },
+          {
+            lauf: '89879',
+            start: moment().subtract(5, 'day').toDate(),
+            value: '2102'
+          },
+          {
+            lauf: '89880',
+            start: moment().subtract(6, 'day').toDate(),
+            value: '2080'
+          },
+          {
+            lauf: '89890',
+            start: moment().subtract(7, 'day').toDate(),
+            value: '712'
+          },
+          {
+            lauf: '89891',
+            start: moment().subtract(8, 'day').toDate(),
+            value: '4100'
+          },
+          {
+            lauf: '89892',
+            start: moment().subtract(9, 'day').toDate(),
+            value: '0'
+          },
+          {
+            lauf: '89893',
+            start: moment().subtract(10, 'day').toDate(),
+            value: '3212'
+          },
+          {
+            lauf: '89894',
+            start: moment().subtract(11, 'day').toDate(),
+            value: '3203'
+          },
         ]
       }
     ];
