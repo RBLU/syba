@@ -94,7 +94,7 @@ class KennzahlController {
         let xAxis =
           d3.axisBottom(xScale)
             .tickFormat((d) => {
-              return moment(d).format('D.M. HH:mm');
+              return moment(d).format('D.M.') + ' ' + moment(d).format('LT');
             })
             .tickSizeInner(-height);
 
