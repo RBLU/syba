@@ -64,6 +64,19 @@ angular.module('myApp')
         weSentALink: 'Wir haben einen Link versendet mit dem das Passwort geändert werden kann',
         back: 'zurück',
         emailDoesNotExist: 'Kein Benutzerkonto gefunden mit diesem  Usernamen oder Email'
+      },
+      signup: {
+        header: 'Anmeldung'
+      },
+      loginform: {
+        usernameOrEmail: {
+          label: 'Username oder Email'
+        },
+        password: {
+          label: 'Passwort'
+        },
+        login: 'senden',
+        passwordForgotten: 'Passwort vergessen'
       }
     });
 
@@ -200,11 +213,11 @@ angular.module('myApp')
             event.preventDefault();
 
             if (!UserService.principal.isAuthenticated()) {
-              $log.log('preventing state change, because user is not authenticated, redirect to password-reset');
+              $log.log('preventing state change because user is not authenticated, redirect to state: "signin"');
               $rootScope.nextStateAfterLogin = {toState: toState, toParams: toParams};
               $state.go('signin');
             } else {
-              $log.log('preventing state change, because user is not authorized for: ' + requiredAccessLevel + ', has roles: ' + UserService.principal.getUser().roles);
+              $log.log('preventing state change because user is not authorized for: ' + requiredAccessLevel + ', has roles: ' + UserService.principal.getUser().roles);
               $rootScope.$emit('clientmsg:error', 'user is not authorized for: ' + requiredAccessLevel + ', has roles: ' + UserService.principal.getUser().roles);
             }
 

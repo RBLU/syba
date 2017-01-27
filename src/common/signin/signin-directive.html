@@ -1,0 +1,33 @@
+
+<form name="signinForm" class="signin-form" ng-submit="submit()">
+
+    <div class="row">
+        <div class="col-sm-12">
+            <input type="text" placeholder="{{'loginform.usernameOrEmail.label' | translate}}" class="form-control login"
+                   ng-model="username" required>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-12">
+            <input type="password" placeholder="{{'loginform.password.label' | translate}}"
+                   class="form-control login"
+                   ng-model="password" required>
+        </div>
+    </div>
+
+    <div class="row login-options">
+        <div class="col-lg-4 col-xs-6">
+            <a ui-sref="requestPasswordReset" translate>loginform.passwordForgotten</a>
+
+        </div>
+
+
+        <div class="col-lg-4 col-xs-12">
+            <button type="submit" class="btn btn-primary" ng-disabled="signinForm.$invalid" translate>loginform.login</button>
+        </div>
+
+
+    </div>
+
+</form>

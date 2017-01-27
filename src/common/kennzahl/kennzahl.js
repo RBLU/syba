@@ -1,5 +1,4 @@
 import angular from 'angular';
-import uiRouter from 'angular-ui-router';
 import kennzahlComponent from './kennzahl.component';
 import "./kennzahl.scss";
 
