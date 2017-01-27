@@ -115,7 +115,9 @@ angular.module('myApp')
     // use: throw { message: 'error message' };
     $provide.decorator('$exceptionHandler', ['$delegate', '$injector', function ($delegate, $injector) {
       return function (exception, cause) {
-        $delegate(exception, cause);
+        // $delegate(exception, cause);
+        $injector.get('$log').log("Exception: " + exception);
+        $injector.get('$log').log("Cause: " + cause);
         _reportErrorToBackend(exception, cause, $injector);
       };
     }]);
@@ -191,7 +193,7 @@ angular.module('myApp')
         $translate.use(locale.split('-')[0]).then(function (data) {
           $log.log('set angular-translate locale to: ' + data);
         }, function (error) {
-          $log.log('ERROR detecting phone system language: ' + error);
+          $log.log('ERROR detecting system language: ' + error);
         });
       }
 

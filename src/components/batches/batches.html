@@ -2,10 +2,8 @@
   <div class="row">
     <left class="col-xs-4">
       <ul class="list-group">
-        <li ng-repeat="batch in vm.batches" class="list-group-item">
-          <a ui-sref="batches({batchId: batch.boid})">
+        <li ng-repeat="batch in vm.batches" class="list-group-item" ng-click="$root.$state.go('batches', ({batchId: batch.boid}))">
           {{batch.name}}
-          </a>
         </li>
       </ul>
     </left>
