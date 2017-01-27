@@ -10,8 +10,9 @@ let BatchesModule = angular.module('Batches', [
 .config(($stateProvider) => {
   $stateProvider
     .state('batches', {
-      url: '/batches/{batchId}?{tab}',
-      template: '<batches></batches>'
+      url: '/batches/{batchId}?{tab}&{run}',
+      template: '<batches></batches>',
+      access: 'all'
     });
 })
 
