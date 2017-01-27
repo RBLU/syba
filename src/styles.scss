@@ -47,8 +47,8 @@ body {
 left {
 	&.col-xs-4 {	// menu left
 		width: 25%;
-		padding-left: 0px;
-    	padding-right: 0px;
+		padding-left: 0;
+    	padding-right: 0;
 	}
 }
 
@@ -56,7 +56,7 @@ main {
 	&.col-xs-8 {	// content frame
 		width: 75%;
     	padding-left: $padhor;
-    	padding-right: 0px;
+    	padding-right: 0;
 	}
 }
 
@@ -74,8 +74,8 @@ h3 {
 
 div {
 		&.row {
-			margin-left: 0px;
-			margin-right: 0px;
+			margin-left: 0;
+			margin-right: 0;
 		}
 		&.ng-scope {
 			margin-top: 10px;
@@ -104,16 +104,16 @@ div {
 		}
 		&.col-xs-3 {	// dropdown-frame for history-graph
 			width: auto;
-			padding-left: 0px;
+			padding-left: 0;
 			padding-right: 30px;
 		}
 		&.col-xs-9 {
-			padding-left: 0px;
-			padding-right: 0px;
-			vertical-align: bottomline;
+			padding-left: 0;
+			padding-right: 0;
+			//vertical-align: bottomline;
 		}
 		&.col-xs-12 {	// reporting and frame with batchrun-dropdown
-			padding-left: 0px;
+			padding-left: 0;
 		}
 }
 
@@ -155,21 +155,21 @@ select {
 ////////////////////////
 
 .list-group-item {
-	border-width: 0px;
+	border-width: 0;
 	border-color: $color11;
 	border-right-width: 1px;
 	padding-left: 48px;
 	&:first-child {
 		border-top-left-radius: 5px;
-		border-top-right-radius: 0px;
+		border-top-right-radius: 0;
 		border-bottom-left-radius: 5px;
-		border-bottom-right-radius: 0px;
+		border-bottom-right-radius: 0;
 	}
 	&:last-child {
 		border-top-left-radius: 5px;
-		border-top-right-radius: 0px;
+		border-top-right-radius: 0;
 		border-bottom-left-radius: 5px;
-		border-bottom-right-radius: 0px;
+		border-bottom-right-radius: 0;
 	}
 	&:hover {
 		border-top-left-radius: 5px;
@@ -202,7 +202,7 @@ a {
 	width: 100%;
 	background: $color00;
 	color: $color99;
-    border-width: 0px;
+    border-width: 0;
 	
 	.navbar-nav {
 		.active {
