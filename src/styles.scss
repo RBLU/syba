@@ -1,12 +1,8 @@
 ///////////////
-/* 2do */
+/* Hints */
 ///////////////
 /*
-- Hintergrundbilder ersetzen durch Code von http://colorzilla.com/gradient-editor/
-		//@import "compass";		// for mixing "background-image"
-		// source: http://colorzilla.com/gradient-editor/
-		//@include background-image(linear-gradient(top, #144372 0%,#144372 50%,#003366 50%,#003366 50%,#194775 53%,#1e4b78 54%,#1e4b78 100%));
-
+- Hintergrundbilder mit Farbverlauf http://colorzilla.com/gradient-editor/
 */
 
 ///////////////
@@ -16,8 +12,10 @@
 $font-stack:    Helvetica, Arial, sans-serif;
 $font-size: 	14px;
 
+// Schema 1 - BLUE
+/*
 $color00:		#FFFFFF; 		// default: white
-$color11:		#A9C7E6; 		// bright blue
+$color11:		#A9C7E6; 		// light blue
 $color12: 		#266CAE; 		// medium blue
 $color13:		#003366; 		// dark blue
 $color21:		#E9E9E9; 		// bright grey 
@@ -27,11 +25,26 @@ $color41:		#93c47D;		// status: normal
 $color42:		#FFE599;		// status: warning
 $color43:		#E06666;		// status: error
 $color99:		#000000; 		// default: black
-
 $lcolor11:		linear-gradient(to top, #b7d0ea 0%,#b7d0ea 50%,#a9c7e6 50%,#bed5ec 54%,#bed5ec 100%);	// Basis: $color11
 $lcolor13:		linear-gradient(to top, #144372 0%,#144372 50%,#003366 50%,#003366 50%,#194775 53%,#1e4b78 54%,#1e4b78 100%);	// Basis: $color13
+*/
 
-$padhor:		30px;			// horizontal padding (left&right)
+// Schema 2 - GREEN
+$color00:		#FFFFFF; 		// default: white
+$color11:		#C6E4DF; 		// light green
+$color12: 		#1d7c8c; 		// medium green
+$color13:		#124a54; 		// dark green
+$color21:		#E9E9E9; 		// bright grey
+$color22:		#E1E1E1; 		// medium grey
+$color23:		#A1A1A1; 		// dark grey
+$color41:		$color11;		// status: normal
+$color42:		#FFE599;		// status: warning
+$color43:		#E06666;		// status: error
+$color99:		#000000; 		// default: black
+$lcolor11:		linear-gradient(to top, #c6e4df 0%,#83c4b8 49%,#c6e4df 50%,#c6e4df 66%);	// Basis: $color11
+$lcolor13:		linear-gradient(to top, #186775 0%,#124a54 49%,#186775 50%,#186775 66%);	// Basis: $color13
+
+
 
 /////////////////////
 /* GENERAL DESIGNS */
@@ -46,6 +59,7 @@ body {
 
 left {
 	&.col-xs-4 {	// menu left
+		min-width: 250px;
 		width: 25%;
 		padding-left: 0;
     	padding-right: 0;
@@ -55,15 +69,16 @@ left {
 main {
 	&.col-xs-8 {	// content frame
 		width: 75%;
-    	padding-left: $padhor;
+    	padding-left: 30px;
     	padding-right: 0;
 	}
 }
 
-h2 {
+h2, h1 {
 	font-weight: 300;
 	font-size: 24px;
 	color: $color13;
+	text-align: left;
 }
 
 h3 {
@@ -89,8 +104,8 @@ div {
 		&.container {            // NAVBAR-Section
 			width: 100%;
 			padding-top: 10px;
-			padding-left: $padhor;
-			padding-right: $padhor;
+			padding-left: 30px;
+			padding-right: 30px;
 		}
 		&.navbar-collapse {
 			font-family: $font-stack;
@@ -114,6 +129,10 @@ div {
 		}
 		&.col-xs-12 {	// reporting and frame with batchrun-dropdown
 			padding-left: 0;
+		}
+		&.col-sm-6, .col-sm-12 {
+			padding-left: 0;
+			margin-left: 0;
 		}
 }
 
@@ -149,6 +168,14 @@ select {
 	}
 }
 
+button {
+	&.navbar-toggle {
+		background: $lcolor13;
+	}
+	&.btn {
+		background: $lcolor13;
+	}
+}
 
 ////////////////////////
 /* TABLE WITH BATCHES */
@@ -175,6 +202,7 @@ select {
 		border-top-left-radius: 5px;
 		border-bottom-left-radius: 5px;
 		background: $lcolor11;
+		color: $color00;
 		cursor: pointer;
 	}
 }
@@ -249,7 +277,7 @@ rect{
   		fill: $color42;
 	}
 	&.normal {
-  	fill: $color41;
+  		fill: $color41;
 	}
 }
 
