@@ -1,9 +1,9 @@
 ///////////////
 /* Hints */
 ///////////////
-/*
-- Hintergrundbilder mit Farbverlauf http://colorzilla.com/gradient-editor/
-*/
+
+//    Hintergrundbilder mit Farbverlauf http://colorzilla.com/gradient-editor/
+
 
 ///////////////
 /* VARIABLES */
@@ -79,6 +79,10 @@ h2, h1 {
 	font-size: 24px;
 	color: $color13;
 	text-align: left;
+	&.ng-scope {
+		margin-top: 0;
+		margin-bottom: 0;
+	}
 }
 
 h3 {
@@ -106,6 +110,9 @@ div {
 			padding-top: 10px;
 			padding-left: 30px;
 			padding-right: 30px;
+			&.ng-scope{
+				padding-left: 63px;
+			}
 		}
 		&.navbar-collapse {
 			font-family: $font-stack;
@@ -133,6 +140,12 @@ div {
 		&.col-sm-6, .col-sm-12 {
 			padding-left: 0;
 			margin-left: 0;
+			margin-bottom: 0;
+			padding-bottom: 0;
+		}
+		&.col-lg-4 {
+			padding-left: 0;
+			padding-top: 30px;
 		}
 }
 
