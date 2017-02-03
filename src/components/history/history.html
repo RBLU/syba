@@ -1,0 +1,39 @@
+<div class="title-bar">
+  <div class="logo side"></div>
+  <div class="main">EV Inkasso monatlich</div>
+</div>
+<div class="main-view">
+  <div class="side">
+    <div class="section-bar">Batches</div>
+    <ul class="list-group">
+      <li ng-repeat="batch in vm.batches" class="list-group-item"
+          ng-click="$root.$state.go('batches', ({batchId: batch.boid}))">
+        {{batch.name}}
+      </li>
+    </ul>
+  </div>
+  <div class="main">
+    <div class="section-bar">
+      <i class="glyphicon glyphicon-chevron-down"
+         ng-click="vm.sectionbatchhidden=!vm.sectionbatchhidden" ng-if="!vm.sectionbatchhidden"></i>
+      <i class="glyphicon glyphicon-chevron-right"
+         ng-click="vm.sectionbatchhidden=!vm.sectionbatchhidden" ng-if="vm.sectionbatchhidden"></i>Batchrun
+    </div>
+
+    <div class="row">
+      <div class="col-xs-3">
+        <select ng-model="vm.selectedKz" ng-options="myKz as myKz.name for myKz in vm.kennzahlen"
+                class="form-control">
+        </select>
+      </div>
+      <div class="col-xs-9">
+        {{vm.selectedKz.description}}
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-12">
+        <kzhistorygraph kz="vm.selectedKz"></kzhistorygraph>
+      </div>
+    </div>
+  </div>
+</div>
