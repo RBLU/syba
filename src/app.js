@@ -100,7 +100,7 @@ angular.module('myApp')
     // TODO: add in env speciic config
     //  RestangularProvider.setBaseUrl(config && config.backendUrl);
     // for now we use local dev server
-    RestangularProvider.setBaseUrl('http://localhost:6000');
+    RestangularProvider.setBaseUrl('http://localhost:8080/api');
 
     // if state is unknown go to /home
 

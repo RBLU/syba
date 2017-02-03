@@ -16,14 +16,14 @@ class KennzahlController {
         g = svg.append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
       $scope.$watch('vm.kz', (kz) => {
-        if (!kz) {
+        if (!kz || !kz.history ||kz.history.length == 0) {
           return;
         }
-
 
         // clear the elements inside of the directive
         g.selectAll('*').remove();
 
+        // set ranges (=screen dimensions) on scale functions
         let xScale = d3.scaleTime()
           .rangeRound([0, width]);
 
@@ -33,16 +33,23 @@ class KennzahlController {
         let yScaleRects = d3.scaleLinear()
           .rangeRound([0, height]);
 
-
+        // set data ranges to be displayed
         xScale.domain(d3.extent(kz.history, function (d) {
-          return d.start;
+          return new Date(d.STARTED);
         }));
-        yScale.domain(d3.extent(kz.history, function (d) {
-          return +d.value;
-        }));
-        yScaleRects.domain(d3.extent(kz.history, function (d) {
-          return +d.value;
-        }));
+
+        // compute min/max of graph to be shown
+        // to remove extreme outliers we show all data that is within
+        // 3 standard deviation of the of the mean.
+        let mean = d3.mean(kz.history, (d) => {return +d.NUMBERVALUE});
+        let sd = d3.deviation(kz.history, (d) => {return +d.NUMBERVALUE});
+
+        const dataExtent = d3.extent(kz.history, function (d) {
+          return +d.NUMBERVALUE;
+        });
+
+        yScale.domain(dataExtent);
+        yScaleRects.domain(dataExtent);
 
         // create the rects for the background color
         // 1st red one
@@ -84,17 +91,21 @@ class KennzahlController {
         // create the line function, maps data to x/y coordinates
         var line = d3.line()
           .x(function (d) {
-            return xScale(d.start);
+            console.log("d.STARTED= " + d.STARTED);
+            console.log("XScale d: " + xScale(new Date(d.STARTED)));
+            return xScale(new Date(d.STARTED));
           })
           .y(function (d) {
-            return yScale(d.value);
+            console.log("d.NUMBERVALUE= " + d.NUMBERVALUE);
+            console.log("yScale d: " + yScale(+d.NUMBERVALUE));
+            return yScale(+d.NUMBERVALUE);
           });
 
 
         let xAxis =
           d3.axisBottom(xScale)
             .tickFormat((d) => {
-              return moment(d).format('D.M.') + ' ' + moment(d).format('LT');
+              return moment(d).format('L');
             })
             .tickSizeInner(-height);
 

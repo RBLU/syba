@@ -18,9 +18,9 @@ $color00:		#FFFFFF; 		// default: white
 $color11:		#A9C7E6; 		// light blue
 $color12: 		#266CAE; 		// medium blue
 $color13:		#003366; 		// dark blue
-$color21:		#E9E9E9; 		// bright grey 
-$color22:		#E1E1E1; 		// medium grey 
-$color23:		#A1A1A1; 		// dark grey 
+$color21:		#E9E9E9; 		// bright grey
+$color22:		#E1E1E1; 		// medium grey
+$color23:		#A1A1A1; 		// dark grey
 $color41:		#93c47D;		// status: normal
 $color42:		#FFE599;		// status: warning
 $color43:		#E06666;		// status: error
@@ -51,143 +51,100 @@ $lcolor13:		linear-gradient(to top, #186775 0%,#124a54 49%,#186775 50%,#186775 6
 /////////////////////
 
 body {
-	width: 100%;
-  	padding-top: 80px;
-	font-family: $font-stack;
-	font-size: $font-size;
+  width: 100%;
+  padding-top: 60px;
+  font-family: $font-stack;
+  font-size: $font-size;
 }
 
-left {
-	&.col-xs-4 {	// menu left
-		min-width: 250px;
-		width: 25%;
-		padding-left: 0;
-    	padding-right: 0;
-	}
+.main-view {
+  display: flex;
+
+  .side {
+    border-right: solid 3px $color13;
+  }
 }
 
-main {
-	&.col-xs-8 {	// content frame
-		width: 75%;
-    	padding-left: 30px;
-    	padding-right: 0;
-	}
+.side {
+  width: 25%;
+
 }
 
-h2, h1 {
-	font-weight: 300;
-	font-size: 24px;
-	color: $color13;
-	text-align: left;
-	&.ng-scope {
-		margin-top: 0;
-		margin-bottom: 0;
-	}
+.main {
+  width: 75%;
+}
+
+.title-bar {
+  display: flex;
+  flex-direction: row;
+
+  .logo {
+    background: url("assets/Helsana-Logo.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    max-height: 40px;
+    max-width: 200px;
+
+  }
+  .main {
+    font-size: 2em;
+    padding-left: 15px;
+  }
+}
+
+.section-bar {
+  background: $color13;
+  color: $color11;
+  height: 25px;
+  padding-left: 15px;
+  padding-top: 2px;
+  display: flex;
+  .left {
+    width: 25%;
+  }
+
+  i {
+    font-size: 1.2em;
+    padding-right: 10px;
+    cursor: pointer;
+  }
+
+}
+
+h2 {
+  font-weight: 300;
+  font-size: 24px;
+  color: $color13;
 }
 
 h3 {
-	font-weight: 200;
-	font-size: 20px;
-	color: $color13;
+  font-weight: 200;
+  font-size: 20px;
+  color: $color13;
 }
 
-div {
-		&.row {
-			margin-left: 0;
-			margin-right: 0;
-		}
-		&.ng-scope {
-			margin-top: 10px;
-		}
-		&.tab-pane.ng-scope.active {
-			float: left;
-		}
-		&.container-fluid {
-			width: 100%;
-		}
-		&.container {            // NAVBAR-Section
-			width: 100%;
-			padding-top: 10px;
-			padding-left: 30px;
-			padding-right: 30px;
-			&.ng-scope{
-				padding-left: 63px;
-			}
-		}
-		&.navbar-collapse {
-			font-family: $font-stack;
-			font-size: 16px;
-			color: $color00;
-			background: $lcolor13;
-			border-top-left-radius: 5px;
-			border-top-right-radius: 5px;
-			border-bottom-left-radius: 5px;
-			border-bottom-right-radius: 5px;
-		}
-		&.col-xs-3 {	// dropdown-frame for history-graph
-			width: auto;
-			padding-left: 0;
-			padding-right: 30px;
-		}
-		&.col-xs-9 {
-			padding-left: 0;
-			padding-right: 0;
-			//vertical-align: bottomline;
-		}
-		&.col-xs-12 {	// reporting and frame with batchrun-dropdown
-			padding-left: 0;
-		}
-		&.col-sm-6, .col-sm-12 {
-			padding-left: 0;
-			margin-left: 0;
-			margin-bottom: 0;
-			padding-bottom: 0;
-		}
-		&.col-lg-4 {
-			padding-left: 0;
-			padding-top: 30px;
-		}
-}
+.navbar.navbar-inverse {
+    font-family: $font-stack;
+    font-size: 16px;
+    background: $color13;
+    border-width: 0;
+  .navbar-nav {
+    .active {
+      a {
+        color: $color13;
+        background: $color11;
+      }
+    }
+    li {
+      a {
+        color: $color11;
+        &:hover {
+          color: $color00;
+        }
+      }
+    }
 
-ul {
-	&.nav.nav-tabs {
-		border-color: $color11;
-		
-		li {
-			&.active { // active tabs
-				a {
-					color: $color13;
-					border-color: $color11;
-					border-bottom-color: transparent;
-					&:hover {				
-						background: $color00;
-						border-bottom-color: transparent;
-					}
-				}
-			}
-			a {
-				&:hover { // Mouseover inactive tabs
-					border-color: $color11;
-					background: $lcolor11;
-				}
-			}
-		}
-	}
-}
-
-select {
-	&.form-control {	// dropdown-box with batchruns or graph-selction
-		width: auto;
-	}
-}
-
-button {
-	&.navbar-toggle {
-		background: $lcolor13;
-	}
-	&.btn {
-		background: $lcolor13;
-	}
+  }
 }
 
 ////////////////////////
@@ -195,111 +152,82 @@ button {
 ////////////////////////
 
 .list-group-item {
-	border-width: 0;
-	border-color: $color11;
-	border-right-width: 1px;
-	padding-left: 48px;
-	&:first-child {
-		border-top-left-radius: 5px;
-		border-top-right-radius: 0;
-		border-bottom-left-radius: 5px;
-		border-bottom-right-radius: 0;
-	}
-	&:last-child {
-		border-top-left-radius: 5px;
-		border-top-right-radius: 0;
-		border-bottom-left-radius: 5px;
-		border-bottom-right-radius: 0;
-	}
-	&:hover {
-		border-top-left-radius: 5px;
-		border-bottom-left-radius: 5px;
-		background: $lcolor11;
-		color: $color00;
-		cursor: pointer;
-	}
+  border-width: 0;
+  border-color: $color11;
+  padding-left: 48px;
+  &:first-child {
+    border-top-left-radius: 5px;
+    border-top-right-radius: 0;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 0;
+  }
+  &:last-child {
+    border-top-left-radius: 5px;
+    border-top-right-radius: 0;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 0;
+  }
+  &:hover {
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+    background: $lcolor11;
+    cursor: pointer;
+  }
 }
-
-
 
 a {
-	color: $color12;
-	text-decoration: none;
-	&.ng-binding {
-		&:hover {
-			color: $color00;
-			//background: $lcolor11;
-			text-decoration: none;
-		}
-	}
+  color: $color12;
+  text-decoration: none;
+  &.ng-binding {
+    &:hover {
+      color: $color00;
+      //background: $lcolor11;
+      text-decoration: none;
+    }
+  }
 }
-
 
 ////////////////////
 /* NAVIGATION BAR */
 ////////////////////
 
-.navbar-inverse {
-	width: 100%;
-	background: $color00;
-	color: $color99;
-    border-width: 0;
-	
-	.navbar-nav {
-		.active {
-			a { 
-				color: $color13;
-				background: $lcolor11;
-			}
-		}
-		li {
-			a { 
-				color: $color11;
-				&:hover {
-					color: $color00;
-				}
-			}
-		}
-	}
-}
-
-span{
-	&.glyphicon {	// flag-icon left in the navbar
-		color: $color11;
-		&:hover {
-			color: $color00;
-		}
-	}
+span {
+  &.glyphicon { // flag-icon left in the navbar
+    color: $color11;
+    &:hover {
+      color: $color00;
+    }
+  }
 }
 
 ///////////////////////////////////
 /* FIGURES BAR AND HISTORY GRAPH */
 ///////////////////////////////////
 
-rect{
-	&.stdabw {
-		fill: $color12;
-	} 
-	&.history {
-		fill: $color12;
-	} 
-	&.error {
-  		fill: $color43;
-	}
-	&.warning {
-  		fill: $color42;
-	}
-	&.normal {
-  		fill: $color41;
-	}
+rect {
+  &.stdabw {
+    fill: $color12;
+  }
+  &.history {
+    fill: $color12;
+  }
+  &.error {
+    fill: $color43;
+  }
+  &.warning {
+    fill: $color42;
+  }
+  &.normal {
+    fill: $color41;
+  }
 }
 
 circle {
-	fill: $color13;
+  fill: $color13;
 }
 
 svg {
-	width: 800px;
+  width: 800px;
 }
 
 

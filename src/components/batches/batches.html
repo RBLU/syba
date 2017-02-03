@@ -1,58 +1,69 @@
-<div class="container-fluid">
-  <div class="row">
-    <left class="col-xs-4">
-      <ul class="list-group">
-        <li ng-repeat="batch in vm.batches" class="list-group-item" ng-click="$root.$state.go('batches', ({batchId: batch.boid}))">
-          {{batch.name}}
-        </li>
-      </ul>
-    </left>
-    <main class="col-xs-8" ng-if="vm.selected">
-
-      <uib-tabset active="vm.activetab">
-        <uib-tab index="0" heading="{{vm.selected.name}}" select="vm.tabChanged(0)">
-          <div col="row">
-            <div class="col-xs-12">
-              Lauf: <select ng-model="vm.run" ng-options="myrun as vm.getRunName(myrun) for myrun in vm.selected.runs"
-                            class="form-control">
-            </select>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-xs-12">
-              <h2>Kennzahlen</h2>
-              <Kennzahlen batchlauf="vm.run"></Kennzahlen>
-            </div>
-          </div>
-        </uib-tab>
-        <uib-tab index="1" select="vm.tabChanged(1)">
-          <uib-tab-heading>
-            <i class="glyphicon glyphicon-stats"></i>&nbsp;History
-          </uib-tab-heading>
-
-          <div class="row">
-            <div class="col-xs-3">
-              <select ng-model="vm.selectedKz" ng-options="myKz as myKz.name for myKz in vm.kennzahlen"
-                      class="form-control">
-              </select>
-            </div>
-            <div class="col-xs-9">
-              {{vm.selectedKz.description}}
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-xs-12">
-              <kzhistorygraph kz="vm.selectedKz"></kzhistorygraph>
-            </div>
-          </div>
-        </uib-tab>
-
-        <uib-tab heading="Log" index="2" select="vm.tabChanged(2)">
-          <ul class="list-group">
-            <li class="list-group-item" ng-repeat="run in vm.selected.runs" ng-click="go('/batches', '({tab=0})')">{{vm.selected.name}}: {{run.boid}} start: {{run.start | date }}</li>
-          </ul>
-        </uib-tab>
-      </uib-tabset>
-    </main>
+<div class="title-bar">
+  <div class="logo side"></div>
+  <div class="main">{{vm.selected.name}}</div>
+</div>
+<div class="main-view">
+  <div class="side">
+    <div class="section-bar">Batches</div>
+    <ul class="list-group">
+      <li ng-repeat="batch in vm.batches" class="list-group-item"
+          ng-click="$root.$state.go('batches', ({batchId: batch.boid}))">
+        {{batch.name}}
+      </li>
+    </ul>
   </div>
+  <div class="main">
+    <div class="section-bar">
+      <i class="glyphicon glyphicon-chevron-down"
+         ng-click="vm.sectionbatchhidden=!vm.sectionbatchhidden" ng-if="!vm.sectionbatchhidden"></i>
+      <i class="glyphicon glyphicon-chevron-right"
+         ng-click="vm.sectionbatchhidden=!vm.sectionbatchhidden" ng-if="vm.sectionbatchhidden"></i>Batchrun
+    </div>
+    <div class="section container-fluid" ng-if="!vm.sectionbatchhidden">
+      <div class="row">
+        <div class="col-xs-6">Batchlauf (Datum/Zeit/BOID)</div>
+        <div class="col-xs-6">
+          <select ng-model="vm.run" ng-options="myrun as vm.getRunName(myrun) for myrun in vm.selected.runs"
+                  class="form-control">
+          </select>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-3">Laufzeit</div>
+        <div class="col-xs-3">12 min 42s</div>
+        <div class="col-xs-3">Anzahl Worker</div>
+        <div class="col-xs-3">80</div>
+      </div>
+      <div class="row">
+        <div class="col-xs-3">Verarbeitete Items</div>
+        <div class="col-xs-3">10123</div>
+        <div class="col-xs-3">Verarbeitungszeit pro Item</div>
+        <div class="col-xs-3">2.76s</div>
+      </div>
+    </div>
+    <div class="section-bar">
+      <i class="glyphicon glyphicon-chevron-down"
+         ng-click="vm.sectionkzhidden=!vm.sectionkzhidden" ng-if="!vm.sectionkzhidden"></i>
+      <i class="glyphicon glyphicon-chevron-right"
+         ng-click="vm.sectionkzhidden=!vm.sectionkzhidden" ng-if="vm.sectionkzhidden"></i>Kennzahlen
+    </div>
+    <div class="section container-fluid" ng-if="!vm.sectionkzhidden">
+      <Kennzahlen batchlauf="vm.run"></Kennzahlen>
+    </div>
+    <div class="section-bar">
+      <i class="glyphicon glyphicon-chevron-down"
+         ng-click="vm.sectionnotificationhidden=!vm.sectionnotificationhidden"
+         ng-if="!vm.sectionnotificationhidden"></i>
+      <i class="glyphicon glyphicon-chevron-right"
+         ng-click="vm.sectionnotificationhidden=!vm.sectionnotificationhidden" ng-if="vm.sectionnotificationhidden"></i>Notification
+      Settings
+    </div>
+    <div class="section container-fluid" ng-if="!vm.sectionnotificationhidden">
+      <div class="row">
+        <div class="col-xs-3">Some notification settings</div>
+      </div>
+    </div>
+  </div>
+
+
 </div>

@@ -5,7 +5,7 @@ moment.locale('de_ch');
 
 class BatchesController {
   /* @ngInject */
-  constructor($scope, $stateParams, $state) {
+  constructor($scope, $stateParams, $state, kennzahlenService) {
     this.batches = [
       {
         name: 'EV Inkasso monatlich',
@@ -115,48 +115,7 @@ class BatchesController {
         id: '324234',
         description: 'Misst die zeitliche Dauer eines Laufes in Sekunden',
         settings: [0 , 0,360,410],
-        history: [
-          {
-            lauf: '89875',
-            start: moment().subtract(1, 'day').toDate(),
-            value: '234'
-          },
-          {
-            lauf: '89875',
-            start: moment().subtract(2, 'day').toDate(),
-            value: '223'
-          },
-          {
-            lauf: '89875',
-            start: moment().subtract(3, 'day').toDate(),
-            value: '290'
-          },
-          {
-            lauf: '89875',
-            start: moment().subtract(4, 'day').toDate(),
-            value: '265'
-          },
-          {
-            lauf: '89875',
-            start: moment().subtract(5, 'day').toDate(),
-            value: '450'
-          },
-          {
-            lauf: '89875',
-            start: moment().subtract(6, 'day').toDate(),
-            value: '330'
-          },
-          {
-            lauf: '89875',
-            start: moment().subtract(7, 'day').toDate(),
-            value: '320'
-          },
-          {
-            lauf: '89875',
-            start: moment().subtract(8, 'day').toDate(),
-            value: '267'
-          }
-        ]
+        history: []
 
       },
       {
@@ -167,77 +126,82 @@ class BatchesController {
         history: [
           {
             lauf: '89875',
-            start: moment().subtract(1, 'day').toDate(),
-            value: '1234'
+            STARTED: moment().subtract(1, 'day').toDate(),
+            NUMBERVALUE: '1234'
           },
           {
             lauf: '89876',
-            start: moment().subtract(2, 'day').toDate(),
-            value: '2344'
+            STARTED: moment().subtract(2, 'day').toDate(),
+            NUMBERVALUE: '2344'
           },
           {
             lauf: '89877',
-            start: moment().subtract(3, 'day').toDate(),
-            value: '1901'
+            STARTED: moment().subtract(3, 'day').toDate(),
+            NUMBERVALUE: '1901'
           },
           {
             lauf: '89877',
-            start: moment().subtract(3, 'day').subtract(1, 'hour').toDate(),
-            value: '1200'
+            STARTED: moment().subtract(3, 'day').subtract(1, 'hour').toDate(),
+            NUMBERVALUE: '1200'
           },
           {
             lauf: '89877',
-            start: moment().subtract(3, 'day').subtract(2, 'hour').toDate(),
-            value: '1400'
+            STARTED: moment().subtract(3, 'day').subtract(2, 'hour').toDate(),
+            NUMBERVALUE: '1400'
           },
           {
             lauf: '89877',
-            start: moment().subtract(3, 'day').subtract(5, 'hour').toDate(),
-            value: '2021'
+            STARTED: moment().subtract(3, 'day').subtract(5, 'hour').toDate(),
+            NUMBERVALUE: '2021'
           },
           {
             lauf: '89878',
-            start: moment().subtract(4, 'day').toDate(),
-            value: '1834'
+            STARTED: moment().subtract(4, 'day').toDate(),
+            NUMBERVALUE: '1834'
           },
           {
             lauf: '89879',
-            start: moment().subtract(5, 'day').toDate(),
-            value: '2102'
+            STARTED: moment().subtract(5, 'day').toDate(),
+            NUMBERVALUE: '2102'
           },
           {
             lauf: '89880',
-            start: moment().subtract(6, 'day').toDate(),
-            value: '2080'
+            STARTED: moment().subtract(6, 'day').toDate(),
+            NUMBERVALUE: '2080'
           },
           {
             lauf: '89890',
-            start: moment().subtract(7, 'day').toDate(),
-            value: '712'
+            STARTED: moment().subtract(7, 'day').toDate(),
+            NUMBERVALUE: '712'
           },
           {
             lauf: '89891',
-            start: moment().subtract(8, 'day').toDate(),
-            value: '4100'
+            STARTED: moment().subtract(8, 'day').toDate(),
+            NUMBERVALUE: '4100'
           },
           {
             lauf: '89892',
-            start: moment().subtract(9, 'day').toDate(),
-            value: '0'
+            STARTED: moment().subtract(9, 'day').toDate(),
+            NUMBERVALUE: '0'
           },
           {
             lauf: '89893',
-            start: moment().subtract(10, 'day').toDate(),
-            value: '3212'
+            STARTED: moment().subtract(10, 'day').toDate(),
+            NUMBERVALUE: '3212'
           },
           {
             lauf: '89894',
-            start: moment().subtract(11, 'day').toDate(),
-            value: '3203'
+            STARTED: moment().subtract(11, 'day').toDate(),
+            NUMBERVALUE: '3203'
           },
         ]
       }
     ];
+
+    kennzahlenService.getKennzahlenValues('MPolEvDrucken', 'MLaufzeitConfigPoliceEV')
+      .then((result) => {
+        this.kennzahlen[0].history = result;
+      });
 
     if ($stateParams && $stateParams.batchId) {
       this.selected = _.find(this.batches, (batch) => {return batch.boid === $stateParams.batchId})
