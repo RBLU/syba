@@ -10,7 +10,7 @@
 ///////////////
 
 $font-stack:    Helvetica, Arial, sans-serif;
-$font-size: 	14px;
+$font-size: 	1.3em;
 
 // Schema 1 - BLUE
 
@@ -52,58 +52,77 @@ $lcolor13:		linear-gradient(to top, #186775 0%,#124a54 49%,#186775 50%,#186775 6
 
 body {
   width: 100%;
-  padding-top: 60px;
+  padding-top: 70px;
   font-family: $font-stack;
   font-size: $font-size;
 }
 
 .main-view {
   display: flex;
-
   .side {
-    border-right: solid 3px $color13;
+    border-right: solid 1px $color13;
+    width: 25%;
+    min-width: 250px;
+    margin-top: 10px;
+    .section-bar {
+      padding-left: 35px;
+      border-top-left-radius: 5px;
+      border-top-right-radius: 0;
+      border-bottom-left-radius: 5px;
+      border-bottom-right-radius: 0;
+
+    }
+  }
+  .main {
+    width: 75%;
+    .section-bar {
+      margin-top: 10px;
+      border-top-left-radius: 0;
+      border-top-right-radius: 5px;
+      border-bottom-left-radius: 0;
+      border-bottom-right-radius: 5px;
+    }
   }
 }
 
-.side {
-  width: 25%;
-
-}
-
-.main {
-  width: 75%;
-}
 
 .title-bar {
   display: flex;
   flex-direction: row;
 
   .logo {
-    background: url("assets/Helsana-Logo.png");
     background-size: contain;
-    background-repeat: no-repeat;
-    max-height: 40px;
-    max-width: 200px;
+    background: url("assets/Helsana-Logo.png") no-repeat 35px;  //doesn't work in chrome yet...
+    height: 40px;
+    min-width: 250px;
+    width: 25%;
 
   }
   .main {
+    width: 75%;
+    font-weight: 300;
     font-size: 2em;
+    color: $color13;
     padding-left: 15px;
   }
 }
 
 .section-bar {
-  background: $color13;
+  background: $lcolor13;
+  font-size: 1.1em;
+  font-family: $font-stack;
   color: $color11;
   height: 25px;
   padding-left: 15px;
   padding-top: 2px;
+  vertical-align: text-bottom;
   display: flex;
   .left {
     width: 25%;
   }
 
   i {
+    font-weight: 100;
     font-size: 1.2em;
     padding-right: 10px;
     cursor: pointer;
@@ -113,14 +132,22 @@ body {
 
 h2 {
   font-weight: 300;
-  font-size: 24px;
+  font-size: 1.8em;
   color: $color13;
 }
 
 h3 {
   font-weight: 200;
-  font-size: 20px;
+  font-size: 1.5em;
   color: $color13;
+}
+
+.row {
+  padding-top: 10px;
+}
+
+.col-xs-3, .col-xs-12 {
+  padding-left: 30px;
 }
 
 .navbar.navbar-inverse {
@@ -128,6 +155,10 @@ h3 {
     font-size: 16px;
     background: $lcolor13;
     border-width: 0;
+    border-radius: 10px;
+    margin-top: 10px;
+    margin-left: 15px;
+    margin-right: 15px;
   .navbar-nav {
     .active {
       a {
@@ -147,6 +178,10 @@ h3 {
   }
 }
 
+.navbar-toggle {
+  background: $color11;
+}
+
 ////////////////////////
 /* TABLE WITH BATCHES */
 ////////////////////////
@@ -154,7 +189,7 @@ h3 {
 .list-group-item {
   border-width: 0;
   border-color: $color11;
-  padding-left: 48px;
+  padding-left: 35px;
   &:first-child {
     border-top-left-radius: 5px;
     border-top-right-radius: 0;
@@ -191,12 +226,10 @@ a {
 /* NAVIGATION BAR */
 ////////////////////
 
-span {
-  &.glyphicon { // flag-icon left in the navbar
-    color: $color11;
-    &:hover {
-      color: $color00;
-    }
+.glyphicon { // flag-icon left in the navbar
+  color: $color11;
+  &:hover {
+    color: $color00;
   }
 }
 
