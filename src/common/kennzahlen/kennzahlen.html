@@ -1,5 +1,6 @@
 <div>
-  <div class="row" ng-repeat="mykz in vm.data">
+  <div class="row" ng-repeat="mykz in vm.data"
+       ng-click="$root.$state.go('history', {batchId: vm.batchid, runId: vm.runid, kennzahlId: mykz.boid})">
       <kennzahl kz="mykz"></kennzahl>
   </div>
 </div>

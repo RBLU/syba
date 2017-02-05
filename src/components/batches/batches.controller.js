@@ -43,7 +43,7 @@ class BatchesController {
             boid: '12341234',
             start: Date.now()
           } , {
-            boid: '12341234',
+            boid: '5435345',
             start: Date.now()
           }
         ]
@@ -112,7 +112,7 @@ class BatchesController {
     this.kennzahlen = [
       {
         name: 'Laufzeit',
-        id: '324234',
+        boid: '324234',
         description: 'Misst die zeitliche Dauer eines Laufes in Sekunden',
         settings: [0 , 0,360,410],
         history: []
@@ -120,7 +120,7 @@ class BatchesController {
       },
       {
         name: 'Workitems',
-        id: '5676734',
+        boid: '5676734',
         settings: [1000, 1500, 3000, 4000],
         description: 'Misst die Anzahl selektierter Workitems eines Laufes',
         history: [
@@ -203,22 +203,15 @@ class BatchesController {
         this.kennzahlen[0].history = result;
       });
 
+    this.selectedrun = null;
+
     if ($stateParams && $stateParams.batchId) {
-      this.selected = _.find(this.batches, (batch) => {return batch.boid === $stateParams.batchId})
+      this.selected = _.find(this.batches, (batch) => {return batch.boid === $stateParams.batchId});
     }
 
-    if ($stateParams && $stateParams.tab) {
-      this.activetab = +$stateParams.tab;
+    if ($stateParams && $stateParams.runId && this.selected) {
+      this.selectedrun = _.find(this.selected.runs, (run) => {return run.boid === $stateParams.runId});
     }
-
-    this.tabChanged = (newIndex) => {
-      $state.go('batches', {batchId: this.selected.boid, tab: newIndex },
-        {
-          location: 'replace',
-          inherit: false,
-          notify: false
-        })
-    };
 
 
     this.select  = (batch) => {
@@ -233,7 +226,7 @@ class BatchesController {
 
     $scope.$watch('vm.selected', (newbatch, old) => {
       if (newbatch && newbatch.runs) {
-        this.run = newbatch.runs[0];
+        this.selectedrun = newbatch.runs[0];
       }
     });
 

@@ -10,7 +10,7 @@ let HistoryModule = angular.module('History', [
 .config(($stateProvider) => {
   $stateProvider
     .state('history', {
-      url: '/history/{batchId}?{tab}&{run}',
+      url: '/history/{batchId}/?{runId}&{kennzahlId}',
       template: '<history></history>',
       access: 'all'
     });

@@ -111,16 +111,8 @@ class HistoryController {
 
     this.kennzahlen = [
       {
-        name: 'Laufzeit',
-        id: '324234',
-        description: 'Misst die zeitliche Dauer eines Laufes in Sekunden',
-        settings: [0 , 0,360,410],
-        history: []
-
-      },
-      {
         name: 'Workitems',
-        id: '5676734',
+        boid: '5676734',
         settings: [1000, 1500, 3000, 4000],
         description: 'Misst die Anzahl selektierter Workitems eines Laufes',
         history: [
@@ -198,48 +190,50 @@ class HistoryController {
       }
     ];
 
-    kennzahlenService.getKennzahlenValues('MPolEvDrucken', 'MLaufzeitConfigPoliceEV')
-      .then((result) => {
-        this.kennzahlen[0].history = result;
-      });
 
     if ($stateParams && $stateParams.batchId) {
       this.selected = _.find(this.batches, (batch) => {return batch.boid === $stateParams.batchId})
     }
 
-    if ($stateParams && $stateParams.tab) {
-      this.activetab = +$stateParams.tab;
+    if ($stateParams && $stateParams.runId && this.selected) {
+      this.selectedrun = _.find(this.selected.runs, (run) => {return run.boid === $stateParams.runId});
     }
-
-    this.tabChanged = (newIndex) => {
-      $state.go('batches', {batchId: this.selected.boid, tab: newIndex },
-        {
-          location: 'replace',
-          inherit: false,
-          notify: false
-        })
-    };
-
 
     this.select  = (batch) => {
       this.selected = batch;
     };
 
-    this.selectedKz = this.kennzahlen[0];
 
     this.getRunName = (run) => {
       return moment(run.start).format('lll') + ' (' + run.boid + ')';
     };
 
-    $scope.$watch('vm.selected', (newbatch, old) => {
-      if (newbatch && newbatch.runs) {
-        this.run = newbatch.runs[0];
-      }
-    });
 
 
+    kennzahlenService.getKennzahlenValues('MPolEvDrucken', 'MLaufzeitConfigPoliceEV')
+      .then((result) => {
+        const laufzeitkz = {
+          name: 'Laufzeit',
+            boid: '324234',
+          description: 'Misst die zeitliche Dauer eines Laufes in Sekunden',
+          settings: [0 , 0,360,410]
+        };
+        laufzeitkz.history = result;
+        this.kennzahlen.push(laufzeitkz);
 
+        $scope.$watch('vm.selected', (newbatch, old) => {
+          if (newbatch && newbatch.runs) {
+            this.run = newbatch.runs[0];
+          }
+        });
 
+        if ($stateParams && $stateParams.kennzahlId && this.selectedrun) {
+          this.selectedKz = _.find(this.kennzahlen, (kz) => {return kz.boid === $stateParams.kennzahlId});
+        } else {
+          this.selectedKz = this.kennzahlen[0];
+        }
+
+      });
   }
 }
 

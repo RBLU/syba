@@ -91,13 +91,9 @@ class KennzahlController {
         // create the line function, maps data to x/y coordinates
         var line = d3.line()
           .x(function (d) {
-            console.log("d.STARTED= " + d.STARTED);
-            console.log("XScale d: " + xScale(new Date(d.STARTED)));
             return xScale(new Date(d.STARTED));
           })
           .y(function (d) {
-            console.log("d.NUMBERVALUE= " + d.NUMBERVALUE);
-            console.log("yScale d: " + yScale(+d.NUMBERVALUE));
             return yScale(+d.NUMBERVALUE);
           });
 

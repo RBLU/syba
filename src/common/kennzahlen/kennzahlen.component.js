@@ -4,7 +4,10 @@ import controller from './kennzahlen.controller';
 let kennzahlenComponent = function () {
   return {
     restrict: 'E',
-    scope: {},
+    scope: {
+      batchid: '=',
+      runid: '='
+    },
     template,
     controller,
     controllerAs: 'vm',
