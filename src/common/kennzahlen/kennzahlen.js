@@ -2,6 +2,7 @@ import angular from 'angular';
 import uiRouter from 'angular-ui-router';
 import kennzahlenComponent from './kennzahlen.component';
 import kennzahlenService from './kennzahlen.service';
+import "./kennzahlen.scss";
 
 let kennzahlenModule = angular.module('kennzahlen', [
   uiRouter

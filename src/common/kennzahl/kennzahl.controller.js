@@ -5,6 +5,7 @@ class KennzahlController {
   /* @ngInject */
   constructor($scope, $element) {
     this.name = 'kennzahl';
+    this.editmode = false;
 
     const width = 500;
     const offset = 20;
@@ -14,7 +15,6 @@ class KennzahlController {
       let svg = d3.select($element.find('svg')[0])
         .attr('width', width + offset * 2)
         .attr('height', 50);
-
 
       let g = svg.append('g')
         .attr('transform', 'translate('+offset+',0)');
@@ -111,6 +111,12 @@ class KennzahlController {
 
     }
 
+    $scope.$watch('vm.editmode', (newValue) => {
+      if (newValue) {
+        console.log("turning on editmode");
+        console.log("turning on editmode");
+      }
+    })
 
   }
 }

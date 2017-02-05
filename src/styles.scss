@@ -237,21 +237,26 @@ a {
 /* FIGURES BAR AND HISTORY GRAPH */
 ///////////////////////////////////
 
-rect {
+rect,div {
   &.stdabw {
     fill: $color12;
+    background: $color12;
   }
   &.history {
     fill: $color12;
+    background: $color12;
   }
   &.error {
     fill: $color43;
+    background: $color43;
   }
   &.warning {
     fill: $color42;
+    background: $color42;
   }
   &.normal {
     fill: $color41;
+    background: $color41;
   }
 }
 
