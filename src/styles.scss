@@ -130,6 +130,16 @@ body {
 
 }
 
+.section.container-fluid{
+  padding-left: 0;
+}
+
+h1 {
+  font-weight: 300;
+  font-size: 2.2em;
+  color: $color13;
+}
+
 h2 {
   font-weight: 300;
   font-size: 1.8em;
@@ -143,11 +153,9 @@ h3 {
 }
 
 .row {
+  padding-left: 15px;
   padding-top: 10px;
-}
-
-.col-xs-3, .col-xs-12 {
-  padding-left: 30px;
+  padding-bottom: 5px;
 }
 
 .navbar.navbar-inverse {
@@ -190,23 +198,25 @@ h3 {
   border-width: 0;
   border-color: $color11;
   padding-left: 35px;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 0;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 0;
   &:first-child {
-    border-top-left-radius: 5px;
     border-top-right-radius: 0;
-    border-bottom-left-radius: 5px;
-    border-bottom-right-radius: 0;
   }
   &:last-child {
-    border-top-left-radius: 5px;
-    border-top-right-radius: 0;
-    border-bottom-left-radius: 5px;
     border-bottom-right-radius: 0;
   }
   &:hover {
-    border-top-left-radius: 5px;
-    border-bottom-left-radius: 5px;
     background: $lcolor11;
+    color: $color00;
     cursor: pointer;
+  }
+  &.active {
+    background: $lcolor11;
+    color: $color13;
+    cursor: auto;
   }
 }
 
