@@ -16,7 +16,7 @@ class KennzahlController {
         g = svg.append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
       // add the tooltip area to the webpage
-      var tooltip = d3.select("kzhistorygraph").append("div")
+      var tooltip = d3.select("body").append("div")
         .attr("class", "tooltip")
         .style("opacity", 0);
 
@@ -158,7 +158,7 @@ class KennzahlController {
             tooltip.transition()
               .duration(200)
               .style("opacity", .9);
-            tooltip.html("Lauf Boid: " + d["lauf"] + "<br/> (" + moment(d.STARTED).format("LL")
+            tooltip.html("Lauf Boid: " + d["Lauf"] + "<br/> (" + moment(d.STARTED).format("LL")
               + ", " + d.NUMBERVALUE + ")")
               .style("left", (d3.event.pageX + 5) + "px")
               .style("top", (d3.event.pageY - 28) + "px");
@@ -170,7 +170,11 @@ class KennzahlController {
           })
           .on("click", function(d) {
             $scope.$root.$state.go('batches', {batchId: d.itsBatchConfig, run: d.lauf})
-          })
+          });
+
+        $scope.$on("$destroy", function() {
+          d3.select('.tooltip').remove();
+        });
 
 
 
