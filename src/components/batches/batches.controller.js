@@ -113,6 +113,7 @@ class BatchesController {
       {
         name: 'Laufzeit',
         boid: '324234',
+        itsBatchConfig: '1121212121',
         description: 'Misst die zeitliche Dauer eines Laufes in Sekunden',
         settings: [0 , 0,360,410],
         history: []
@@ -121,6 +122,7 @@ class BatchesController {
       {
         name: 'Workitems',
         boid: '5676734',
+        itsBatchConfig: '1121212121',
         settings: [1000, 1500, 3000, 4000],
         description: 'Misst die Anzahl selektierter Workitems eines Laufes',
         history: [

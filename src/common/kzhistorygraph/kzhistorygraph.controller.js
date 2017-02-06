@@ -15,6 +15,11 @@ class KennzahlController {
         height = +svg.attr("height") - margin.top - margin.bottom,
         g = svg.append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
+      // add the tooltip area to the webpage
+      var tooltip = d3.select("body").append("div")
+        .attr("class", "tooltip")
+        .style("opacity", 0);
+
       $scope.$watch('vm.kz', (kz) => {
         if (!kz || !kz.history ||kz.history.length == 0) {
           return;
@@ -50,6 +55,11 @@ class KennzahlController {
 
         yScale.domain(dataExtent);
         yScaleRects.domain(dataExtent);
+
+        let cValue = function(d) {
+            return "yellow";
+        };
+        let color = d3.scaleOrdinal(d3.schemeCategory10);
 
         // create the rects for the background color
         // 1st red one
@@ -135,6 +145,34 @@ class KennzahlController {
           .attr("stroke-linecap", "round")
           .attr("stroke-width", 1.5)
           .attr("d", line);
+
+        g.selectAll(".dot")
+          .data(kz.history)
+          .enter().append("circle")
+          .attr("class", "dot")
+          .attr("r", 3.5)
+          .attr("cx", (d) => {return xScale(new Date(d.STARTED));})
+          .attr("cy", (d) => {return yScale(new Date(+d.NUMBERVALUE));})
+          .style("fill", function(d) { return color(cValue(d));})
+          .on("mouseover", function(d) {
+            tooltip.transition()
+              .duration(200)
+              .style("opacity", .9);
+            tooltip.html("Lauf Boid: " + d["lauf"] + "<br/> (" + moment(d.STARTED).format("LL")
+              + ", " + d.NUMBERVALUE + ")")
+              .style("left", (d3.event.pageX + 5) + "px")
+              .style("top", (d3.event.pageY - 28) + "px");
+          })
+          .on("mouseout", function(d) {
+            tooltip.transition()
+              .duration(500)
+              .style("opacity", 0);
+          })
+          .on("click", function(d) {
+            $scope.$root.$state.go('batches', {batchId: d.itsBatchConfig, run: d.lauf})
+          })
+
+
 
       });
     }
