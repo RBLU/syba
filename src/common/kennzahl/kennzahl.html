@@ -1,4 +1,22 @@
 <div class="kennzahl col-xs-12" id="{{vm.kz.name}}">
-  <h3>{{vm.kz.name}}</h3>
+  <h3>{{vm.kz.name}}<i class="glyphicon glyphicon-edit" ng-click="vm.editmode=true"></i></h3>
   <svg></svg>
+  <form class="form-inline">
+    <div ng-if="vm.editmode" class="edit-form">
+
+      <div class="error"></div>
+      <input class="form-control" type="text" ng-model="vm.kz.settings[0]">
+      <div class="warning"></div>
+      <input class="form-control" type="text" ng-model="vm.kz.settings[1]">
+      <div class="normal"></div>
+      <input class="form-control" type="text" ng-model="vm.kz.settings[2]">
+      <div class="warning"></div>
+      <input class="form-control" type="text" ng-model="vm.kz.settings[3]">
+      <div class="error"></div>
+      <button type="button" class="btn btn-primary" ng-click="vm.save()">Save</button>
+      <button type="button" class="btn btn-default" ng-click="vm.editmode=false">Cancel</button>
+    </div>
+
+
+  </form>
 </div>
