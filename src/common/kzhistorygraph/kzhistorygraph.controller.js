@@ -16,7 +16,7 @@ class KennzahlController {
         g = svg.append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
       // add the tooltip area to the webpage
-      var tooltip = d3.select("body").append("div")
+      var tooltip = d3.select("kzhistorygraph").append("div")
         .attr("class", "tooltip")
         .style("opacity", 0);
 
@@ -150,7 +150,7 @@ class KennzahlController {
           .data(kz.history)
           .enter().append("circle")
           .attr("class", "dot")
-          .attr("r", 3.5)
+          .attr("r", 5)
           .attr("cx", (d) => {return xScale(new Date(d.STARTED));})
           .attr("cy", (d) => {return yScale(new Date(+d.NUMBERVALUE));})
           .style("fill", function(d) { return color(cValue(d));})

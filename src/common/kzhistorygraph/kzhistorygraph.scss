@@ -67,6 +67,14 @@ kzhistorygraph {
   rect {
     fill-opacity: 0.2;
   }
+
+  .tooltip {
+    position: fixed;
+  }
+
+  .dot {
+    cursor: pointer;
+  }
 }
 
 
