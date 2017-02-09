@@ -122,7 +122,7 @@ body {
   }
 
   i {
-    font-weight: 100;
+    font-weight: 10;
     font-size: 1.2em;
     padding-right: 10px;
     cursor: pointer;
@@ -151,6 +151,33 @@ h3 {
   font-size: 1.5em;
   color: $color13;
 }
+
+button.btn {
+  margin-left: 0;
+  margin-right: 5px;
+  &.btn-primary {
+    color: $color00;
+    background-color: $color12;
+    border-color: $color13;
+    &:hover {
+      color: $color13;
+      background-color: $color11;
+    }
+  }
+  &.btn-default {
+    color: $color11;
+    background-color: $color00;
+    border-color: $color11;
+    &:hover {
+      color: $color13;
+      background-color: $color11;
+      border-color: $color13;
+    }
+
+  }
+}
+
+
 
 .row {
   padding-left: 15px;
@@ -232,14 +259,17 @@ a {
   }
 }
 
-////////////////////
-/* NAVIGATION BAR */
-////////////////////
 
-.glyphicon { // flag-icon left in the navbar
+.glyphicon { // icon left in the navbar
   color: $color11;
   &:hover {
     color: $color00;
+  }
+  &.glyphicon-edit,&.glyphicon-stats { // icon on white background (eg edit)
+    &:hover {
+      color: $color12;
+      border-color: $color12;
+    }
   }
 }
 
