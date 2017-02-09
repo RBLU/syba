@@ -137,14 +137,14 @@ class KennzahlController {
           .attr("text-anchor", "end")
           .text(kz.name);
 
-        g.append("path")
-          .datum(kz.history)
-          .attr("fill", "none")
-          .attr("stroke", "steelblue")
-          .attr("stroke-linejoin", "round")
-          .attr("stroke-linecap", "round")
-          .attr("stroke-width", 1.5)
-          .attr("d", line);
+        // g.append("path")
+        //   .datum(kz.history)
+        //   .attr("fill", "none")
+        //   .attr("stroke", "steelblue")
+        //   .attr("stroke-linejoin", "round")
+        //   .attr("stroke-linecap", "round")
+        //   .attr("stroke-width", 1.5)
+        //   .attr("d", line);
 
         g.selectAll(".dot")
           .data(kz.history)

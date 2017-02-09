@@ -1,4 +1,5 @@
 class KennzahlenController {
+  /* @ngInject */
   constructor($scope) {
     this.name = 'kennzahlen';
 
