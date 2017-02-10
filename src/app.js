@@ -48,7 +48,7 @@ function _reportErrorToBackend(exception, cause, $injector) {
   //Restangular.all('/error').post(data);
 }
 
-
+/* @ngInject */
 angular.module('myApp')
   .config(function ($stateProvider, $urlRouterProvider, $translateProvider, RestangularProvider,
                     tmhDynamicLocaleProvider, $provide, $httpProvider) {
@@ -139,6 +139,7 @@ angular.module('myApp')
       }]);
   })
 
+  /* @ngInject */
   .run(
     function ($rootScope, UserService, $filter, $state, $stateParams, $injector, $log,
               $timeout, $translate, tmhDynamicLocale, tmhDynamicLocaleCache) {

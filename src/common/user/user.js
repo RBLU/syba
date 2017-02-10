@@ -63,7 +63,7 @@ userModule
 // authorization levels and user Roles
   .constant('userRoles', _userRoles)
   .constant('accessLevels', _accessLevels)
-
+  /* @ngInject */
   .factory('UserService',
     function (userRoles, localStorageService, $rootScope, Restangular, $location, $http, base64codec, $q) {
       var users = Restangular.all('users');
