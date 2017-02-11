@@ -1,0 +1,6 @@
+machine:
+deployment:
+  ci:
+    branch: master
+    commands:
+      - scripts/deploy.sh
