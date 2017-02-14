@@ -1,6 +1,7 @@
 import angular from 'angular';
 import uiRouter from 'angular-ui-router';
 import settingsComponent from './settings.component';
+import settingsBatchComponent from './settings.batch.component';
 
 let settingsModule = angular.module('settings', [
   uiRouter
@@ -15,12 +16,12 @@ let settingsModule = angular.module('settings', [
       })
       .state('settings.defaults', {
         url: '/defaults',
-        template: 'using defaults substate<settingsdefaults></settingsdefaults>',
+        template: '<settingsdefaults></settingsdefaults>',
         access: 'all'
       })
       .state('settings.batch', {
         url: '/batch',
-        template: 'using batch substate<settingsbatch></settingsbatch>',
+        template: '<settingsbatch></settingsbatch>',
         access: 'all'
       })
       .state('settings.query', {
@@ -38,5 +39,6 @@ let settingsModule = angular.module('settings', [
   })
 
   .component('settings', settingsComponent)
+  .component('settingsbatch', settingsBatchComponent);
 
 export default settingsModule;

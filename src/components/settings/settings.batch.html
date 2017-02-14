@@ -1,0 +1,46 @@
+<div class="section-bar">
+  <i class="glyphicon glyphicon-chevron-down"
+     ng-click="vm.sectionbatchhidden=!vm.sectionbatchhidden" ng-if="!vm.sectionbatchhidden"></i>
+  <i class="glyphicon glyphicon-chevron-right"
+     ng-click="vm.sectionbatchhidden=!vm.sectionbatchhidden" ng-if="vm.sectionbatchhidden"></i>Batch Spezifikation
+</div>
+<div class="section container-fluid" ng-if="!vm.sectionbatchhidden">
+  <div class="row">
+    <div class="col-xs-4">
+      <ul>
+        <li ng-repeat="syrbatch in vm.syriusbatches">{{syrbatch.BEZEICHNUNG_DT}}</li>
+      </ul>
+    </div>
+    <div class="col-xs-4">
+      <ul>
+        <li ng-repeat="bc in vm.batchconfigs">{{bc.NAME}}</li>
+      </ul>
+    </div>
+    <div class="col-xs-4">
+      <div class="row">
+        <div clas="col-xs-12">
+          <div class="form-group">
+            <label for="syrbatchname">Syrius Batch Name:</label>
+            <input type="text" class="form-control" id="syrbatchname" readonly placeholder="Selektiere einen Batch...">
+          </div>
+          <div class="form-group">
+            <label for="bcname">Kunden Batch Name:</label>
+            <input type="text" class="form-control" id="bcname" placeholder="Neuer Syrius-Batch oder bestehender Kundenbatch">
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-4"></div>
+        <div class="col-xs-4">
+          <button class="btn btn-default">Cancel</button>
+        </div>
+        <div class="col-xs-4">
+          <button class="btn btn-primary">OK</button>
+        </div>
+        <div class="col-xs-4"></div>
+      </div>
+
+
+    </div>
+  </div>
+</div>
