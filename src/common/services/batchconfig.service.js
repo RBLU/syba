@@ -9,8 +9,8 @@ class BatchConfigService {
       return Restangular.all('batchconfigs').getList();
     };
 
-    this.getBatchConfig = (boid) => {
-      return Restangular.all('batchconfigs').one(boid).get();
+    this.getBatchConfig = (boid, params) => {
+      return Restangular.all('batchconfigs').one(boid).get(params);
     };
   }
 }

@@ -9,7 +9,7 @@ class BatchesController {
 
     this.selectBatchConfig  = (batchConfig) => {
       $q.all([
-        batchConfigService.getBatchConfig(batchConfig.BOID),
+        batchConfigService.getBatchConfig(batchConfig.BOID, {includeIgnored: this.includeIgnored}),
         batchRunService.getRuns(batchConfig.BOID)
       ])
         .then((results) => {
@@ -53,111 +53,7 @@ class BatchesController {
         }
       })
       .catch( (err) => {
-        console.log("error contacting the Backend, using fake data: ", err);
-        this.batches = [
-          {
-            NAME: 'EV Inkasso monatlich',
-            BOID: '1121212121',
-            runs: [
-              {
-                BOID: '12341234',
-                start: Date.now()
-              }
-              , {
-                BOID: '3234134',
-                start: Date.now()
-              }
-            ]
-          },
-          {
-            NAME: 'EV Inkasso Mutationen',
-            BOID: '212341234',
-            runs: [
-              {
-                BOID: '42341234',
-                start: Date.now()
-              }
-              , {
-                BOID: '1234211234',
-                start: Date.now()
-              }
-            ]
-          },
-          {
-            NAME: 'Police EV Drucken TEV',
-            BOID: '387139271',
-            runs: [
-              {
-                BOID: '12341234',
-                start: Date.now()
-              } , {
-                BOID: '5435345',
-                start: Date.now()
-              }
-            ]
-          },
-          {
-            NAME: 'Police EV Drucken monatlich',
-            BOID: '48123741',
-            runs: [
-              {
-                BOID: '12341234',
-                start: Date.now()
-              }
-              , {
-                BOID: '22341234',
-                start: Date.now()
-              }
-            ]
-
-          },
-          {
-            NAME: 'Police EV Drucken JAWE',
-            BOID: '58123741',
-            runs: [
-              {
-                BOID: '32341234',
-                start: Date.now()
-              }
-              , {
-                BOID: '52341234',
-                start: Date.now()
-              }
-            ]
-
-          },
-          {
-            NAME: 'Eclaim Import',
-            BOID: '613241324',
-            runs: [
-              {
-                BOID: '62341234',
-                start: Date.now()
-              }
-              , {
-                BOID: '1261234',
-                start: Date.now()
-              }
-            ]
-
-          },
-          {
-            NAME: 'Leistungsabrechnung',
-            BOID: '723424',
-            runs: [
-              {
-                BOID: '241234',
-                start: Date.now()
-              }
-              , {
-                BOID: '52341234',
-                start: Date.now()
-              }
-            ]
-          }
-        ];
-        this.selected = this.batches[0];
-        this.runs = this.selected.runs;
+        console.log("error contacting the Backend", err);
       });
 
     this.selectedrun = null;
@@ -171,7 +67,8 @@ class BatchesController {
         .ignoreRunInStats(run.BOID)
         .then((putResult) => {
           console.log("Put successful", putResult)
-          // TODO: reload batchStats
+          // reload batchConfig
+          this.selectBatchConfig(this.selected);
         })
         .catch((err) => {
           console.log("Error putting ignore", err);

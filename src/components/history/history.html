@@ -26,8 +26,13 @@
                 class="form-control">
         </select>
       </div>
-      <div class="col-xs-9">
-        {{vm.selectedKz.description}}
+      <div class="col-xs-6">
+        {{vm.kennzahl.DESCRIPTION}}
+      </div>
+      <div class="col-xs-3">
+        <div class="checkbox">
+          <label><input type="checkbox" ng-model="vm.includeIgnored" ng-change="vm.selectKz(vm.selected.BOID, vm.kennzahl.BOID)">Ignorierte miteinbeziehen</label>
+        </div>
       </div>
     </div>
     <div class="row">

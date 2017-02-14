@@ -13,10 +13,10 @@ class HistoryController {
 
     this.selectBatchConfig = (batchConfigBoid) => {
       batchConfigService
-        .getBatchConfig(batchConfigBoid)
+        .getBatchConfig(batchConfigBoid, {ignored: this.includeIgnored})
         .then((result) => {
           this.selected = result;
-        })
+        });
     };
 
     this.selectRun = (runBoid) => {
@@ -28,7 +28,7 @@ class HistoryController {
     };
 
     this.selectKz = (batchConfigId, kzConfigId) => {
-      kennzahlenService.getKennzahlHistory(batchConfigId, kzConfigId)
+      kennzahlenService.getKennzahlHistory(batchConfigId, kzConfigId, {includeIgnored: this.includeIgnored})
         .then((result) => {
           this.kennzahl = result;
         });
