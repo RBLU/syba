@@ -62,9 +62,13 @@ class BatchesController {
       return moment(run.STARTED).format('lll') + ' (' + run.BOID + ')';
     };
 
-    this.ignoreRunInStats = (run) => {
+    this.unignoreRunInStats= (run) => {
+      this.ignoreRunInStats(run, true);
+    };
+
+    this.ignoreRunInStats = (run, unignore) => {
       batchRunService
-        .ignoreRunInStats(run.BOID)
+        .ignoreRunInStats(run.BOID, unignore)
         .then((putResult) => {
           console.log("Put successful", putResult)
           // reload batchConfig

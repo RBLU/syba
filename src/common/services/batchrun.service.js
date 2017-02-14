@@ -13,9 +13,8 @@ class BatchRunService {
       return Restangular.all('batchruns').one(batchRunId).get();
     }
 
-    this.ignoreRunInStats = (batchRunId, updates) => {
-
-      return Restangular.all('batchruns').one(batchRunId).customPUT({IGNOREINSTATS: 1});
+    this.ignoreRunInStats = (batchRunId, unignore) => {
+      return Restangular.all('batchruns').one(batchRunId).customPUT({IGNOREINSTATS: unignore ? 0 : 1});
     }
   }
 }
