@@ -240,7 +240,7 @@ button.btn {
     color: $color13;
     cursor: pointer;
   }
-  &.active {
+  &.active, .active & {
     background: $lcolor11;
     color: $color00;
     cursor: auto;

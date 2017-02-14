@@ -1,0 +1,42 @@
+import angular from 'angular';
+import uiRouter from 'angular-ui-router';
+import settingsComponent from './settings.component';
+
+let settingsModule = angular.module('settings', [
+  uiRouter
+])
+/* @ngInject */
+  .config(($stateProvider) => {
+    $stateProvider
+      .state('settings', {
+        url: '/settings',
+        template: '<settings></settings>',
+        access: 'all'
+      })
+      .state('settings.defaults', {
+        url: '/defaults',
+        template: 'using defaults substate<settingsdefaults></settingsdefaults>',
+        access: 'all'
+      })
+      .state('settings.batch', {
+        url: '/batch',
+        template: 'using batch substate<settingsbatch></settingsbatch>',
+        access: 'all'
+      })
+      .state('settings.query', {
+        url: '/query',
+        template: '<settingsquery></settingsquery>',
+        access: 'all'
+      })
+      .state('settings.kennzahlen', {
+        url: '/kennzahlen',
+        template: '<settingskennzahlen></settingskennzahlen>',
+        access: 'all'
+      })
+
+
+  })
+
+  .component('settings', settingsComponent)
+
+export default settingsModule;

@@ -1,0 +1,26 @@
+<div class="title-bar">
+  <div class="logo side"></div>
+  <div class="main">{{vm.selected.name}}</div>
+</div>
+<div class="main-view">
+  <div class="side">
+    <div class="section-bar">Settings</div>
+    <ul class="list-group">
+      <a ui-sref="settings.defaults" ui-sref-active="active">
+        <li class="list-group-item">Default Settings</li>
+      </a>
+      <a ui-sref="settings.batch" ui-sref-active="active">
+        <li class="list-group-item" >Batch Settings</li>
+      </a>
+      <a ui-sref="settings.query">
+        <li class="list-group-item">Query Settings</li>
+      </a>
+      <a ui-sref="settings.kennzahlen">
+        <li class="list-group-item">Kennzahlen Settings</li>
+      </a>
+    </ul>
+  </div>
+  <div class="main">
+    <ui-view></ui-view>
+  </div>
+</div>
