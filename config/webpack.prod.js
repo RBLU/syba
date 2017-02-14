@@ -6,6 +6,8 @@ const commonConfig = require('./webpack.common.js');
 const WebpackMd5Hash = require('webpack-md5-hash');
 const DedupePlugin = require('webpack/lib/optimize/DedupePlugin');
 const UglifyJsPlugin = require('webpack/lib/optimize/UglifyJsPlugin');
+const DefinePlugin = require('webpack/lib/DefinePlugin');
+
 
 
 module.exports = webpackMerge(commonConfig, {
@@ -76,7 +78,7 @@ module.exports = webpackMerge(commonConfig, {
    */
   plugins: [
 
-    new webpack.DefinePlugin({
+    new DefinePlugin({
       __BACKEND_URL__: JSON.stringify('https://retohome.youpers.org/api'),
       __VERSION__: JSON.stringify('1.0.0.' + Date.now())
     }),
