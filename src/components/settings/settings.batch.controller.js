@@ -18,7 +18,7 @@ class SettingsController {
       this.selectedsyrbatch = syriusBatch;
       this.selectedbatchconfig = {
         ITSSYRIUSBATCH: syriusBatch.BOID,
-        NAME: syriusBatch.BEZEICHNUNGDT,
+        NAME: '',
         DESCRIPTION: '',
         ACTIVE: 1
       }
@@ -56,7 +56,14 @@ class SettingsController {
     };
 
     this.deleteBatchConfig = () => {
-      batchConfigService.delete(this.selectedbatchconfig);
+      batchConfigService
+        .delete(this.selectedbatchconfig)
+        .then((result) => {
+          _.remove(this.batchconfigs, (config) => {return config.BOID === this.selectedbatchconfig.BOID;});
+          this.selectedbatchconfig = null;
+          this.batchconfigform.$setPristine();
+          this.batchconfigform.$setUntouched();
+        });
     };
 
     this.reloadBatchConfig = () => {

@@ -42,7 +42,7 @@
             </div>
           </div>
         </div>
-        <div class="row" ng-if="vm.selectedbatchconfig">
+        <div class="row" ng-if="vm.selectedbatchconfig && vm.selectedbatchconfig.BOID">
           <div class="col-xs-4">
             <button class="btn btn-default" ng-click="vm.reloadBatchConfig()">Neu Laden</button>
           </div>
