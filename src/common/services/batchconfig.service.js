@@ -1,4 +1,3 @@
-
 class BatchConfigService {
   /* @ngInject */
   constructor(Restangular) {
@@ -15,7 +14,16 @@ class BatchConfigService {
 
     this.getSyriusBatches = () => {
       return Restangular.all('syriusbatches').getList();
-    }}
+    };
+
+    this.post = (newBatchConfig) => {
+      return Restangular.all('batchconfigs').post(newBatchConfig);
+    };
+
+    this.put = (updatedBatchConfig) => {
+      return Restangular.all('batchconfigs').one(updatedBatchConfig.BOID).customPUT(updatedBatchConfig);
+    };
+  }
 
 }
 
