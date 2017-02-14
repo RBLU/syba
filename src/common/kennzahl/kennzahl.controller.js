@@ -10,25 +10,51 @@ class KennzahlController {
     const width = 500;
     const offset = 20;
 
+    let svg = d3.select($element.find('svg')[0])
+      .attr('width', width + offset * 2)
+      .attr('height', 50);
+
+    let g = svg.append('g')
+      .attr('transform', 'translate('+offset+',0)');
+
 
     this.$onInit = () => {
-      let svg = d3.select($element.find('svg')[0])
-        .attr('width', width + offset * 2)
-        .attr('height', 50);
+      $scope.$watch('vm.kz', (newValues) => {
+        console.log("Kennzahl watcher active: ", this.kz);
+        if (this.kz) {
+          redraw(this.kz);
+        }
+      });
+    };
 
-      let g = svg.append('g')
-        .attr('transform', 'translate('+offset+',0)');
+
+
+
+    $scope.$watch('vm.editmode', (newValue) => {
+      if (newValue) {
+        console.log("turning on editmode");
+        console.log("turning on editmode");
+      }
+    });
+
+    function redraw(kz) {
+      let stats = kz.kzstat;
+      let run = kz.runstat;
+      console.log('redrawing KZ: ' + stats.NAME);
+      let low = _.isNumber(stats.LEVELMIN) ? stats.LEVELMIN : stats.MIN;
+      let high = _.isNumber(stats.LEVELMAX) ? stats.LEVELMAX : stats.MAX;
+      console.log("Domain: ", low, high);
 
       let xScale = d3.scaleLinear()
-        .domain([this.kz.min, this.kz.max])
+        .domain([low , high])
         .range([0, width - (offset *2)]);
 
       // add the max value of our data to the settings array, so we can draw the
       // last red rect from the last settings value to the max value
-      this.kz.settings.push(this.kz.max);
+      let settingsArray = [stats.LEVELLOWERROR, stats.LEVELLOWWARNING, stats.LEVELNORMAL, stats.LEVELHIGHWARNING, stats.LEVELMAX || stats.MAX];
 
       g.selectAll('rect .settings')
-        .data(this.kz.settings)
+        .data(settingsArray)
         .enter()
         .append('rect')
         .attr('class', function(d,i ) {
@@ -44,7 +70,7 @@ class KennzahlController {
           if (i == 0) {
             return 0;
           } else {
-            return xScale(this.kz.settings[i - 1]);
+            return xScale(settingsArray[i - 1]);
           }
         })
         .attr('y', (d, i) => {
@@ -54,16 +80,16 @@ class KennzahlController {
           if (i == 0) {
             return xScale(d);
           }  else {
-            return xScale(d -  this.kz.settings[i - 1]);
+            return xScale(d -  settingsArray[i - 1]);
           }
         })
         .attr('height', (d, i) => {
           return 30;
-        })
+        });
 
 
       g.selectAll('text .settings')
-        .data(this.kz.settings)
+        .data(settingsArray)
         .enter()
         .append('text')
         .attr('class', 'settings')
@@ -71,7 +97,7 @@ class KennzahlController {
           if (i == 0) {
             return 0;
           } else {
-            return xScale(this.kz.settings[i - 1]);
+            return xScale(settingsArray[i - 1]);
           }
         })
         .attr('y', 45)
@@ -79,7 +105,7 @@ class KennzahlController {
           if (i == 0) {
             return 0;
           } else {
-            return this.kz.settings[i - 1]
+            return settingsArray[i - 1]
           }
         })
         .attr('text-anchor', 'middle');
@@ -87,37 +113,29 @@ class KennzahlController {
       g
         .append('rect')
         .attr('class', 'history')
-        .attr('x',  xScale(this.kz.minMaxHist[0]))
+        .attr('x',  xScale(stats.MIN))
         .attr('y', 13)
-        .attr('width', xScale(this.kz.minMaxHist[1]-this.kz.minMaxHist[0]))
+        .attr('width', xScale(stats.MAX-stats.MIN))
         .attr('height', 4)
         .attr('fill', 'black');
 
       g
         .append('rect')
         .attr('class', 'stdabw')
-        .attr('x',  xScale(this.kz.medValue - this.kz.stdAbw))
+        .attr('x',  Math.max(xScale(stats.AVG - stats.STDDEV), 0))
         .attr('y', 10)
-        .attr('width', xScale(this.kz.stdAbw * 2))
+        .attr('width', xScale(stats.STDDEV * 2))
         .attr('height', 10)
         .attr('fill', 'black');
 
       g
         .append('circle')
-        .attr('cx', xScale(this.kz.value))
+        .attr('cx', xScale(run.NUMBERVALUE))
         .attr('cy', 15)
         .attr('r', 10)
         .attr('fill', 'blue')
 
-    }
-
-    $scope.$watch('vm.editmode', (newValue) => {
-      if (newValue) {
-        console.log("turning on editmode");
-        console.log("turning on editmode");
-      }
-    })
-
+    };
   }
 }
 

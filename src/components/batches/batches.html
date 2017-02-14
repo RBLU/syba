@@ -49,7 +49,7 @@
          ng-click="vm.sectionkzhidden=!vm.sectionkzhidden" ng-if="vm.sectionkzhidden"></i>Kennzahlen
     </div>
     <div class="section container-fluid" ng-if="!vm.sectionkzhidden">
-      <Kennzahlen runid="vm.selectedrun.boid" batchid="vm.selected.boid"></Kennzahlen>
+      <Kennzahlen runstats="vm.selectedrun.kennzahlen" kzstats="vm.selected.kennzahlStats"></Kennzahlen>
     </div>
     <div class="section-bar">
       <i class="glyphicon glyphicon-chevron-down"

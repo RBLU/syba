@@ -5,8 +5,7 @@ let kennzahlComponent = function () {
   return {
     restrict: 'E',
     scope: {
-      kz: '=',
-      index: '='
+      kz: '='
     },
     template,
     controller,

@@ -1,5 +1,5 @@
 <div>
-  <div class="row" ng-repeat="mykz in vm.data">
+  <div class="row" ng-repeat="mykz in vm.kennzahlen">
 
       <kennzahl kz="mykz" class="col-xs-9"></kennzahl>
       <button class="btn btn-default stats-button" ng-click="$root.$state.go('history', {batchId: vm.batchid, runId: vm.runid, kennzahlId: mykz.boid})">

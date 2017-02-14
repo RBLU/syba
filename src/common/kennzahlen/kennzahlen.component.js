@@ -5,8 +5,8 @@ let kennzahlenComponent = function () {
   return {
     restrict: 'E',
     scope: {
-      batchid: '=',
-      runid: '='
+      kzstats: '=',
+      runstats: '='
     },
     template,
     controller,
