@@ -23,6 +23,11 @@ class BatchConfigService {
     this.put = (updatedBatchConfig) => {
       return Restangular.all('batchconfigs').one(updatedBatchConfig.BOID).customPUT(updatedBatchConfig);
     };
+
+    this.delete = (bc) => {
+      return Restangular.all('batchconfigs').one(bc.BOID).remove();
+    };
+
   }
 
 }

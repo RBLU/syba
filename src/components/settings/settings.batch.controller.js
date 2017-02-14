@@ -55,6 +55,14 @@ class SettingsController {
       this.batchconfigform.$setUntouched();
     };
 
+    this.deleteBatchConfig = () => {
+      batchConfigService.delete(this.selectedbatchconfig);
+    };
+
+    this.reloadBatchConfig = () => {
+      batchConfigService.reload(this.selectedbatchconfig);
+    }
+
   }
 
 }
