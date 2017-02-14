@@ -87,26 +87,20 @@ class KennzahlController {
           return 30;
         });
 
+      let settingsCaptions = [low].concat(settingsArray).concat(high);
+
 
       g.selectAll('text .settings')
-        .data(settingsArray)
+        .data(settingsCaptions)
         .enter()
         .append('text')
         .attr('class', 'settings')
         .attr('x', (d, i) => {
-          if (i == 0) {
-            return 0;
-          } else {
-            return xScale(settingsArray[i - 1]);
-          }
+            return xScale(d);
         })
         .attr('y', 45)
         .text((d, i) => {
-          if (i == 0) {
-            return 0;
-          } else {
-            return settingsArray[i - 1]
-          }
+            return d;
         })
         .attr('text-anchor', 'middle');
 
