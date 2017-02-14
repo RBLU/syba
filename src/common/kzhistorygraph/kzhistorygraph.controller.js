@@ -183,7 +183,8 @@ class KennzahlController {
               .style("opacity", 0);
           })
           .on("click", function (d) {
-            $scope.$root.$state.go('batches', {batchId: d.ITSBATCHCONFIG, run: d.ITSBATCHLAUF})
+            console.log("going to: ", {batchId: d.ITSBATCHCONFIG, runId: d.ITSBATCHLAUF});
+            $scope.$root.$state.go('batches', {batchId: d.ITSBATCHCONFIG, runId: d.ITSBATCHRUN})
           });
 
         $scope.$on("$destroy", function () {
