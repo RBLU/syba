@@ -97,10 +97,9 @@ angular.module('myApp')
     $translateProvider.preferredLanguage('de');
     $translateProvider.fallbackLanguage('de');
 
-    // TODO: add in env speciic config
     //  RestangularProvider.setBaseUrl(config && config.backendUrl);
     // for now we use local dev server
-    RestangularProvider.setBaseUrl('http://localhost:8080/api');
+    RestangularProvider.setBaseUrl(__BACKEND_URL__);
 
     // if state is unknown go to /home
 

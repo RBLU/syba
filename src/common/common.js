@@ -6,6 +6,7 @@ import Signin from './signin/signin';
 import Kennzahlen from './kennzahlen/kennzahlen';
 import Kennzahl from './kennzahl/kennzahl';
 import Kzhistorygraph from './kzhistorygraph/kzhistorygraph';
+import Services from './services/services';
 
 export default angular.module('app.common', [
   Navbar.name,
@@ -14,5 +15,6 @@ export default angular.module('app.common', [
   Signin.name,
   Kennzahlen.name,
   Kennzahl.name,
-  Kzhistorygraph.name
+  Kzhistorygraph.name,
+  Services.name
 ]);

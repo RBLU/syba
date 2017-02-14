@@ -76,6 +76,12 @@ module.exports = webpackMerge(commonConfig, {
    */
   plugins: [
 
+    new webpack.DefinePlugin({
+      __BACKEND_URL__: JSON.stringify('https://retohome.youpers.org/api'),
+      __VERSION__: JSON.stringify('1.0.0.' + Date.now())
+    }),
+
+
     /**
      * Plugin: WebpackMd5Hash
      * Description: Plugin to replace a standard webpack chunkhash with md5.
