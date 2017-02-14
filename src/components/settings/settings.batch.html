@@ -7,13 +7,15 @@
 <div class="section container-fluid" ng-if="!vm.sectionbatchhidden">
   <div class="row">
     <div class="col-xs-4">
-      <ul>
-        <li ng-repeat="syrbatch in vm.syriusbatches">{{syrbatch.BEZEICHNUNG_DT}}</li>
+      <h3>Syrius Batches</h3>
+      <ul class="batch-listing">
+        <li class="list-group-item" ng-repeat="syrbatch in vm.syriusbatches">{{::syrbatch.BEZEICHNUNGDT}}</li>
       </ul>
     </div>
     <div class="col-xs-4">
-      <ul>
-        <li ng-repeat="bc in vm.batchconfigs">{{bc.NAME}}</li>
+      <h3>Kunden Batches</h3>
+      <ul class="batch-listing">
+        <li class="list-group-item"  ng-repeat="bc in vm.batchconfigs">{{bc.NAME}}</li>
       </ul>
     </div>
     <div class="col-xs-4">
@@ -25,8 +27,18 @@
           </div>
           <div class="form-group">
             <label for="bcname">Kunden Batch Name:</label>
-            <input type="text" class="form-control" id="bcname" placeholder="Neuer Syrius-Batch oder bestehender Kundenbatch">
+            <input type="text" class="form-control" id="bcname"
+                   placeholder="Neuer Syrius-Batch oder bestehender Kundenbatch">
           </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-4">
+          <button class="btn btn-default">Neu Rechnen</button>
+        </div>
+        <div class="col-xs-4">
+        </div>
+        <div class="col-xs-4">
         </div>
       </div>
       <div class="row">
@@ -35,7 +47,7 @@
           <button class="btn btn-default">Cancel</button>
         </div>
         <div class="col-xs-4">
-          <button class="btn btn-primary">OK</button>
+          <button class="btn btn-primary">Save</button>
         </div>
         <div class="col-xs-4"></div>
       </div>

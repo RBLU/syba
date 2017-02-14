@@ -2,6 +2,7 @@ import angular from 'angular';
 import uiRouter from 'angular-ui-router';
 import settingsComponent from './settings.component';
 import settingsBatchComponent from './settings.batch.component';
+import  './settings.scss';
 
 let settingsModule = angular.module('settings', [
   uiRouter

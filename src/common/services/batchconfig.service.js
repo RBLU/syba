@@ -12,7 +12,11 @@ class BatchConfigService {
     this.getBatchConfig = (boid, params) => {
       return Restangular.all('batchconfigs').one(boid).get(params);
     };
-  }
+
+    this.getSyriusBatches = () => {
+      return Restangular.all('syriusbatches').getList();
+    }}
+
 }
 
 export default BatchConfigService;

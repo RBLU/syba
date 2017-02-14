@@ -1,0 +1,9 @@
+.batch-listing {
+  max-height: 80vh;
+  overflow-y: auto;
+
+  .list-group-item {
+    padding-top: 4px;
+    padding-bottom: 4px;
+  }
+}
