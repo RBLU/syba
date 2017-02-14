@@ -7,6 +7,7 @@ class KennzahlController {
     this.name = 'kzhistorygraph';
 
     this.$onInit = () => {
+
       let svg = d3.select($element.find('svg')[0])
           .attr('height', 560)
           .attr('width', 500),
@@ -14,16 +15,19 @@ class KennzahlController {
         width = +svg.attr("width") - margin.left - margin.right,
         height = +svg.attr("height") - margin.top - margin.bottom,
         g = svg.append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
       // add the tooltip area to the webpage
       var tooltip = d3.select("body").append("div")
         .attr("class", "tooltip")
         .style("opacity", 0);
 
+
       $scope.$watch('vm.kz', (kz) => {
-        if (!kz || !kz.history ||kz.history.length == 0) {
-          return;
+        if (kz && kz.history && kz.history.length > 0) {
+          redraw(kz)
         }
+      });
+
+      function redraw(kz) {
 
         // clear the elements inside of the directive
         g.selectAll('*').remove();
@@ -46,8 +50,12 @@ class KennzahlController {
         // compute min/max of graph to be shown
         // to remove extreme outliers we show all data that is within
         // 3 standard deviation of the of the mean.
-        let mean = d3.mean(kz.history, (d) => {return +d.NUMBERVALUE});
-        let sd = d3.deviation(kz.history, (d) => {return +d.NUMBERVALUE});
+        let mean = d3.mean(kz.history, (d) => {
+          return +d.NUMBERVALUE
+        });
+        let sd = d3.deviation(kz.history, (d) => {
+          return +d.NUMBERVALUE
+        });
 
         const dataExtent = d3.extent(kz.history, function (d) {
           return +d.NUMBERVALUE;
@@ -56,8 +64,8 @@ class KennzahlController {
         yScale.domain(dataExtent);
         yScaleRects.domain(dataExtent);
 
-        let cValue = function(d) {
-            return "yellow";
+        let cValue = function (d) {
+          return "yellow";
         };
         let color = d3.scaleOrdinal(d3.schemeCategory10);
 
@@ -66,36 +74,36 @@ class KennzahlController {
         g.append('rect')
           .attr('x', 0)
           .attr('width', width)
-          .attr('y', height - yScaleRects(kz.settings[0]))
-          .attr('height', Math.max(0, yScaleRects(kz.settings[0])))
+          .attr('y', height - yScaleRects(kz.LEVELLOWERROR))
+          .attr('height', Math.max(0, yScaleRects(kz.LEVELLOWERROR)))
           .attr('class', 'error');
 
         g.append('rect')
           .attr('x', 0)
           .attr('width', width)
-          .attr('y', height - yScaleRects(kz.settings[1]))
-          .attr('height', Math.max(0, yScaleRects(kz.settings[1]) - yScaleRects(kz.settings[0])))
+          .attr('y', height - yScaleRects(kz.LEVELLOWWARNING))
+          .attr('height', Math.max(0, yScaleRects(kz.LEVELLOWWARNING) - yScaleRects(kz.LEVELLOWERROR)))
           .attr('class', 'warning');
 
         g.append('rect')
           .attr('x', 0)
           .attr('width', width)
-          .attr('y', height - yScaleRects(kz.settings[2]))
-          .attr('height', yScaleRects(kz.settings[2]) - Math.max(0, yScaleRects(kz.settings[1])))
+          .attr('y', height - yScaleRects(kz.LEVELNORMAL))
+          .attr('height', yScaleRects(kz.LEVELNORMAL) - Math.max(0, yScaleRects(kz.LEVELLOWWARNING)))
           .attr('class', 'normal');
 
         g.append('rect')
           .attr('x', 0)
           .attr('width', width)
-          .attr('y', height - yScaleRects(kz.settings[3]))
-          .attr('height', yScaleRects(kz.settings[3]) - yScaleRects(kz.settings[2]))
+          .attr('y', height - yScaleRects(kz.LEVELHIGHWARNING))
+          .attr('height', yScaleRects(kz.LEVELHIGHWARNING) - yScaleRects(kz.LEVELNORMAL))
           .attr('class', 'warning');
 
         g.append('rect')
           .attr('x', 0)
           .attr('width', width)
           .attr('y', 0)
-          .attr('height', height - Math.min(height, yScaleRects(kz.settings[3])))
+          .attr('height', height - Math.min(height, yScaleRects(kz.LEVELHIGHWARNING)))
           .attr('class', 'error');
 
         // create the line function, maps data to x/y coordinates
@@ -135,7 +143,7 @@ class KennzahlController {
           .attr("y", 6)
           .attr("dy", "0.71em")
           .attr("text-anchor", "end")
-          .text(kz.name);
+          .text(kz.NAME);
 
         // g.append("path")
         //   .datum(kz.history)
@@ -151,35 +159,40 @@ class KennzahlController {
           .enter().append("circle")
           .attr("class", "dot")
           .attr("r", 5)
-          .attr("cx", (d) => {return xScale(new Date(d.STARTED));})
-          .attr("cy", (d) => {return yScale(new Date(+d.NUMBERVALUE));})
-          .style("fill", function(d) { return color(cValue(d));})
-          .on("mouseover", function(d) {
+          .attr("cx", (d) => {
+            return xScale(new Date(d.STARTED));
+          })
+          .attr("cy", (d) => {
+            return yScale(new Date(+d.NUMBERVALUE));
+          })
+          .style("fill", function (d) {
+            return color(cValue(d));
+          })
+          .on("mouseover", function (d) {
             tooltip.transition()
               .duration(200)
               .style("opacity", .9);
-            tooltip.html("Lauf Boid: " + d["Lauf"] + "<br/> (" + moment(d.STARTED).format("LL")
+            tooltip.html("Lauf Boid: " + d.ITSBATCHRUN + "<br/> (" + moment(d.STARTED).format("LL")
               + ", " + d.NUMBERVALUE + ")")
               .style("left", (d3.event.pageX + 5) + "px")
               .style("top", (d3.event.pageY - 28) + "px");
           })
-          .on("mouseout", function(d) {
+          .on("mouseout", function (d) {
             tooltip.transition()
               .duration(500)
               .style("opacity", 0);
           })
-          .on("click", function(d) {
-            $scope.$root.$state.go('batches', {batchId: d.itsBatchConfig, run: d.lauf})
+          .on("click", function (d) {
+            $scope.$root.$state.go('batches', {batchId: d.ITSBATCHCONFIG, run: d.ITSBATCHLAUF})
           });
 
-        $scope.$on("$destroy", function() {
+        $scope.$on("$destroy", function () {
           d3.select('.tooltip').remove();
         });
+      }
 
 
-
-      });
-    }
+    };
   }
 }
 

@@ -7,8 +7,8 @@
     <div class="section-bar">Batches</div>
     <ul class="list-group">
       <li ng-repeat="batch in vm.batches" class="list-group-item" ng-class="{'active': vm.selected.boid == batch.boid}"
-          ng-click="$root.$state.go('batches', ({batchId: batch.boid}))">
-        {{batch.name}}
+          ng-click="$root.$state.go('batches', ({batchId: batch.BOID}))">
+        {{batch.NAME}}
       </li>
     </ul>
   </div>
@@ -22,7 +22,7 @@
 
     <div class="row">
       <div class="col-xs-3">
-        <select ng-model="vm.selectedKz" ng-options="myKz as myKz.name for myKz in vm.kennzahlen"
+        <select ng-model="vm.selectedKzBoid" ng-options="myKz.ITSKENNZAHLCONFIG as myKz.NAME for myKz in vm.selected.kennzahlStats"
                 class="form-control">
         </select>
       </div>
@@ -32,7 +32,7 @@
     </div>
     <div class="row">
       <div class="col-xs-12">
-        <kzhistorygraph kz="vm.selectedKz"></kzhistorygraph>
+        <kzhistorygraph kz="vm.kennzahl"></kzhistorygraph>
       </div>
     </div>
   </div>

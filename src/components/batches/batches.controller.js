@@ -5,7 +5,39 @@ moment.locale('de_ch');
 
 class BatchesController {
   /* @ngInject */
-  constructor($scope, $stateParams, $state, kennzahlenService, batchConfigService, batchRunService , $log, $q) {
+  constructor($scope, $stateParams, $state, batchConfigService, batchRunService , $log, $q) {
+
+    this.selectBatchConfig  = (batchConfig) => {
+      $q.all([
+        batchConfigService.getBatchConfig(batchConfig.BOID),
+        batchRunService.getRuns(batchConfig.BOID)
+      ])
+        .then((results) => {
+          this.selected = results[0];
+          this.runs = results[1];
+
+          if ($stateParams && $stateParams.runId) {
+            this.selectedrunBoid = $stateParams.runId;
+            this.selectBatchRun($stateParams.runId);
+          } else {
+            this.selectedrunBoid = this.runs[0].BOID;
+            this.selectBatchRun(this.runs[0].BOID);
+          }
+        })
+        .catch((err) => {
+          $log.log("error contacting backend", err);
+        });
+    };
+
+    this.selectBatchRun = (runBoid) => {
+      if (runBoid) {
+        $state.go('batches', {batchId: this.selected.BOID, runId: runBoid}, {notify: false});
+        batchRunService.getRun(runBoid)
+          .then((run) => {
+            this.selectedrun = run;
+          });
+      }
+    };
 
     batchConfigService.getBatchConfigs()
       .then((batchConfigs) => {
@@ -128,143 +160,23 @@ class BatchesController {
         this.runs = this.selected.runs;
       });
 
-    this.kennzahlen = [
-      {
-        NAME: 'Laufzeit',
-        BOID: '324234',
-        itsBatchConfig: '1121212121',
-        description: 'Misst die zeitliche Dauer eines Laufes in Sekunden',
-        settings: [0 , 0,360,410],
-        history: []
-
-      },
-      {
-        NAME: 'Workitems',
-        BOID: '5676734',
-        itsBatchConfig: '1121212121',
-        settings: [1000, 1500, 3000, 4000],
-        description: 'Misst die Anzahl selektierter Workitems eines Laufes',
-        history: [
-          {
-            lauf: '89875',
-            STARTED: moment().subtract(1, 'day').toDate(),
-            NUMBERVALUE: '1234'
-          },
-          {
-            lauf: '89876',
-            STARTED: moment().subtract(2, 'day').toDate(),
-            NUMBERVALUE: '2344'
-          },
-          {
-            lauf: '89877',
-            STARTED: moment().subtract(3, 'day').toDate(),
-            NUMBERVALUE: '1901'
-          },
-          {
-            lauf: '89877',
-            STARTED: moment().subtract(3, 'day').subtract(1, 'hour').toDate(),
-            NUMBERVALUE: '1200'
-          },
-          {
-            lauf: '89877',
-            STARTED: moment().subtract(3, 'day').subtract(2, 'hour').toDate(),
-            NUMBERVALUE: '1400'
-          },
-          {
-            lauf: '89877',
-            STARTED: moment().subtract(3, 'day').subtract(5, 'hour').toDate(),
-            NUMBERVALUE: '2021'
-          },
-          {
-            lauf: '89878',
-            STARTED: moment().subtract(4, 'day').toDate(),
-            NUMBERVALUE: '1834'
-          },
-          {
-            lauf: '89879',
-            STARTED: moment().subtract(5, 'day').toDate(),
-            NUMBERVALUE: '2102'
-          },
-          {
-            lauf: '89880',
-            STARTED: moment().subtract(6, 'day').toDate(),
-            NUMBERVALUE: '2080'
-          },
-          {
-            lauf: '89890',
-            STARTED: moment().subtract(7, 'day').toDate(),
-            NUMBERVALUE: '712'
-          },
-          {
-            lauf: '89891',
-            STARTED: moment().subtract(8, 'day').toDate(),
-            NUMBERVALUE: '4100'
-          },
-          {
-            lauf: '89892',
-            STARTED: moment().subtract(9, 'day').toDate(),
-            NUMBERVALUE: '0'
-          },
-          {
-            lauf: '89893',
-            STARTED: moment().subtract(10, 'day').toDate(),
-            NUMBERVALUE: '3212'
-          },
-          {
-            lauf: '89894',
-            STARTED: moment().subtract(11, 'day').toDate(),
-            NUMBERVALUE: '3203'
-          },
-        ]
-      }
-    ];
-
-    kennzahlenService.getKennzahlenValues('MPolEvDrucken', 'MLaufzeitConfigPoliceEV')
-      .then((result) => {
-        this.kennzahlen[0].history = result;
-      });
-
     this.selectedrun = null;
-
-    this.selectBatchConfig  = (batchConfig) => {
-      $q.all([
-        batchConfigService.getBatchConfig(batchConfig.BOID),
-        batchRunService.getRuns(batchConfig.BOID)
-      ])
-        .then((results) => {
-          this.selected = results[0];
-          this.runs = results[1];
-
-          if ($stateParams && $stateParams.runId) {
-            this.selectedrunBoid = $stateParams.runId;
-            this.selectBatchRun($stateParams.runId);
-          } else {
-            this.selectedrunBoid = this.runs[0].BOID;
-            this.selectBatchRun(this.runs[0].BOID);
-          }
-        })
-        .catch((err) => {
-          $log.log("error contacting backend", err);
-        });
-    };
-
-    this.selectBatchRun = (runBoid) => {
-      if (runBoid) {
-        $state.go('batches', {batchId: this.selected.BOID, runId: runBoid}, {notify: false});
-        batchRunService.getRun(runBoid)
-          .then((run) => {
-            this.selectedrun = run;
-          });
-      }
-    };
-
-
-
-
-    this.selectedKz = this.kennzahlen[0];
 
     this.getRunName = (run) => {
       return moment(run.STARTED).format('lll') + ' (' + run.BOID + ')';
+    };
+
+    this.ignoreRunInStats = (run) => {
+      batchRunService
+        .ignoreRunInStats(run.BOID)
+        .then((putResult) => {
+          console.log("Put successful", putResult)
+          // TODO: reload batchStats
+        })
+        .catch((err) => {
+          console.log("Error putting ignore", err);
+        });
+
     };
 
     $scope.$watch('vm.selected', (newbatch, old) => {

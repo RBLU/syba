@@ -2,7 +2,8 @@
   <div class="row" ng-repeat="mykz in vm.kennzahlen">
 
       <kennzahl kz="mykz" class="col-xs-9"></kennzahl>
-      <button class="btn btn-default stats-button" ng-click="$root.$state.go('history', {batchId: vm.batchid, runId: vm.runid, kennzahlId: mykz.boid})">
+      <button class="btn btn-default stats-button"
+              ng-click="$root.$state.go('history', {batchId: mykz.runstat.ITSBATCHCONFIG, runId: mykz.runstat.ITSBATCHRUN, kennzahlId: mykz.kzstat.ITSKENNZAHLCONFIG})">
         <i class="glyphicon glyphicon-stats"></i>
       </button>
 

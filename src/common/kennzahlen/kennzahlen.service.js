@@ -4,8 +4,8 @@ class KennzahlenService {
     this.name = 'kennzahlenService';
 
 
-    this.getKennzahlenValues = (batchconfigid, kennzahlconfigid) => {
-      return Restangular.all('batchconfigs').one(batchconfigid).all('kennzahlvalues').one(kennzahlconfigid).getList();
+    this.getKennzahlHistory = (batchconfigid, kennzahlconfigid) => {
+      return Restangular.all('batchconfigs').one(batchconfigid).all('kennzahlvalues').one(kennzahlconfigid).get();
     }
 
   }
