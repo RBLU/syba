@@ -14,6 +14,9 @@ import Components from './components/components';
 import './styles.scss';
 import moment from 'moment';
 
+console.log("loaded: " + angulardech);
+console.log("loaded: " + angularde);
+
 angular.module('myApp', [
   uiRouter,
   Common.name,
