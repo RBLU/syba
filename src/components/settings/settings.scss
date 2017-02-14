@@ -1,9 +1,11 @@
 .batch-listing {
   max-height: 80vh;
   overflow-y: auto;
+  padding-left: 10px;
 
   .list-group-item {
     padding-top: 4px;
     padding-bottom: 4px;
+    padding-left: 10px;
   }
 }
