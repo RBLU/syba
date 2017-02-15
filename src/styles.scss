@@ -92,7 +92,7 @@ body {
 
   .logo {
     background-size: contain;
-    background: url("assets/Helsana-Logo.png") no-repeat 35px;  //doesn't work in chrome yet...
+    background: url("assets/Helsana-Logo.png") no-repeat 15px;
     height: 40px;
     min-width: 250px;
     width: 25%;
@@ -122,7 +122,7 @@ body {
   }
 
   i {
-    font-weight: 10;
+    font-weight: 100;
     font-size: 1.2em;
     padding-right: 10px;
     cursor: pointer;
@@ -222,6 +222,7 @@ button.btn {
 ////////////////////////
 
 .list-group-item {
+  text-decoration: none;
   border-width: 0;
   border-color: $color11;
   padding-left: 35px;
@@ -236,11 +237,13 @@ button.btn {
     border-bottom-right-radius: 0;
   }
   &:hover {
+    text-decoration: none;
     background: $lcolor11;
     color: $color13;
     cursor: pointer;
   }
   &.active, .active & {
+    text-decoration: none;
     background: $lcolor11;
     color: $color00;
     cursor: auto;
@@ -250,6 +253,12 @@ button.btn {
 a {
   color: $color12;
   text-decoration: none;
+  &:hover{
+    text-decoration: none;
+  }
+  &.active{
+    text-decoration: none;
+  }
   &.ng-binding {
     &:hover {
       color: $color00;
