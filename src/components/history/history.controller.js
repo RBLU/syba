@@ -12,7 +12,7 @@ class HistoryController {
     };
 
     this.selectBatchConfig = (batchConfigBoid) => {
-      batchConfigService
+      return batchConfigService
         .getBatchConfig(batchConfigBoid, {ignored: this.includeIgnored})
         .then((result) => {
           this.selected = result;
@@ -38,6 +38,13 @@ class HistoryController {
     batchConfigService.getBatchConfigs()
       .then((batchConfigs) => {
         this.batches = batchConfigs;
+        if (!$stateParams.batchId) {
+          this.selectBatchConfig(batchConfigs[0].BOID)
+            .then(() => {
+              this.selectKz(batchConfigs[0].BOID, this.selected.kennzahlStats[0].BOID);
+              $state.go('history', {batchId: batchConfigs[0].BOID, kennzahlId: batchConfigs[0].kennzahlen[0].BOID});
+            });
+        }
       });
 
 
