@@ -42,7 +42,8 @@ class HistoryController {
           this.selectBatchConfig(batchConfigs[0].BOID)
             .then(() => {
               this.selectKz(batchConfigs[0].BOID, this.selected.kennzahlStats[0].BOID);
-              $state.go('history', {batchId: batchConfigs[0].BOID, kennzahlId: batchConfigs[0].kennzahlen[0].BOID});
+              this.selectedKzBoid = this.selected.kennzahlStats[0].BOID;
+              $state.go('history', {batchId: batchConfigs[0].BOID, kennzahlId:  this.selected.kennzahlStats[0].BOID}, {notify: false});
             });
         }
       });
