@@ -67,7 +67,8 @@ class SettingsController {
     };
 
     this.reloadBatchConfig = () => {
-      batchConfigService.reload(this.selectedbatchconfig);
+      batchConfigService.reload(this.selectedbatchconfig)
+        .then((result) => {this.reloadResult = result;});
     }
 
   }

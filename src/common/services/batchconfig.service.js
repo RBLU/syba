@@ -28,6 +28,10 @@ class BatchConfigService {
       return Restangular.all('batchconfigs').one(bc.BOID).remove();
     };
 
+    this.reload = (bc) => {
+      return Restangular.all('batchconfigs').one(bc.BOID).all('reload').post({}, {ITSSYRIUSBATCH: bc.ITSSYRIUSBATCH});
+    };
+
   }
 
 }

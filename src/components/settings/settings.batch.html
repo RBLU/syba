@@ -47,6 +47,9 @@
             <button class="btn btn-default" ng-click="vm.reloadBatchConfig()">Neu Laden</button>
           </div>
           <div class="col-xs-4">
+            <div ng-if="vm.reloadResult">
+              removed: {{vm.reloadResult.removed.rowsAffected}} runs<br>
+              added: {{vm.reloadResult.added.rowsAffected}} runs</div>
           </div>
           <div class="col-xs-4">
             <button class="btn btn-danger" ng-click="vm.deleteBatchConfig()">Löschen</button>

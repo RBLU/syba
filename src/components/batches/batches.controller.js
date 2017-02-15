@@ -59,7 +59,7 @@ class BatchesController {
     this.selectedrun = null;
 
     this.getRunName = (run) => {
-      return moment(run.STARTED).format('lll') + ' (' + run.BOID + ')';
+      return moment(run.STARTED).format('lll') + ' (' + run.ITSSYRIUSBATCHLAUF + ')';
     };
 
     this.unignoreRunInStats= (run) => {
