@@ -1,0 +1,27 @@
+<div class="section-bar">
+  <i class="glyphicon glyphicon-chevron-down"
+     ng-click="vm.sectionbatchhidden=!vm.sectionbatchhidden" ng-if="!vm.sectionbatchhidden"></i>
+  <i class="glyphicon glyphicon-chevron-right"
+     ng-click="vm.sectionbatchhidden=!vm.sectionbatchhidden" ng-if="vm.sectionbatchhidden"></i>Kennzahlen Settings
+</div>
+<div class="section container-fluid" ng-if="!vm.sectionbatchhidden">
+  <div class="row">
+    <div class="col-xs-4">
+      <h3>Kunden Batches</h3>
+      <ul class="batch-listing">
+        <li class="list-group-item" ng-repeat="bc in vm.batchconfigs" ng-click="vm.selectBatchConfig(bc)">{{bc.NAME}}
+        </li>
+      </ul>
+    </div>
+    <div class="col-xs-4">
+      <h3>Kennzahlen</h3>
+      <ul class="batch-listing">
+
+      </ul>
+    </div>
+    <div class="col-xs-4">
+      <form novalidate name="vm.kzform">
+      </form>
+    </div>
+  </div>
+</div>
