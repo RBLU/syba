@@ -24,6 +24,10 @@ class SettingsController {
       this.currentkzconfig = _.filter(this.allkzconfigs, (kzc) => {return kzc.ITSBATCHCONFIG == batchConfig.BOID;});
     };
 
+    this.selectKz = (kz) => {
+      this.selectedkzconfig = kz;
+    };
+
     this.formCancel = () => {
       this.selectedbatchconfig = null;
       this.batchconfigform.$setPristine();

@@ -9,14 +9,16 @@
     <div class="col-xs-4">
       <h3>Kunden Batches</h3>
       <ul class="batch-listing">
-        <li class="list-group-item" ng-repeat="bc in vm.batchconfigs" ng-click="vm.selectBatchConfig(bc)">{{bc.NAME}}
+        <li class="list-group-item" ng-repeat="bc in vm.batchconfigs" ng-click="vm.selectBatchConfig(bc)"
+            ng-class="{'active': vm.selectedbatchconfig.BOID == bc.BOID}">{{bc.NAME}}
         </li>
       </ul>
     </div>
     <div class="col-xs-4">
       <h3>Kennzahlen</h3>
       <ul class="batch-listing">
-        <li class="list-group-item" ng-repeat="kz in vm.currentkz" ng-click="vm.selectKz(kz)">
+        <li class="list-group-item" ng-repeat="kz in vm.currentkz" ng-click="vm.selectKz(kz)"
+            ng-class="{'active': vm.selectedkzconfig.BOID == kz.BOID}">
           <input type="checkbox"> {{kz.NAME}}
         </li>
       </ul>
