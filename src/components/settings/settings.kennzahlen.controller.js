@@ -10,18 +10,18 @@ class SettingsController {
 
     kennzahlenService.getKennzahlen()
       .then((kennzahlen) => {
-        this.kennzahlen = kennzahlen;
+        this.allkz = kennzahlen;
       });
 
     kennzahlenService.getKennzahlConfigs()
       .then((kennzahlConfigs) => {
-        this.kennzahlConfigs = kennzahlConfigs;
+        this.allkzconfigs = kennzahlConfigs;
       });
-
-
 
     this.selectBatchConfig = (batchConfig) => {
       this.selectedbatchconfig = batchConfig;
+      this.currentkz = _.filter(this.allkz, (kz) => {return kz.ITSSYRIUSBATCH == batchConfig.ITSSYRIUSBATCH || !kz.ITSSYRIUSBATCH;});
+      this.currentkzconfig = _.filter(this.allkzconfigs, (kzc) => {return kzc.ITSBATCHCONFIG == batchConfig.BOID;});
     };
 
     this.formCancel = () => {

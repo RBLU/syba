@@ -1,5 +1,5 @@
 <div class="kennzahl col-xs-12" id="{{vm.kz.kzstat.NAME}}">
-  <h3>{{vm.kz.kzstat.NAME}}<i class="glyphicon glyphicon-edit" ng-click="vm.editmode=true"></i></h3>
+  <h3>{{vm.kz.kzstat.NAME}} <span class="anzahl-text">({{vm.kz.kzstat.ANZAHL}} Messungen {{vm.kz.kzstat.VON | date}} - {{vm.kz.kzstat.BIS | date}})</span> <i class="glyphicon glyphicon-edit" ng-click="vm.editmode=true"></i> </h3>
   <svg></svg>
   <form class="form-inline">
     <div ng-if="vm.editmode" class="edit-form">

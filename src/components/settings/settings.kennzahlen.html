@@ -16,11 +16,34 @@
     <div class="col-xs-4">
       <h3>Kennzahlen</h3>
       <ul class="batch-listing">
-
+        <li class="list-group-item" ng-repeat="kz in vm.currentkz" ng-click="vm.selectKz(kz)">
+          <input type="checkbox"> {{kz.NAME}}
+        </li>
       </ul>
     </div>
     <div class="col-xs-4">
       <form novalidate name="vm.kzform">
+        <div class="row">
+          <div class="col-xs-12">
+            <div class="form-group">
+              <label for="kzname">Kennzahl Original Name:</label>
+              <input ng-model="vm.currentkz.BEZEICHNUNGDT" type="text" class="form-control" id="kzname"
+                     readonly placeholder="Selektiere eine Kennzahl...">
+            </div>
+            <div class="form-group">
+              <label for="kzconfigname">Kundenspezifischer Name:</label>
+              <input ng-model="vm.currentkzconfig.NAME" type="text" class="form-control" id="kzconfigname"
+                     placeholder="">
+            </div>
+            <div class="form-group">
+              <label for="kzconfigdesc">Beschreibung:</label>
+              <input ng-model="vm.currentkzconfig.DESCRIPTION" type="text" class="form-control" id="kzconfigdesc"
+                     placeholder="Beschreibung der Kennzahl Konfiguration">
+            </div>
+
+          </div>
+        </div>
+
       </form>
     </div>
   </div>
