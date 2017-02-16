@@ -14,16 +14,16 @@
         </li>
       </ul>
     </div>
-    <div class="col-xs-4">
+    <div class="col-xs-3">
       <h3>Kennzahlen</h3>
-      <ul class="batch-listing">
+      <ul class="kz-listing">
         <li class="list-group-item" ng-repeat="kz in vm.currentkzs" ng-click="vm.selectKz(kz)"
             ng-class="{'active': vm.selectedkzconfig.BOID == kz.BOID}">
           <input type="checkbox" ng-change="vm.kzCheckboxClicked(kz)" ng-model="vm.kzcheckboxes[kz.BOID]"> {{kz.NAME}}
         </li>
       </ul>
     </div>
-    <div class="col-xs-4">
+    <div class="col-xs-5">
       <form novalidate name="vm.kzform">
         <div class="row">
           <div class="col-xs-12">
