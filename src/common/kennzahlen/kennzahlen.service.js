@@ -14,6 +14,18 @@ class KennzahlenService {
     this.getKennzahlConfigs = () => {
       return Restangular.all('kennzahlconfigs').getList();
     };
+
+    this.saveKzConfig = (kzc) => {
+      if (kzc.BOID) {
+        return Restangular.all('kennzahlconfigs').one(kzc.BOID).customPUT(kzc);
+      } else {
+        return Restangular.all('kennzahlconfigs').post(kzc);
+      }
+    };
+
+    this.deleteKzConfig = (kzc) => {
+      return Restangular.all('kennzahlconfigs').one(kzc.BOID).remove();
+    };
   }
 }
 

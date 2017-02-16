@@ -12,20 +12,45 @@ class SettingsController {
       .then((kennzahlen) => {
         this.allkz = kennzahlen;
       });
-
+    this.kzcheckboxes = {};
     kennzahlenService.getKennzahlConfigs()
       .then((kennzahlConfigs) => {
         this.allkzconfigs = kennzahlConfigs;
+        _.each(kennzahlConfigs, (kzc) => {
+          this.kzcheckboxes[kzc.ITSKENNZAHL] = true;
+        });
       });
 
     this.selectBatchConfig = (batchConfig) => {
       this.selectedbatchconfig = batchConfig;
-      this.currentkz = _.filter(this.allkz, (kz) => {return kz.ITSSYRIUSBATCH == batchConfig.ITSSYRIUSBATCH || !kz.ITSSYRIUSBATCH;});
-      this.currentkzconfig = _.filter(this.allkzconfigs, (kzc) => {return kzc.ITSBATCHCONFIG == batchConfig.BOID;});
+      this.currentkzs = _.filter(this.allkz, (kz) => {return kz.ITSSYRIUSBATCH == batchConfig.ITSSYRIUSBATCH || !kz.ITSSYRIUSBATCH;});
+      this.currentkzconfigs = _.filter(this.allkzconfigs, (kzc) => {return kzc.ITSBATCHCONFIG == batchConfig.BOID;});
     };
 
     this.selectKz = (kz) => {
-      this.selectedkzconfig = kz;
+      this.selectedkzconfig = _.find(this.allkzconfigs, (kzc) => {return kzc.ITSKENNZAHL == kz.BOID;});
+      this.selectedKz = kz;
+      if (! this.selectedkzconfig) {
+        // this is a newly selected KZ, we need to provide a new kzc for it
+        this.selectedkzconfig = {
+          ITSKENNZAHL: kz.BOID,
+          NAME: kz.NAME,
+          DESCRIPTION: kz.DESCRIPTION,
+          ACTIVE: 1
+        }
+      }
+    };
+
+    this.kzCheckboxClicked = (kz) => {
+      this.selectKz(kz);
+      if (this.kzcheckboxes[kz.BOID]) {
+        kennzahlenService.saveKzConfig(this.selectedkzconfig);
+      } else {
+        kennzahlenService.deleteKzConfig(this.selectedkzconfig);
+        this.kzcheckboxes[kz.BOID] = undefined;
+        this.selectedkzconfig = null;
+      }
+
     };
 
     this.formCancel = () => {
@@ -33,6 +58,8 @@ class SettingsController {
       this.batchconfigform.$setPristine();
       this.batchconfigform.$setUntouched();
     };
+
+
 
     this.formSubmit = () => {
       if (this.selectedbatchconfig.BOID) {
