@@ -1,32 +1,27 @@
 
 class SettingsController {
   /* @ngInject */
-  constructor(batchConfigService) {
-    batchConfigService.getSyriusBatches()
-      .then((batches) => {
-        this.syriusbatches = batches;
-      });
-
+  constructor(batchConfigService, kennzahlenService) {
 
     batchConfigService.getBatchConfigs()
       .then((batchConfigs) => {
         this.batchconfigs = batchConfigs;
       });
 
-    this.selectSyriusBatch = (syriusBatch) => {
-      // check dirty Form
-      this.selectedsyrbatch = syriusBatch;
-      this.selectedbatchconfig = {
-        ITSSYRIUSBATCH: syriusBatch.BOID,
-        NAME: '',
-        DESCRIPTION: '',
-        ACTIVE: 1
-      }
-    };
+    kennzahlenService.getKennzahlen()
+      .then((kennzahlen) => {
+        this.kennzahlen = kennzahlen;
+      });
+
+    kennzahlenService.getKennzahlConfigs()
+      .then((kennzahlConfigs) => {
+        this.kennzahlConfigs = kennzahlConfigs;
+      });
+
+
 
     this.selectBatchConfig = (batchConfig) => {
-      this.selectedbatchconfig = _.clone(batchConfig);
-      this.selectedsyrbatch= _.find(this.syriusbatches, (sb) => {return sb.BOID == batchConfig.ITSSYRIUSBATCH});
+      this.selectedbatchconfig = batchConfig;
     };
 
     this.formCancel = () => {
@@ -54,22 +49,6 @@ class SettingsController {
       this.batchconfigform.$setPristine();
       this.batchconfigform.$setUntouched();
     };
-
-    this.deleteBatchConfig = () => {
-      batchConfigService
-        .delete(this.selectedbatchconfig)
-        .then((result) => {
-          _.remove(this.batchconfigs, (config) => {return config.BOID === this.selectedbatchconfig.BOID;});
-          this.selectedbatchconfig = null;
-          this.batchconfigform.$setPristine();
-          this.batchconfigform.$setUntouched();
-        });
-    };
-
-    this.reloadBatchConfig = () => {
-      batchConfigService.reload(this.selectedbatchconfig)
-        .then((result) => {this.reloadResult = result;});
-    }
 
   }
 

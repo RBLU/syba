@@ -3,6 +3,7 @@ import uiRouter from 'angular-ui-router';
 import settingsComponent from './settings.component';
 import settingsBatchComponent from './settings.batch.component';
 import settingsKennzahlenComponent from './settings.kennzahlen.component';
+import settingsDefaultsComponent from './settings.defaults.component';
 import  './settings.scss';
 
 let settingsModule = angular.module('settings', [
@@ -42,6 +43,11 @@ let settingsModule = angular.module('settings', [
 
   .component('settings', settingsComponent)
   .component('settingsbatch', settingsBatchComponent)
-  .component('settingskennzahlen', settingsKennzahlenComponent);
+  .component('settingskennzahlen', settingsKennzahlenComponent)
+  .component('settingsdefaults', settingsDefaultsComponent)
+
+
+  ;
+
 
 export default settingsModule;
