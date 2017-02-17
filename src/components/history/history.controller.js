@@ -11,11 +11,13 @@ class HistoryController {
       return moment(run.start).format('lll') + ' (' + run.BOID + ')';
     };
 
-    this.selectBatchConfig = (batchConfigBoid) => {
+    this.selectbatchconfig = (batchConfigBoid) => {
       return batchConfigService
         .getBatchConfig(batchConfigBoid, {ignored: this.includeIgnored})
         .then((result) => {
           this.selected = result;
+          this.selectkz(this.selected.BOID, this.selected.kennzahlStats[0].BOID);
+
         });
     };
 
@@ -27,10 +29,12 @@ class HistoryController {
         })
     };
 
-    this.selectKz = (batchConfigId, kzConfigId) => {
+    this.selectkz = (batchConfigId, kzConfigId) => {
       kennzahlenService.getKennzahlHistory(batchConfigId, kzConfigId, {includeIgnored: this.includeIgnored})
         .then((result) => {
           this.kennzahl = result;
+          this.selectedKzBoid = result.BOID;
+          $state.go('history', {batchId: this.selected.BOID, kennzahlId:  result.BOID}, {notify: false});
         });
     };
 
@@ -39,18 +43,13 @@ class HistoryController {
       .then((batchConfigs) => {
         this.batches = batchConfigs;
         if (!$stateParams.batchId) {
-          this.selectBatchConfig(batchConfigs[0].BOID)
-            .then(() => {
-              this.selectKz(batchConfigs[0].BOID, this.selected.kennzahlStats[0].BOID);
-              this.selectedKzBoid = this.selected.kennzahlStats[0].BOID;
-              $state.go('history', {batchId: batchConfigs[0].BOID, kennzahlId:  this.selected.kennzahlStats[0].BOID}, {notify: false});
-            });
+          this.selectbatchconfig(batchConfigs[0].BOID)
         }
       });
 
 
     if ($stateParams && $stateParams.batchId) {
-      this.selectBatchConfig($stateParams.batchId);
+      this.selectbatchconfig($stateParams.batchId);
     }
 
     if ($stateParams && $stateParams.runId ) {
@@ -58,7 +57,7 @@ class HistoryController {
     }
 
     if ($stateParams && $stateParams.kennzahlId ) {
-      this.selectKz($stateParams.batchId, $stateParams.kennzahlId);
+      this.selectkz($stateParams.batchId, $stateParams.kennzahlId);
       this.selectedKzBoid = $stateParams.kennzahlId;
     }
   }

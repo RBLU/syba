@@ -23,7 +23,7 @@
     <div class="row">
       <div class="col-xs-3">
         <select ng-model="vm.selectedKzBoid" ng-options="myKz.ITSKENNZAHLCONFIG as myKz.NAME for myKz in vm.selected.kennzahlStats"
-                class="form-control">
+                class="form-control" ng-change="vm.selectkz(vm.selected.BOID, vm.selectedKzBoid)">
         </select>
       </div>
       <div class="col-xs-6">
@@ -31,7 +31,7 @@
       </div>
       <div class="col-xs-3">
         <div class="checkbox">
-          <label><input type="checkbox" ng-model="vm.includeIgnored" ng-change="vm.selectKz(vm.selected.BOID, vm.kennzahl.BOID)">Ignorierte miteinbeziehen</label>
+          <label><input type="checkbox" ng-model="vm.includeIgnored" ng-change="vm.selectkz(vm.selected.BOID, vm.kennzahl.BOID)">Ignorierte miteinbeziehen</label>
         </div>
       </div>
     </div>
