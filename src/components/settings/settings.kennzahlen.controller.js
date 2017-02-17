@@ -29,7 +29,7 @@ class SettingsController {
 
     this.selectKz = (kz) => {
       this.selectedkzconfig = _.find(this.allkzconfigs, (kzc) => {return kzc.ITSKENNZAHL == kz.BOID;});
-      this.selectedKz = kz;
+      this.selectedkz = kz;
       if (! this.selectedkzconfig) {
         // this is a newly selected KZ, we need to provide a new kzc for it
         this.selectedkzconfig = {
@@ -44,13 +44,25 @@ class SettingsController {
     this.kzCheckboxClicked = (kz) => {
       this.selectKz(kz);
       if (this.kzcheckboxes[kz.BOID]) {
-        kennzahlenService.saveKzConfig(this.selectedkzconfig);
+        kennzahlenService.saveKzConfig(this.selectedkzconfig)
+          .then((result) => {
+            if (result.BOID) {
+              this.selectedkzconfig.BOID = result.BOID
+              this.allkzconfigs.push(result);
+            }
+          });
       } else {
         kennzahlenService.deleteKzConfig(this.selectedkzconfig);
         this.kzcheckboxes[kz.BOID] = undefined;
-        this.selectedkzconfig = null;
+        _.remove(this.allkzconfigs, (kzc) => {return kzc.BOID == this.selectedkzconfig.BOID});
+        this.selectedkzconfig = undefined;
+        this.selectedkz= undefined;
       }
 
+    };
+
+    this.recalckz = () => {
+      console.log('recalc kz: ', this.selectedkzconfig);
     };
 
     this.formCancel = () => {

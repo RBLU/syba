@@ -18,18 +18,18 @@
       <h3>Kennzahlen</h3>
       <ul class="kz-listing">
         <li class="list-group-item" ng-repeat="kz in vm.currentkzs" ng-click="vm.selectKz(kz)"
-            ng-class="{'active': vm.selectedkzconfig.BOID == kz.BOID}">
+            ng-class="{'active': vm.selectedkzconfig.ITSKENNZAHL == kz.BOID}">
           <input type="checkbox" ng-change="vm.kzCheckboxClicked(kz)" ng-model="vm.kzcheckboxes[kz.BOID]"> {{kz.NAME}}
         </li>
       </ul>
     </div>
     <div class="col-xs-5">
-      <form novalidate name="vm.kzform">
+      <form novalidate name="vm.kzform" ng-if="vm.selectedkzconfig">
         <div class="row">
           <div class="col-xs-12">
             <div class="form-group">
               <label for="kzname">Kennzahl Original Name:</label>
-              <input ng-model="vm.selectedKz.NAME" type="text" class="form-control" id="kzname"
+              <input ng-model="vm.selectedkz.NAME" type="text" class="form-control" id="kzname"
                      readonly placeholder="Selektiere eine Kennzahl...">
             </div>
             <div class="form-group">
@@ -42,10 +42,16 @@
               <input ng-model="vm.selectedkzconfig.DESCRIPTION" type="text" class="form-control" id="kzconfigdesc"
                      placeholder="Beschreibung der Kennzahl Konfiguration">
             </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-6">
+            <button class="btn btn-default" ng-click="vm.recalckz()">Neuberechnen</button>
+          </div>
+          <div class="col-xs-6">
 
           </div>
         </div>
-
       </form>
     </div>
   </div>
