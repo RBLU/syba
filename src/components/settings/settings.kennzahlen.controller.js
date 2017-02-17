@@ -77,11 +77,11 @@ class SettingsController {
       this.batchconfigform.$setUntouched();
     };
 
-    $scope.$watch('vm.selectedkzconfig.BOID', (newBOID) => {
-      if (newBOID && newBOID.length >0) {
-        kennzahlenService.reloadKzcStats(newBOID)
-          .then((kzcStats) => {
-            this.selectedKzcStats = kzcStats;
+    $scope.$watch('vm.selectedkzconfig.BOID', (newBOID, oldBOID) => {
+      if (newBOID && newBOID.length >0 && newBOID !== oldBOID) {
+        kennzahlenService.getKennzahlConfigById(newBOID)
+          .then((kzc) => {
+            this.selectedkzconfig = kzc;
           });
       }
     });

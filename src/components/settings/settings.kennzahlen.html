@@ -44,12 +44,19 @@
             </div>
           </div>
         </div>
-        <div class="row">
-          <div class="col-xs-6">
-            <button class="btn btn-default" ng-click="vm.recalckz()">Neuberechnen</button>
+        <div class="row" ng-if="vm.selectedkzconfig.BOID">
+          <div class="col-xs-8">
+            <div ng-if="vm.selectedkzconfig.kzstats && vm.selectedkzconfig.kzstats.ANZAHL > 0">
+              Anzahl Messungen: {{vm.selectedkzconfig.kzstats.ANZAHL}}<br>
+              Erste Messung: {{vm.selectedkzconfig.kzstats.VON | date}}<br>
+              Letzte Messung: {{vm.selectedkzconfig.kzstats.BIS | date}}<br>
+            </div>
+            <div ng-if="!vm.selectedkzconfig.kzstats || vm.selectedkzconfig.kzstats.ANZAHL == 0">
+              Kennzahl noch nicht berechnet!
+            </div>
           </div>
-          <div class="col-xs-6">
-
+          <div class="col-xs-4">
+            <button class="btn btn-default" ng-click="vm.recalckz()">Neuberechnen</button>
           </div>
         </div>
       </form>
