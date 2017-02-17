@@ -29,8 +29,12 @@ class KennzahlenService {
 
     this.getKennzahlConfigById = (kzcBOID) => {
       return Restangular.all('kennzahlconfigs').one(kzcBOID).get();
-    }
-  }
+    };
+
+    this.recalcKennzahlConfig = (kzc) => {
+      return Restangular.all('kennzahlconfigs').one(kzc.BOID).all('recalc').post({});
+    }};
+
 }
 
 export default KennzahlenService;

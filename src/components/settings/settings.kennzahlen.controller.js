@@ -69,6 +69,10 @@ class SettingsController {
 
     this.recalckz = () => {
       console.log('recalc kz: ', this.selectedkzconfig);
+      kennzahlenService.recalcKennzahlConfig(this.selectedkzconfig)
+        .then((result) => {
+
+        });
     };
 
     this.formCancel = () => {
