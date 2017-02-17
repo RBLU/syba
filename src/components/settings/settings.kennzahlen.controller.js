@@ -1,7 +1,7 @@
 
 class SettingsController {
   /* @ngInject */
-  constructor(batchConfigService, kennzahlenService) {
+  constructor(batchConfigService, kennzahlenService, $scope) {
 
     batchConfigService.getBatchConfigs()
       .then((batchConfigs) => {
@@ -16,19 +16,22 @@ class SettingsController {
     kennzahlenService.getKennzahlConfigs()
       .then((kennzahlConfigs) => {
         this.allkzconfigs = kennzahlConfigs;
-        _.each(kennzahlConfigs, (kzc) => {
-          this.kzcheckboxes[kzc.ITSKENNZAHL] = true;
-        });
       });
 
     this.selectBatchConfig = (batchConfig) => {
       this.selectedbatchconfig = batchConfig;
       this.currentkzs = _.filter(this.allkz, (kz) => {return kz.ITSSYRIUSBATCH == batchConfig.ITSSYRIUSBATCH || !kz.ITSSYRIUSBATCH;});
       this.currentkzconfigs = _.filter(this.allkzconfigs, (kzc) => {return kzc.ITSBATCHCONFIG == batchConfig.BOID;});
+      this.selectedkzconfig = undefined;
+      this.selectedkz = undefined;
+      this.kzcheckboxes = {};
+      _.each(this.currentkzconfigs, (kzc) => {
+        this.kzcheckboxes[kzc.ITSKENNZAHL] = true;
+      });
     };
 
     this.selectKz = (kz) => {
-      this.selectedkzconfig = _.find(this.allkzconfigs, (kzc) => {return kzc.ITSKENNZAHL == kz.BOID;});
+      this.selectedkzconfig = _.find(this.currentkzconfigs, (kzc) => {return kzc.ITSKENNZAHL == kz.BOID;});
       this.selectedkz = kz;
       if (! this.selectedkzconfig) {
         // this is a newly selected KZ, we need to provide a new kzc for it
@@ -36,7 +39,9 @@ class SettingsController {
           ITSKENNZAHL: kz.BOID,
           NAME: kz.NAME,
           DESCRIPTION: kz.DESCRIPTION,
-          ACTIVE: 1
+          ACTIVE: 1,
+          ITSBATCHCONFIG: this.selectedbatchconfig.BOID,
+          ITSSYRIUSBATCH: this.selectedbatchconfig.ITSSYRIUSBATCH
         }
       }
     };
@@ -49,16 +54,17 @@ class SettingsController {
             if (result.BOID) {
               this.selectedkzconfig.BOID = result.BOID
               this.allkzconfigs.push(result);
+              this.currentkzconfigs.push(result);
             }
           });
       } else {
         kennzahlenService.deleteKzConfig(this.selectedkzconfig);
         this.kzcheckboxes[kz.BOID] = undefined;
         _.remove(this.allkzconfigs, (kzc) => {return kzc.BOID == this.selectedkzconfig.BOID});
+        _.remove(this.currentkzconfigs, (kzc) => {return kzc.BOID == this.selectedkzconfig.BOID});
         this.selectedkzconfig = undefined;
         this.selectedkz= undefined;
       }
-
     };
 
     this.recalckz = () => {
@@ -70,6 +76,15 @@ class SettingsController {
       this.batchconfigform.$setPristine();
       this.batchconfigform.$setUntouched();
     };
+
+    $scope.$watch('vm.selectedkzconfig.BOID', (newBOID) => {
+      if (newBOID && newBOID.length >0) {
+        kennzahlenService.reloadKzcStats(newBOID)
+          .then((kzcStats) => {
+            this.selectedKzcStats = kzcStats;
+          });
+      }
+    });
 
 
 

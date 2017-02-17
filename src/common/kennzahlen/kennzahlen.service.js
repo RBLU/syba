@@ -26,6 +26,10 @@ class KennzahlenService {
     this.deleteKzConfig = (kzc) => {
       return Restangular.all('kennzahlconfigs').one(kzc.BOID).remove();
     };
+
+    this.reloadKzcStats = (kzcBOID) => {
+      return Restangular.all('kennzahlconfigs').one(kzcBOID).get();
+    }
   }
 }
 
