@@ -172,7 +172,7 @@ class KennzahlController {
             tooltip.transition()
               .duration(200)
               .style("opacity", .9);
-            tooltip.html("Lauf Boid: " + d.ITSBATCHRUN + "<br/> (" + moment(d.STARTED).format("LL")
+            tooltip.html("Lauf Boid: " + d.ITSSYRIUSBATCHLAUF + "<br/> (" + moment(d.STARTED).format("LL")
               + ", " + d.NUMBERVALUE + ")")
               .style("left", (d3.event.pageX + 5) + "px")
               .style("top", (d3.event.pageY - 28) + "px");
