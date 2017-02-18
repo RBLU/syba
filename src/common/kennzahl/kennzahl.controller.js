@@ -55,7 +55,7 @@ class KennzahlController {
       let stats = kz.kzstat;
       let run = kz.runstat;
       let low = _.isNumber(stats.LEVELMIN) ? stats.LEVELMIN : stats.MIN;
-      let high = _.isNumber(stats.LEVELMAX) ? stats.LEVELMAX : stats.MAX;
+      let high = Math.max(_.isNumber(stats.LEVELMAX) ? stats.LEVELMAX : stats.MAX, stats.LEVELHIGHWARNING);
 
       let xScale = d3.scaleLinear()
         .domain([low , high])
@@ -82,7 +82,7 @@ class KennzahlController {
           if (i == 0) {
             return 0;
           } else {
-            return xScale(settingsArray[i - 1]);
+            return xScale(Math.min(settingsArray[i - 1], high));
           }
         })
         .attr('y', (d, i) => {
