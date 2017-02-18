@@ -1,23 +1,22 @@
 <div class="kennzahl col-xs-12" id="{{vm.kz.kzstat.NAME}}">
-  <h3>{{vm.kz.kzstat.NAME}} <span class="anzahl-text">({{vm.kz.kzstat.ANZAHL}} Messungen {{vm.kz.kzstat.VON | date}} - {{vm.kz.kzstat.BIS | date}})</span> <i class="glyphicon glyphicon-edit" ng-click="vm.editmode=true"></i> </h3>
+  <h3>{{vm.kz.kzstat.NAME}} <span class="anzahl-text">({{vm.kz.kzstat.ANZAHL}} Messungen {{vm.kz.kzstat.VON | date}} - {{vm.kz.kzstat.BIS | date}})</span>
+    <i class="glyphicon glyphicon-edit" ng-click="vm.editLevels(vm.kz.kzstat)"></i> </h3>
   <svg></svg>
-  <form class="form-inline">
+  <form class="form-inline" name="vm.editform">
     <div ng-if="vm.editmode" class="edit-form">
 
 
       <div class="error"></div>
-      <input class="form-control" type="text" ng-model="vm.kz.kzstat.LEVELLOWERROR">
+      <input class="form-control" type="text" ng-model="vm.levels.LEVELLOWERROR">
       <div class="warning"></div>
-      <input class="form-control" type="text" ng-model="vm.kz.kzstat.LEVELLOWWARNING">
+      <input class="form-control" type="text" ng-model="vm.levels.LEVELLOWWARNING">
       <div class="normal"></div>
-      <input class="form-control" type="text" ng-model="vm.kz.kzstat.LEVELNORMAL">
+      <input class="form-control" type="text" ng-model="vm.levels.LEVELNORMAL">
       <div class="warning"></div>
-      <input class="form-control" type="text" ng-model="vm.kz.kzstat.LEVELHIGHWARNING">
+      <input class="form-control" type="text" ng-model="vm.levels.LEVELHIGHWARNING">
       <div class="error"></div>
-      <button type="button" class="btn btn-primary" ng-click="vm.save()">Save</button>
+      <button type="button" class="btn btn-primary" ng-click="vm.saveLevels()">Save</button>
       <button type="button" class="btn btn-default" ng-click="vm.editmode=false">Cancel</button>
     </div>
-
-
   </form>
 </div>

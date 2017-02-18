@@ -3,7 +3,7 @@ import angular from 'angular';
 
 class KennzahlController {
   /* @ngInject */
-  constructor($scope, $element) {
+  constructor($scope, $element, kennzahlenService) {
     this.name = 'kennzahl';
     this.editmode = false;
 
@@ -20,30 +20,42 @@ class KennzahlController {
 
     this.$onInit = () => {
       $scope.$watch('vm.kz', (newValues) => {
-        console.log("Kennzahl watcher active: ", this.kz);
         if (this.kz) {
           redraw(this.kz);
         }
       });
     };
 
+    this.editLevels = (stats) => {
+      this.levels = {
+        BOID: stats.BOID,
+        LEVELLOWERROR: stats.LEVELLOWERROR,
+        LEVELLOWWARNING: stats.LEVELLOWWARNING,
+        LEVELNORMAL: stats.LEVELNORMAL,
+        LEVELHIGHWARNING: stats.LEVELHIGHWARNING
+      };
+      this.editmode = true;
+    };
+
+    this.saveLevels = () => {
+        kennzahlenService.saveKzConfig(this.levels)
+          .then((results) => {
+             console.log("KennzahlConfig successfully saved", results);
+             _.merge(this.kz.kzstat, this.levels);
+             this.editmode = false;
+             redraw(this.kz);
+          });
+    };
 
 
-
-    $scope.$watch('vm.editmode', (newValue) => {
-      if (newValue) {
-        console.log("turning on editmode");
-        console.log("turning on editmode");
-      }
-    });
 
     function redraw(kz) {
+      g.selectAll('*').remove();
+
       let stats = kz.kzstat;
       let run = kz.runstat;
-      console.log('redrawing KZ: ' + stats.NAME);
       let low = _.isNumber(stats.LEVELMIN) ? stats.LEVELMIN : stats.MIN;
       let high = _.isNumber(stats.LEVELMAX) ? stats.LEVELMAX : stats.MAX;
-      console.log("Domain: ", low, high);
 
       let xScale = d3.scaleLinear()
         .domain([low , high])
