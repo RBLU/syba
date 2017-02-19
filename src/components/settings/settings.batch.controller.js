@@ -1,7 +1,8 @@
+import _ from 'lodash';
 
 class SettingsController {
   /* @ngInject */
-  constructor(batchConfigService) {
+  constructor(batchConfigService, $log) {
     batchConfigService.getSyriusBatches()
       .then((batches) => {
         this.syriusbatches = batches;
@@ -21,12 +22,14 @@ class SettingsController {
         NAME: '',
         DESCRIPTION: '',
         ACTIVE: 1
-      }
+      };
     };
 
     this.selectBatchConfig = (batchConfig) => {
       this.selectedbatchconfig = _.clone(batchConfig);
-      this.selectedsyrbatch= _.find(this.syriusbatches, (sb) => {return sb.BOID == batchConfig.ITSSYRIUSBATCH});
+      this.selectedsyrbatch = _.find(this.syriusbatches, (sb) => {
+        return sb.BOID == batchConfig.ITSSYRIUSBATCH;
+      });
     };
 
     this.formCancel = () => {
@@ -40,7 +43,9 @@ class SettingsController {
         // this is an update
         batchConfigService
           .put(this.selectedbatchconfig)
-          .then((result) => {});
+          .then((result) => {
+            $log.log('update successful', result);
+          });
 
       } else {
         // this is a new BatchConfig
@@ -59,7 +64,10 @@ class SettingsController {
       batchConfigService
         .delete(this.selectedbatchconfig)
         .then((result) => {
-          _.remove(this.batchconfigs, (config) => {return config.BOID === this.selectedbatchconfig.BOID;});
+          $log.log('successfully deleted batchconfig', result);
+          _.remove(this.batchconfigs, (config) => {
+            return config.BOID === this.selectedbatchconfig.BOID;
+          });
           this.selectedbatchconfig = null;
           this.batchconfigform.$setPristine();
           this.batchconfigform.$setUntouched();
@@ -68,8 +76,10 @@ class SettingsController {
 
     this.reloadBatchConfig = () => {
       batchConfigService.reload(this.selectedbatchconfig)
-        .then((result) => {this.reloadResult = result;});
-    }
+        .then((result) => {
+          this.reloadResult = result;
+        });
+    };
 
   }
 

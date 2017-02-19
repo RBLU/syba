@@ -3,7 +3,7 @@ import moment from 'moment';
 
 class KennzahlController {
   /* @ngInject */
-  constructor($scope, $element) {
+  constructor($scope, $element, $log) {
     this.name = 'kzhistorygraph';
 
     this.$onInit = () => {
@@ -12,18 +12,18 @@ class KennzahlController {
           .attr('height', 560)
           .attr('width', 500),
         margin = {top: 20, right: 20, bottom: 60, left: 50},
-        width = +svg.attr("width") - margin.left - margin.right,
-        height = +svg.attr("height") - margin.top - margin.bottom,
-        g = svg.append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+        width = +svg.attr('width') - margin.left - margin.right,
+        height = +svg.attr('height') - margin.top - margin.bottom,
+        g = svg.append('g').attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
       // add the tooltip area to the webpage
-      var tooltip = d3.select("body").append("div")
-        .attr("class", "tooltip")
-        .style("opacity", 0);
+      var tooltip = d3.select('body').append('div')
+        .attr('class', 'tooltip')
+        .style('opacity', 0);
 
 
       $scope.$watch('vm.kz', (kz) => {
         if (kz && kz.history && kz.history.length > 0) {
-          redraw(kz)
+          redraw(kz);
         }
       });
 
@@ -51,10 +51,10 @@ class KennzahlController {
         // to remove extreme outliers we show all data that is within
         // 3 standard deviation of the of the mean.
         let mean = d3.mean(kz.history, (d) => {
-          return +d.NUMBERVALUE
+          return +d.NUMBERVALUE;
         });
         let sd = d3.deviation(kz.history, (d) => {
-          return +d.NUMBERVALUE
+          return +d.NUMBERVALUE;
         });
 
         const dataExtent = d3.extent(kz.history, function (d) {
@@ -65,7 +65,7 @@ class KennzahlController {
         yScaleRects.domain(dataExtent);
 
         let cValue = function (d) {
-          return "yellow";
+          return 'yellow';
         };
         let color = d3.scaleOrdinal(d3.schemeCategory10);
 
@@ -124,25 +124,25 @@ class KennzahlController {
             .tickSizeInner(-height);
 
 
-        g.append("g")
-          .attr("transform", "translate(0," + height + ")")
-          .attr("class", "x axis")
+        g.append('g')
+          .attr('transform', 'translate(0,' + height + ')')
+          .attr('class', 'x axis')
           .call(xAxis)
           .selectAll('text')
-          .attr("y", 15)
-          .attr("x", 5)
-          .attr("dy", ".35em")
-          .attr("transform", "rotate(45)")
-          .style("text-anchor", "start");
+          .attr('y', 15)
+          .attr('x', 5)
+          .attr('dy', '.35em')
+          .attr('transform', 'rotate(45)')
+          .style('text-anchor', 'start');
 
-        g.append("g")
+        g.append('g')
           .call(d3.axisLeft(yScale))
-          .append("text")
-          .attr("fill", "#000")
-          .attr("transform", "rotate(-90)")
-          .attr("y", 6)
-          .attr("dy", "0.71em")
-          .attr("text-anchor", "end")
+          .append('text')
+          .attr('fill', '#000')
+          .attr('transform', 'rotate(-90)')
+          .attr('y', 6)
+          .attr('dy', '0.71em')
+          .attr('text-anchor', 'end')
           .text(kz.NAME);
 
         // g.append("path")
@@ -154,40 +154,40 @@ class KennzahlController {
         //   .attr("stroke-width", 1.5)
         //   .attr("d", line);
 
-        g.selectAll(".dot")
+        g.selectAll('.dot')
           .data(kz.history)
-          .enter().append("circle")
-          .attr("class", "dot")
-          .attr("r", 5)
-          .attr("cx", (d) => {
+          .enter().append('circle')
+          .attr('class', 'dot')
+          .attr('r', 5)
+          .attr('cx', (d) => {
             return xScale(new Date(d.STARTED));
           })
-          .attr("cy", (d) => {
+          .attr('cy', (d) => {
             return yScale(new Date(+d.NUMBERVALUE));
           })
-          .style("fill", function (d) {
+          .style('fill', function (d) {
             return color(cValue(d));
           })
-          .on("mouseover", function (d) {
+          .on('mouseover', function (d) {
             tooltip.transition()
               .duration(200)
-              .style("opacity", .9);
-            tooltip.html("Lauf Boid: " + d.ITSSYRIUSBATCHLAUF + "<br/> (" + moment(d.STARTED).format("LL")
-              + ", " + d.NUMBERVALUE + ")")
-              .style("left", (d3.event.pageX + 5) + "px")
-              .style("top", (d3.event.pageY - 28) + "px");
+              .style('opacity', .9);
+            tooltip.html('Lauf Boid: ' + d.ITSSYRIUSBATCHLAUF + '<br/> (' + moment(d.STARTED).format('LL')
+              + ', ' + d.NUMBERVALUE + ')')
+              .style('left', (d3.event.pageX + 5) + 'px')
+              .style('top', (d3.event.pageY - 28) + 'px');
           })
-          .on("mouseout", function (d) {
+          .on('mouseout', function (d) {
             tooltip.transition()
               .duration(500)
-              .style("opacity", 0);
+              .style('opacity', 0);
           })
-          .on("click", function (d) {
-            console.log("going to: ", {batchId: d.ITSBATCHCONFIG, runId: d.ITSBATCHLAUF});
-            $scope.$root.$state.go('batches', {batchId: d.ITSBATCHCONFIG, runId: d.ITSBATCHRUN})
+          .on('click', function (d) {
+            $log.log('going to: ', {batchId: d.ITSBATCHCONFIG, runId: d.ITSBATCHLAUF});
+            $scope.$root.$state.go('batches', {batchId: d.ITSBATCHCONFIG, runId: d.ITSBATCHRUN});
           });
 
-        $scope.$on("$destroy", function () {
+        $scope.$on('$destroy', function () {
           d3.select('.tooltip').remove();
         });
       }

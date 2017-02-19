@@ -3,8 +3,8 @@ import directivetemplate from './signin-directive.html';
 
 let SigninModule = angular.module('signin', [])
 
-  /* @ngInject */
-  .config(['$stateProvider', '$urlRouterProvider', 'accessLevels',
+/* @ngInject */
+  .config(
     function ($stateProvider, $urlRouterProvider, accessLevels) {
       $stateProvider
         .state('signin', {
@@ -15,15 +15,15 @@ let SigninModule = angular.module('signin', [])
           resolve: {}
         });
 
-    }])
+    })
   /* @ngInject */
-  .controller('SigninController', ['$scope', '$rootScope', '$state', '$stateParams', 'UserService',
+  .controller('SigninController',
     function ($scope, $rootScope, $state, $stateParams, UserService) {
 
     }
-  ])
+  )
   /* @ngInject */
-  .directive('signIn', ['UserService', '$rootScope', '$state', function (UserService, $rootScope, $state) {
+  .directive('signIn', function (UserService, $rootScope, $state) {
     return {
       restrict: 'E',
       scope: {
@@ -31,35 +31,27 @@ let SigninModule = angular.module('signin', [])
       },
       template: directivetemplate,
       link: function (scope, elem, attrs) {
-
-
         scope.keepMeLoggedIn = true;
-
         scope.submit = function () {
-          UserService.login(UserService.encodeCredentials(scope.username, scope.password),  scope.keepMeLoggedIn)
+          UserService.login(UserService.encodeCredentials(scope.username, scope.password), scope.keepMeLoggedIn)
             .then(function (response) {
+              scope.username = '';
+              scope.password = '';
 
-                scope.username = '';
-                scope.password = '';
-
-                if(attrs.onSignIn) { // can't check isolated scope variable as it is always defined
-                  return scope.onSignIn();
-                }
-
-                if ($rootScope.nextStateAfterLogin) {
-                  $state.go($rootScope.nextStateAfterLogin.toState, $rootScope.nextStateAfterLogin.toParams);
-                } else {
-                  $state.go('home');
-                }
-
+              if (attrs.onSignIn) { // can't check isolated scope variable as it is always defined
+                return scope.onSignIn();
               }
-            );
 
+              if ($rootScope.nextStateAfterLogin) {
+                $state.go($rootScope.nextStateAfterLogin.toState, $rootScope.nextStateAfterLogin.toParams);
+              } else {
+                $state.go('home');
+              }
+            });
         };
       }
     };
-  }]);
+  });
 
 
-
-export default SigninModule
+export default SigninModule;

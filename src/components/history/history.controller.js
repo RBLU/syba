@@ -1,11 +1,8 @@
 import moment from 'moment';
-import _ from 'lodash';
-
-moment.locale('de_ch');
 
 class HistoryController {
   /* @ngInject */
-  constructor($scope, $stateParams, $state, kennzahlenService, batchConfigService, batchRunService, $log) {
+  constructor($scope, $stateParams, $state, kennzahlenService, batchConfigService, batchRunService) {
 
     this.getRunName = (run) => {
       return moment(run.start).format('lll') + ' (' + run.BOID + ')';
@@ -26,7 +23,7 @@ class HistoryController {
         .getRun(runBoid)
         .then((result) => {
           this.selectedrun = result;
-        })
+        });
     };
 
     this.selectkz = (batchConfigId, kzConfigId) => {
@@ -43,7 +40,7 @@ class HistoryController {
       .then((batchConfigs) => {
         this.batches = batchConfigs;
         if (!$stateParams.batchId) {
-          this.selectbatchconfig(batchConfigs[0].BOID)
+          this.selectbatchconfig(batchConfigs[0].BOID);
         }
       });
 

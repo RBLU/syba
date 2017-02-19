@@ -1,5 +1,5 @@
 {
-  "plugins": [angular],
+  "plugins": ["angular"],
   "extends": ["eslint:recommended", "angular"],
   "rules": {
     "indent": [
@@ -20,8 +20,10 @@
       "always"
     ],
     "angular/di": [
-      2,
-      "$inject"
+      2
+    ],
+    "no-unused-vars": [
+      2, {"args": "none"}
     ]
   },
   "env": {
@@ -43,5 +45,8 @@
     "after"      : false,
     "afterEach"  : false,
     "inject"     : false
+  },
+  "parserOptions": {
+    "sourceType": "module"
   }
 }

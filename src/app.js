@@ -13,9 +13,7 @@ import Common from './common/common';
 import Components from './components/components';
 import './styles.scss';
 import moment from 'moment';
-
-console.log("loaded: " + angulardech);
-console.log("loaded: " + angularde);
+import * as _ from 'lodash';
 
 angular.module('myApp', [
   uiRouter,
@@ -37,7 +35,7 @@ function _reportErrorToBackend(exception, cause, $injector) {
 
   var data = {
     message: exception.message,
-    cause: JSON.stringify(cause),
+    cause: angular.toJson(cause),
     version: $rootScope.appVersion,
     location: $window.location.href,
     userAgent: navigator.userAgent,
@@ -118,8 +116,8 @@ angular.module('myApp')
     $provide.decorator('$exceptionHandler', ['$delegate', '$injector', function ($delegate, $injector) {
       return function (exception, cause) {
         // $delegate(exception, cause);
-        $injector.get('$log').log("Exception: " + exception);
-        $injector.get('$log').log("Cause: " + cause);
+        $injector.get('$log').log(`Exception: ${exception}`);
+        $injector.get('$log').log(`Cause: ${cause}`);
         _reportErrorToBackend(exception, cause, $injector);
       };
     }]);
@@ -158,7 +156,7 @@ angular.module('myApp')
       tmhDynamicLocaleCache.put('de', getInjectedLocale());
 
 
-      if (typeof navigator.globalization !== 'undefined') {
+      if (!_.isUndefined(navigator.globalization)) {
         navigator.globalization.getPreferredLanguage(_setLanguage, null);
       } else if (navigator.language || navigator.userLanguage) {
         _setLanguage(navigator.language || navigator.userLanguage);
@@ -178,18 +176,18 @@ angular.module('myApp')
           .then(function (localeSet) {
             return localeSet;
           }, function (err) {
-            $log.log('ERROR setting angular internal locale: ' + locale + ', ' + JSON.stringify(err));
+            $log.log('ERROR setting angular internal locale: ' + locale + ', ' + angular.toJson(err));
             if (locale.split('-').length > 1) {
               $log.log('trying short locale: ' + locale.split('-')[0]);
               return tmhDynamicLocale.set(locale.split('-')[0]);
             } else {
-              $log.log('ERROR setting angular internal locale: ' + JSON.stringify(err) + ', using default');
+              $log.log('ERROR setting angular internal locale: ' + angular.toJson(err) + ', using default');
             }
           })
           .then(function (localeSet) {
             $log.log('set angular internal locale to: ' + localeSet.id);
           }, function (err) {
-            $log.log('ERROR setting angular internal locale: ' + JSON.stringify(err) + ', using default');
+            $log.log('ERROR setting angular internal locale: ' + angular.toJson(err) + ', using default');
           });
 
 
@@ -247,7 +245,7 @@ angular.module('myApp')
         var msg = 'Error on StateChange from: "' + (fromState && fromState.name) + '" to:  "' + toState.name + '", err:' +
           error.message + ', code: ' + error.status;
         $log.log(msg);
-        $log.log(JSON.stringify(error.stack));
+        $log.log(angular.toJson(error.stack));
         _reportErrorToBackend(error, msg, $injector);
 
         if (error.status === 401) { // Unauthorized

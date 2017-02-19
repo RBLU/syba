@@ -1,9 +1,9 @@
 import * as d3 from 'd3';
-import angular from 'angular';
+import _ from 'lodash';
 
 class KennzahlController {
   /* @ngInject */
-  constructor($scope, $element, kennzahlenService) {
+  constructor($scope, $element, kennzahlenService, $log) {
     this.name = 'kennzahl';
     this.editmode = false;
 
@@ -15,7 +15,7 @@ class KennzahlController {
       .attr('height', 50);
 
     let g = svg.append('g')
-      .attr('transform', 'translate('+offset+',0)');
+      .attr('transform', 'translate(' + offset + ',0)');
 
 
     this.$onInit = () => {
@@ -38,15 +38,14 @@ class KennzahlController {
     };
 
     this.saveLevels = () => {
-        kennzahlenService.saveKzConfig(this.levels)
-          .then((results) => {
-             console.log("KennzahlConfig successfully saved", results);
-             _.merge(this.kz.kzstat, this.levels);
-             this.editmode = false;
-             redraw(this.kz);
-          });
+      kennzahlenService.saveKzConfig(this.levels)
+        .then((results) => {
+          $log.log('KennzahlConfig successfully saved', results);
+          _.merge(this.kz.kzstat, this.levels);
+          this.editmode = false;
+          redraw(this.kz);
+        });
     };
-
 
 
     function redraw(kz) {
@@ -58,8 +57,8 @@ class KennzahlController {
       let high = Math.max(_.isNumber(stats.LEVELMAX) ? stats.LEVELMAX : stats.MAX, stats.LEVELHIGHWARNING);
 
       let xScale = d3.scaleLinear()
-        .domain([low , high])
-        .range([0, width - (offset *2)]);
+        .domain([low, high])
+        .range([0, width - (offset * 2)]);
 
       // add the max value of our data to the settings array, so we can draw the
       // last red rect from the last settings value to the max value
@@ -69,7 +68,7 @@ class KennzahlController {
         .data(settingsArray)
         .enter()
         .append('rect')
-        .attr('class', function(d,i ) {
+        .attr('class', function (d, i) {
           if (i == 0 || i == 4) {
             return 'settings error';
           } else if (i == 2) {
@@ -91,8 +90,8 @@ class KennzahlController {
         .attr('width', (d, i) => {
           if (i == 0) {
             return xScale(d);
-          }  else {
-            return xScale(d -  settingsArray[i - 1]);
+          } else {
+            return xScale(d - settingsArray[i - 1]);
           }
         })
         .attr('height', (d, i) => {
@@ -108,27 +107,27 @@ class KennzahlController {
         .append('text')
         .attr('class', 'settings')
         .attr('x', (d, i) => {
-            return xScale(d);
+          return xScale(d);
         })
         .attr('y', 45)
         .text((d, i) => {
-            return d;
+          return d;
         })
         .attr('text-anchor', 'middle');
 
       g
         .append('rect')
         .attr('class', 'history')
-        .attr('x',  xScale(stats.MIN))
+        .attr('x', xScale(stats.MIN))
         .attr('y', 13)
-        .attr('width', xScale(stats.MAX-stats.MIN))
+        .attr('width', xScale(stats.MAX - stats.MIN))
         .attr('height', 4)
         .attr('fill', 'black');
 
       g
         .append('rect')
         .attr('class', 'stdabw')
-        .attr('x',  Math.max(xScale(stats.AVG - stats.STDDEV), 0))
+        .attr('x', Math.max(xScale(stats.AVG - stats.STDDEV), 0))
         .attr('y', 10)
         .attr('width', xScale(stats.STDDEV * 2))
         .attr('height', 10)
@@ -139,9 +138,9 @@ class KennzahlController {
         .attr('cx', xScale(run.NUMBERVALUE))
         .attr('cy', 15)
         .attr('r', 10)
-        .attr('fill', 'blue')
+        .attr('fill', 'blue');
 
-    };
+    }
   }
 }
 

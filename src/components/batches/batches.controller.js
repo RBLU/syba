@@ -25,7 +25,7 @@ class BatchesController {
           }
         })
         .catch((err) => {
-          $log.log("error contacting backend", err);
+          $log.log('error contacting backend', err);
         });
     };
 
@@ -45,7 +45,7 @@ class BatchesController {
       })
       .then(() => {
         if ($stateParams && $stateParams.batchId) {
-          this.selectBatchConfig(_.find(this.batches, (batch) => {return batch.BOID === $stateParams.batchId}));
+          this.selectBatchConfig(_.find(this.batches, (batch) => {return batch.BOID === $stateParams.batchId;}));
         } else {
           this.selectBatchConfig(this.batches[0]);
           //TODO: fix Update URL
@@ -53,7 +53,7 @@ class BatchesController {
         }
       })
       .catch( (err) => {
-        console.log("error contacting the Backend", err);
+        $log.log('error contacting the Backend', err);
       });
 
     this.selectedrun = null;
@@ -70,12 +70,12 @@ class BatchesController {
       batchRunService
         .ignoreRunInStats(run.BOID, unignore)
         .then((putResult) => {
-          console.log("Put successful", putResult)
+          $log.log('Put successful', putResult);
           // reload batchConfig
           this.selectBatchConfig(this.selected);
         })
         .catch((err) => {
-          console.log("Error putting ignore", err);
+          $log.log('Error putting ignore', err);
         });
 
     };

@@ -36,7 +36,7 @@ let settingsModule = angular.module('settings', [
         url: '/kennzahlen',
         template: '<settingskennzahlen></settingskennzahlen>',
         access: 'all'
-      })
+      });
 
 
   })

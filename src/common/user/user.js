@@ -1,7 +1,8 @@
 import angular from 'angular';
 import Base64Module from './base64';
+import _ from 'lodash';
 
-let userModule = angular.module('user', [Base64Module.name])
+
 
 
 // Private variable for storing identity information.
@@ -58,7 +59,7 @@ var _authenticated = false;
 
 var AUTH_COOKIE_NAME = 'sybaauth';
 
-userModule
+let userModule = angular.module('user', [Base64Module.name])
 
 // authorization levels and user Roles
   .constant('userRoles', _userRoles)
@@ -305,4 +306,5 @@ userModule
 
       return UserService;
     });
+
 export default userModule;

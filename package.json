@@ -10,16 +10,13 @@
     "npm",
     "angular"
   ],
-  "author": "Timo Stollenwerk",
-  "license": "MIT",
+  "author": "Reto Blunschi, Stefan Palm",
+  "license": "licensed",
   "babel": {
     "presets": [
-      "es2015"
+      ["es2015", {"modules": false}]
     ]
   },
-
-
-
   "devDependencies": {
     "angular-mocks": "1.6.2",
     "babel-core": "6.23.1",

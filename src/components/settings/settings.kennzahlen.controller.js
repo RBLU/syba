@@ -1,7 +1,8 @@
+import _ from 'lodash';
 
 class SettingsController {
   /* @ngInject */
-  constructor(batchConfigService, kennzahlenService, $scope) {
+  constructor(batchConfigService, kennzahlenService, $scope, $log) {
 
     batchConfigService.getBatchConfigs()
       .then((batchConfigs) => {
@@ -42,7 +43,7 @@ class SettingsController {
           ACTIVE: 1,
           ITSBATCHCONFIG: this.selectedbatchconfig.BOID,
           ITSSYRIUSBATCH: this.selectedbatchconfig.ITSSYRIUSBATCH
-        }
+        };
       }
     };
 
@@ -52,7 +53,7 @@ class SettingsController {
         kennzahlenService.saveKzConfig(this.selectedkzconfig)
           .then((result) => {
             if (result.BOID) {
-              this.selectedkzconfig.BOID = result.BOID
+              this.selectedkzconfig.BOID = result.BOID;
               this.allkzconfigs.push(result);
               this.currentkzconfigs.push(result);
             }
@@ -60,18 +61,18 @@ class SettingsController {
       } else {
         kennzahlenService.deleteKzConfig(this.selectedkzconfig);
         this.kzcheckboxes[kz.BOID] = undefined;
-        _.remove(this.allkzconfigs, (kzc) => {return kzc.BOID == this.selectedkzconfig.BOID});
-        _.remove(this.currentkzconfigs, (kzc) => {return kzc.BOID == this.selectedkzconfig.BOID});
+        _.remove(this.allkzconfigs, (kzc) => {return kzc.BOID == this.selectedkzconfig.BOID;});
+        _.remove(this.currentkzconfigs, (kzc) => {return kzc.BOID == this.selectedkzconfig.BOID;});
         this.selectedkzconfig = undefined;
         this.selectedkz= undefined;
       }
     };
 
     this.recalckz = () => {
-      console.log('recalc kz: ', this.selectedkzconfig);
+      $log.log('recalc kz: ', this.selectedkzconfig);
       kennzahlenService.recalcKennzahlConfig(this.selectedkzconfig)
         .then((result) => {
-
+          $log.log('recalc finsishd', result );
         });
     };
 
@@ -90,26 +91,10 @@ class SettingsController {
       }
     });
 
-
-
     this.formSubmit = () => {
-      if (this.selectedbatchconfig.BOID) {
-        // this is an update
-        batchConfigService
-          .put(this.selectedbatchconfig)
-          .then((result) => {});
-
-      } else {
-        // this is a new BatchConfig
-        batchConfigService
-          .post(this.selectedbatchconfig)
-          .then((result) => {
-            this.batchconfigs.push(result);
-            this.selectedbatchconfig = result;
-          });
-      }
-      this.batchconfigform.$setPristine();
-      this.batchconfigform.$setUntouched();
+        // Todo: implement saving of kzform data
+      this.kzform.$setPristine();
+      this.kzform.$setUntouched();
     };
 
   }

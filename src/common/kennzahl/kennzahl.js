@@ -1,6 +1,6 @@
 import angular from 'angular';
 import kennzahlComponent from './kennzahl.component';
-import "./kennzahl.scss";
+import './kennzahl.scss';
 
 let kennzahlModule = angular.module('kennzahl', [])
 
