@@ -14,6 +14,7 @@ import Components from './components/components';
 import './styles.scss';
 import moment from 'moment';
 import * as _ from 'lodash';
+import * as d3 from 'd3';
 
 angular.module('myApp', [
   uiRouter,
@@ -190,6 +191,16 @@ angular.module('myApp')
             $log.log('ERROR setting angular internal locale: ' + angular.toJson(err) + ', using default');
           });
 
+        d3.timeFormatDefaultLocale({
+          dateTime: '%A, der %e. %B %Y, %X',
+          date: '%d.%m.%Y',
+          time: '%H:%M:%S',
+          periods: ['AM', 'PM'],
+          days: ['Sonntag', 'Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag'],
+          shortDays: ['So', 'Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa'],
+          months: ['Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'],
+          shortMonths: ['Jan', 'Feb', 'Mrz', 'Apr', 'Mai', 'Jun', 'Jul', 'Aug', 'Sep', 'Okt', 'Nov', 'Dez']
+        });
 
         $translate.use(locale.split('-')[0]).then(function (data) {
           $log.log('set angular-translate locale to: ' + data);

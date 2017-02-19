@@ -51,14 +51,11 @@ kzhistorygraph {
     line {	// helpers
       stroke: $color11;
     }
+    text {
+      fill: #000;
+    }
   }
-  
-  path {	// graph
-	stroke: $color12;
-	&.domain {	// axis
-		stroke: $color13;
-	} 
-  }
+
  
   g.tick {
 	font-size: 12px;

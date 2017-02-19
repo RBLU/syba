@@ -20,7 +20,7 @@ class KennzahlController {
         svg.append('g')
           .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')')
           .attr('class', 'viewport');
-      
+
       // add the tooltip area to the webpage
       let tooltip = d3.select('body').append('div')
         .attr('class', 'tooltip')
@@ -35,8 +35,20 @@ class KennzahlController {
 
       function redraw(kz) {
 
+        let zoom = d3.zoom()
+
+          .scaleExtent([1, 40])
+          .translateExtent([[-100, 0], [width + 90, 0]])
+          .on('zoom', zoomed);
+
         // clear the elements inside of the directive
         viewport.selectAll('*').remove();
+
+        viewport.append('defs').append('clipPath')
+          .attr('id', 'clip')
+          .append('rect')
+          .attr('width', width)
+          .attr('height', height);
 
         // set ranges (=screen dimensions) on scale functions
         let xScale = d3.scaleTime()
@@ -53,16 +65,6 @@ class KennzahlController {
           return new Date(d.STARTED);
         }));
 
-        // compute min/max of graph to be shown
-        /* currently unused        
-        let mean = d3.mean(kz.history, (d) => {
-          return +d.NUMBERVALUE;
-        });
-        let sd = d3.deviation(kz.history, (d) => {
-          return +d.NUMBERVALUE;
-        });
-        */
-
         let yExtent = d3.extent(kz.history, function (d) {
           return +d.NUMBERVALUE;
         });
@@ -71,12 +73,11 @@ class KennzahlController {
         yScaleRects.domain(yExtent);
 
 
-
         // create the rects for the background color
         // 1st red one
 
         let levels = viewport.append('g')
-          .attr('class', 'levels')
+          .attr('class', 'levels');
 
         levels.append('rect')
           .attr('x', 0)
@@ -113,39 +114,18 @@ class KennzahlController {
           .attr('height', height - Math.min(height, yScaleRects(kz.LEVELHIGHWARNING)))
           .attr('class', 'error');
 
-        // create the line function, maps data to x/y coordinates
-        /* currently unused
-        var line = d3.line()
-          .x(function (d) {
-            return xScale(new Date(d.STARTED));
-          })
-          .y(function (d) {
-            return yScale(+d.NUMBERVALUE);
-          });
-        */
-
         let xAxis =
           d3.axisBottom(xScale)
-            .tickFormat((d) => {
-              return moment(d).format('L');
-            })
+
             .tickSizeInner(-height);
 
         let yAxis = d3.axisLeft(yScale);
 
-
         viewport.append('g')
           .attr('transform', 'translate(0,' + height + ')')
-          .attr('class', 'axis xaxis')
-          .call(xAxis)
+          .attr('class', 'axis xaxis');
 
-          // format the tck texts by rotating them 45 degrees
-          .selectAll('text')
-          .attr('y', 15)
-          .attr('x', 5)
-          .attr('dy', '.35em')
-          .attr('transform', 'rotate(45)')
-          .style('text-anchor', 'start');
+        drawXaxis(xScale);
 
         viewport.append('g')
           .attr('class', 'axis yaxis')
@@ -160,18 +140,35 @@ class KennzahlController {
           .attr('text-anchor', 'end')
           .text(kz.NAME);
 
-        // g.append("path")
-        //   .datum(kz.history)
-        //   .attr("fill", "none")
-        //   .attr("stroke", "steelblue")
-        //   .attr("stroke-linejoin", "round")
-        //   .attr("stroke-linecap", "round")
-        //   .attr("stroke-width", 1.5)
-        //   .attr("d", line);
+        function zoomed() {
+          let transform = d3.event.transform;
+          let updatedXscale = transform.rescaleX(xScale);
+          d3.selectAll('.dot')
+            .data(kz.history)
+            .attr('cx', (d) => {
+              return updatedXscale(new Date(d.STARTED));
+            });
+
+          //dots.attr('transform', 'translate(' + transform.x + ') scale( ' + transform.k+ ',1)');
+          drawXaxis(updatedXscale);
+        }
+
+        function drawXaxis(scale) {
+          d3.select('.xaxis')
+            .call(xAxis.scale(scale))
+            .selectAll('text')
+            .attr('fill', '#000')
+            .attr('y', 15)
+            .attr('x', 5)
+            .attr('dy', '.35em')
+            .attr('transform', 'rotate(45)')
+            .style('text-anchor', 'start');
+        }
 
         viewport
           .append('g')
-          .attr('class','dots')
+          .attr('class', 'dots')
+          .attr('clip-path', 'url(#clip)')
           .selectAll('.dot')
           .data(kz.history)
           .enter().append('circle')
@@ -194,7 +191,7 @@ class KennzahlController {
           })
           .on('mouseout', function (d) {
             tooltip.transition()
-              .duration(500)
+              .duration(1000)
               .style('opacity', 0);
           })
           .on('click', function (d) {
@@ -202,13 +199,14 @@ class KennzahlController {
             $scope.$root.$state.go('batches', {batchId: d.ITSBATCHCONFIG, runId: d.ITSBATCHRUN});
           });
 
+        viewport.call(zoom);
+
         $scope.$on('$destroy', function () {
           d3.select('.tooltip').remove();
         });
       }
 
     };
-
 
 
   }
