@@ -23,7 +23,7 @@
       <div class="row">
         <div class="col-xs-6">Batchlauf (Datum/Zeit/BOID)</div>
         <div class="col-xs-6">
-          < select ng-model="vm.selectedrunBoid" ng-options="myrun.BOID as vm.getRunName(myrun) for myrun in vm.runs"
+          <select ng-model="vm.selectedrunBoid" ng-options="myrun.BOID as vm.getRunName(myrun) for myrun in vm.runs"
                   ng-change="vm.selectBatchRun(vm.selectedrunBoid)"
                   class="form-control">
           </select>
