@@ -2,11 +2,11 @@ let Base64Module = angular.module('Base64', [])
   .factory('base64codec', function () {
 
 
-    var _keyStr = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=';
+    let _keyStr = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=';
 
-    var _utf8_encode = function (string) {
+    let _utf8_encode = function (string) {
 
-      var utftext = '', c, n;
+      let utftext = '', c, n;
 
       string = string.replace(/\r\n/g, '\n');
 
@@ -36,8 +36,8 @@ let Base64Module = angular.module('Base64', [])
       return utftext;
     };
 
-    var _utf8_decode = function (utftext) {
-      var string = '', i = 0, c = 0, c1 = 0, c2 = 0;
+    let _utf8_decode = function (utftext) {
+      let string = '', i = 0, c = 0, c1 = 0, c2 = 0;
 
       while (i < utftext.length) {
 
@@ -68,8 +68,8 @@ let Base64Module = angular.module('Base64', [])
       return string;
     };
 
-    var _hexEncode = function (input) {
-      var output = '', i;
+    let _hexEncode = function (input) {
+      let output = '', i;
 
       for (i = 0; i < input.length; i++) {
         output += input.charCodeAt(i).toString(16);
@@ -78,8 +78,8 @@ let Base64Module = angular.module('Base64', [])
       return output;
     };
 
-    var _hexDecode = function (input) {
-      var output = '', i;
+    let _hexDecode = function (input) {
+      let output = '', i;
 
       if (input.length % 2 > 0) {
         input = '0' + input;
@@ -92,8 +92,8 @@ let Base64Module = angular.module('Base64', [])
       return output;
     };
 
-    var encode = function (input) {
-      var output = '', chr1, chr2, chr3, enc1, enc2, enc3, enc4, i = 0;
+    let encode = function (input) {
+      let output = '', chr1, chr2, chr3, enc1, enc2, enc3, enc4, i = 0;
 
       input = _utf8_encode(input);
 
@@ -124,8 +124,8 @@ let Base64Module = angular.module('Base64', [])
       return output;
     };
 
-    var decode = function (input) {
-      var output = '', chr1, chr2, chr3, enc1, enc2, enc3, enc4, i = 0;
+    let decode = function (input) {
+      let output = '', chr1, chr2, chr3, enc1, enc2, enc3, enc4, i = 0;
 
       input = input.replace(/[^A-Za-z0-9\+\/\=]/g, '');
 
@@ -154,11 +154,11 @@ let Base64Module = angular.module('Base64', [])
       return _utf8_decode(output);
     };
 
-    var decodeToHex = function (input) {
+    let decodeToHex = function (input) {
       return _hexEncode(decode(input));
     };
 
-    var encodeFromHex = function (input) {
+    let encodeFromHex = function (input) {
       return encode(_hexDecode(input));
     };
 

@@ -10,7 +10,7 @@ let SigninModule = angular.module('signin', [])
         .state('signin', {
           url: '/signin',
           template: pagetemplate,
-          controller: 'SigninController',
+          controller: 'SigninController as vm',
           access: accessLevels.all,
           resolve: {}
         });

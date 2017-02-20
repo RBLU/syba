@@ -15,6 +15,7 @@ import './styles.scss';
 import moment from 'moment';
 import * as _ from 'lodash';
 import * as d3 from 'd3';
+import {setLocale, reportErrorToBackend} from './utils/utils';
 
 angular.module('myApp', [
   uiRouter,
@@ -27,28 +28,6 @@ angular.module('myApp', [
 ])
   .directive('app', AppComponent);
 
-
-function _reportErrorToBackend(exception, cause, $injector) {
-  var Restangular = $injector.get('Restangular');
-  var $window = $injector.get('$window');
-  var UserService = $injector.get('UserService');
-  var $rootScope = $injector.get('$rootScope');
-
-  var data = {
-    message: exception.message,
-    cause: angular.toJson(cause),
-    version: $rootScope.appVersion,
-    location: $window.location.href,
-    userAgent: navigator.userAgent,
-    stack: exception.stack,
-    username: UserService.principal.getUser().username,
-    profileLocation: _.get(UserService.principal.getUser(), 'profile.homeAddress.location'),
-    clientTime: new Date().toISOString(),
-    clientLocale: moment.locale()
-  };
-
-  //Restangular.all('/error').post(data);
-}
 
 /* @ngInject */
 angular.module('myApp')
@@ -106,7 +85,7 @@ angular.module('myApp')
     // if state is unknown go to /home
 
     $urlRouterProvider.otherwise(function ($injector) {
-      var $state = $injector.get('$state');
+      let $state = $injector.get('$state');
       $state.go('home');
     });
 
@@ -119,7 +98,7 @@ angular.module('myApp')
         // $delegate(exception, cause);
         $injector.get('$log').log(`Exception: ${exception}`);
         $injector.get('$log').log(`Cause: ${cause}`);
-        _reportErrorToBackend(exception, cause, $injector);
+        // reportErrorToBackend(exception, cause, $injector);
       };
     }]);
 
@@ -146,9 +125,8 @@ angular.module('myApp')
               $timeout, $translate, tmhDynamicLocale, tmhDynamicLocaleCache) {
 
       // preload the most importand dynamic locales
-
       function getInjectedLocale() {
-        var localInjector = angular.injector(['ngLocale']);
+        let localInjector = angular.injector(['ngLocale']);
         return localInjector.get('$locale');
       }
 
@@ -156,71 +134,42 @@ angular.module('myApp')
       tmhDynamicLocaleCache.put('de-ch', getInjectedLocale());
       tmhDynamicLocaleCache.put('de', getInjectedLocale());
 
-
+      // get current language from environment and set the Locale in all
+      // relevant libraries:
+      // angular (via tmhdynamiclocale), moment, d3, $translate
       if (!_.isUndefined(navigator.globalization)) {
-        navigator.globalization.getPreferredLanguage(_setLanguage, null);
+        // mobile phone using Cordova
+        navigator.globalization.getPreferredLanguage(function(locale) {
+          setLocale(locale, tmhDynamicLocale, $translate, d3, moment, $log);
+        }, null);
       } else if (navigator.language || navigator.userLanguage) {
-        _setLanguage(navigator.language || navigator.userLanguage);
-      }
-
-      function _setLanguage(language) {
-
-        var locale = (language.value || language).toLowerCase();
-
-        $log.log('detected system language, setting language to: ' + locale);
-
-        // setting the locale on moment, so we get localized dates and times
-        moment.locale(locale);
-        $log.log('set moment.js locale to: ' + locale);
-
-        tmhDynamicLocale.set(locale.toLowerCase())
-          .then(function (localeSet) {
-            return localeSet;
-          }, function (err) {
-            $log.log('ERROR setting angular internal locale: ' + locale + ', ' + angular.toJson(err));
-            if (locale.split('-').length > 1) {
-              $log.log('trying short locale: ' + locale.split('-')[0]);
-              return tmhDynamicLocale.set(locale.split('-')[0]);
-            } else {
-              $log.log('ERROR setting angular internal locale: ' + angular.toJson(err) + ', using default');
-            }
-          })
-          .then(function (localeSet) {
-            $log.log('set angular internal locale to: ' + localeSet.id);
-          }, function (err) {
-            $log.log('ERROR setting angular internal locale: ' + angular.toJson(err) + ', using default');
-          });
-
-        d3.timeFormatDefaultLocale({
-          dateTime: '%A, der %e. %B %Y, %X',
-          date: '%d.%m.%Y',
-          time: '%H:%M:%S',
-          periods: ['AM', 'PM'],
-          days: ['Sonntag', 'Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag'],
-          shortDays: ['So', 'Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa'],
-          months: ['Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'],
-          shortMonths: ['Jan', 'Feb', 'Mrz', 'Apr', 'Mai', 'Jun', 'Jul', 'Aug', 'Sep', 'Okt', 'Nov', 'Dez']
-        });
-
-        $translate.use(locale.split('-')[0]).then(function (data) {
-          $log.log('set angular-translate locale to: ' + data);
-        }, function (error) {
-          $log.log('ERROR detecting system language: ' + error);
-        });
+        // Browser
+        setLocale(navigator.language || navigator.userLanguage,
+          tmhDynamicLocale, $translate, d3, moment, $log);
       }
 
       // put some general services on $rootScope
       $rootScope.$state = $state;
       $rootScope.$stateParams = $stateParams;
 
-
       // handle routing authentication
-      $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
+      $rootScope.$on('$stateChangeStart', stateChangeStartListener);
+
+      $rootScope.$on('$stateChangeSuccess',
+        function stateChangeSuccessListener(event, toState, toParams, fromState, fromParams) {
+          $log.log('stateChangeSuccess from: ' + (fromState && fromState.name) + ' to: ' + toState.name);
+        });
+
+      // log stateChangeErrors
+      $rootScope.$on('$stateChangeError', stateChangeErrorListener);
+
+
+      function stateChangeStartListener(event, toState, toParams, fromState, fromParams) {
         $log.log('stateChangeStart from: ' + (fromState && fromState.name) + ' to: ' + toState.name);
 
         toState.previous = fromState;
 
-        var requiredAccessLevel = toState.access;
+        let requiredAccessLevel = toState.access;
 
         if (UserService.initialized) {
           if (!UserService.principal.isAuthorized(requiredAccessLevel)) {
@@ -239,25 +188,21 @@ angular.module('myApp')
         } else {
           // if the UserService is not done initializing we cancel the stateChange and schedule it again a bit later
           event.preventDefault();
-          var waitTime = 400;
+          let waitTime = 400;
           $log.log('preventing state change and waiting ' + waitTime + 'ms, Reason:  UserService initialized: ' + UserService.initialized + '"');
           $timeout(function () {
             $state.go(toState, toParams);
           }, waitTime);
         }
-      });
+      }
 
-      $rootScope.$on('$stateChangeSuccess', function (event, toState, toParams, fromState, fromParams) {
-        $log.log('stateChangeSuccess from: ' + (fromState && fromState.name) + ' to: ' + toState.name);
-      });
 
-      // log stateChangeErrors
-      $rootScope.$on('$stateChangeError', function (event, toState, toParams, fromState, fromParams, error) {
-        var msg = 'Error on StateChange from: "' + (fromState && fromState.name) + '" to:  "' + toState.name + '", err:' +
+      function stateChangeErrorListener(event, toState, toParams, fromState, fromParams, error) {
+        let msg = 'Error on StateChange from: "' + (fromState && fromState.name) + '" to:  "' + toState.name + '", err:' +
           error.message + ', code: ' + error.status;
         $log.log(msg);
         $log.log(angular.toJson(error.stack));
-        _reportErrorToBackend(error, msg, $injector);
+        // reportErrorToBackend(error, msg, $injector);
 
         if (error.status === 401) { // Unauthorized
 
@@ -280,7 +225,6 @@ angular.module('myApp')
             return $state.go('home');
           }
         }
-      });
-    })
-;
+      }
 
+    });

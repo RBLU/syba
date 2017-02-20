@@ -24,6 +24,9 @@
     ],
     "no-unused-vars": [
       2, {"args": "none"}
+    ],
+    "angular/no-service-method": [
+      0
     ]
   },
   "env": {

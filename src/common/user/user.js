@@ -43,7 +43,7 @@ var _userRoles = {
     _userRoles.systemadmin,
     systemadmin: _userRoles.systemadmin
   };
-var _emptyDefaultUser = {
+let _emptyDefaultUser = {
   avatar: 'images/default_avatar_woman.png',
   profile: {
     homeAddress: {
@@ -54,10 +54,10 @@ var _emptyDefaultUser = {
     }
   }
 };
-var _currentUser = _.clone(_emptyDefaultUser);
-var _authenticated = false;
+let _currentUser = _.clone(_emptyDefaultUser);
+let _authenticated = false;
 
-var AUTH_COOKIE_NAME = 'sybaauth';
+let AUTH_COOKIE_NAME = 'sybaauth';
 
 let userModule = angular.module('user', [Base64Module.name])
 
@@ -67,12 +67,12 @@ let userModule = angular.module('user', [Base64Module.name])
   /* @ngInject */
   .factory('UserService',
     function (userRoles, localStorageService, $rootScope, Restangular, $location, $http, base64codec, $q) {
-      var users = Restangular.all('users');
-      var profiles = Restangular.all('profiles');
-      var login = Restangular.all('login');
-      var validateUser = Restangular.all('/users/validate');
+      let users = Restangular.all('users');
+      let profiles = Restangular.all('profiles');
+      let login = Restangular.all('login');
+      let validateUser = Restangular.all('/users/validate');
 
-      var _authorize = function authorize(authenticatedUser) {
+      let _authorize = function authorize(authenticatedUser) {
         // check argument and mandatory keys
         if (!(authenticatedUser && ('username' in authenticatedUser) && (('roles' in authenticatedUser) || ('role' in authenticatedUser)) && ('id' in authenticatedUser))) {
           return $q.reject('Authorize user: incorrect type: ' + angular.toJson(authenticatedUser));
@@ -110,13 +110,13 @@ let userModule = angular.module('user', [Base64Module.name])
         // clean current user in order to keep the same reference
 
         // keep the profile, if the newly authenticated user does not provide an updated populated profile
-        var hasProfilePopulated = authenticatedUser.profile && authenticatedUser.profile.id;
+        let hasProfilePopulated = authenticatedUser.profile && authenticatedUser.profile.id;
         if (!hasProfilePopulated) {
           authenticatedUser.profile = _currentUser.profile;
         }
 
         // keep the campaign, if the newly authenticated user does not provide an updated populated campaign
-        var hasCampaignPopulated = authenticatedUser.campaign && authenticatedUser.campaign.id;
+        let hasCampaignPopulated = authenticatedUser.campaign && authenticatedUser.campaign.id;
         if (!hasCampaignPopulated) {
           authenticatedUser.campaign = _currentUser.campaign;
         }
@@ -136,7 +136,7 @@ let userModule = angular.module('user', [Base64Module.name])
       };
 
       // `deauthorize` resets the `principal` and `identity`
-      var _deauthorize = function () {
+      let _deauthorize = function () {
         _authenticated = false;
         _currentUser = _.clone(_emptyDefaultUser);
 
@@ -144,9 +144,9 @@ let userModule = angular.module('user', [Base64Module.name])
         $rootScope.$broadcast('event:authority-deauthorized');
       };
 
-      var _authorizeLoginResponse = function _authorizeLoginResponse(result) {
+      let _authorizeLoginResponse = function _authorizeLoginResponse(result) {
 
-        var user = Restangular.restangularizeElement(null, result.user, 'users');
+        let user = Restangular.restangularizeElement(null, result.user, 'users');
 
         if (result.token) {
           $http.defaults.headers.common.Authorization = 'Bearer ' + result.token;
@@ -154,7 +154,7 @@ let userModule = angular.module('user', [Base64Module.name])
         return _authorize(user);
       };
 
-      var UserService = {
+      let UserService = {
         encodeCredentials: function (username, password) {
           return ({username: username, password: password});
         },
@@ -260,14 +260,14 @@ let userModule = angular.module('user', [Base64Module.name])
             return _authenticated;
           },
           isAuthorized: function (reqAccessLevel, rolesToCheck) {
-            var roles = 1;
+            let roles = 1;
             if (_.isNumber(rolesToCheck)) {
               roles = rolesToCheck;
-            } else if (Array.isArray(rolesToCheck)) {
+            } else if (_.isArray(rolesToCheck)) {
               roles = _.reduce(rolesToCheck, function (sum, role) {
                 return sum | _userRoles[role];
               }, 0);
-            } else if (_currentUser && ('roles' in _currentUser) && Array.isArray(_currentUser.roles)) {
+            } else if (_currentUser && ('roles' in _currentUser) && _.isArray(_currentUser.roles)) {
               roles = _.reduce(_currentUser.roles, function (sum, role) {
                 return sum | _userRoles[role];
               }, 0);
@@ -290,7 +290,7 @@ let userModule = angular.module('user', [Base64Module.name])
         initialized: false
       };
 
-      var tokenRetrieved = $location.search().token || localStorageService.get(AUTH_COOKIE_NAME);
+      let tokenRetrieved = $location.search().token || localStorageService.get(AUTH_COOKIE_NAME);
 
       if (tokenRetrieved) {
         UserService.login(tokenRetrieved, true)
