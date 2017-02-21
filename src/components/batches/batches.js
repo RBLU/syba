@@ -12,7 +12,7 @@ let BatchesModule = angular.module('Batches', [
     .state('batches', {
       url: '/batches/{batchId}/{runId}',
       template: '<batches></batches>',
-      access: 'all'
+      access: 'user'
     });
 })
 

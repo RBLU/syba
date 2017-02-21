@@ -180,8 +180,8 @@ angular.module('myApp')
               $rootScope.nextStateAfterLogin = {toState: toState, toParams: toParams};
               $state.go('signin');
             } else {
-              $log.log('preventing state change because user is not authorized for: ' + requiredAccessLevel + ', has roles: ' + UserService.principal.getUser().roles);
-              $rootScope.$emit('clientmsg:error', 'user is not authorized for: ' + requiredAccessLevel + ', has roles: ' + UserService.principal.getUser().roles);
+              $log.log('preventing state change because user is not authorized for: ' + requiredAccessLevel + ', has roles: ' + UserService.principal.getUser().ROLES);
+              $rootScope.$emit('clientmsg:error', 'user is not authorized for: ' + requiredAccessLevel + ', has roles: ' + UserService.principal.getUser().ROLES);
             }
 
           }

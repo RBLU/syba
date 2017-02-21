@@ -13,7 +13,7 @@ let homeModule = angular.module('home', [
     .state('home', {
       url: '/',
       template: '<home></home>',
-      access: 'all'
+      access: 'user'
     });
 })
 

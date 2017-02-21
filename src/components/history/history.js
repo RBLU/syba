@@ -12,7 +12,7 @@ let HistoryModule = angular.module('History', [
     .state('history', {
       url: '/history/{batchId}/?{runId}&{kennzahlId}',
       template: '<history></history>',
-      access: 'all'
+      access: 'user'
     });
 })
 

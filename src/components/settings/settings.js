@@ -15,27 +15,27 @@ let settingsModule = angular.module('settings', [
       .state('settings', {
         url: '/settings',
         template: '<settings></settings>',
-        access: 'all'
+        access: 'operator'
       })
       .state('settings.defaults', {
         url: '/defaults',
         template: '<settingsdefaults></settingsdefaults>',
-        access: 'all'
+        access: 'operator'
       })
       .state('settings.batch', {
         url: '/batch',
         template: '<settingsbatch></settingsbatch>',
-        access: 'all'
+        access: 'operator'
       })
       .state('settings.query', {
         url: '/query',
         template: '<settingsquery></settingsquery>',
-        access: 'all'
+        access: 'operator'
       })
       .state('settings.kennzahlen', {
         url: '/kennzahlen',
         template: '<settingskennzahlen></settingskennzahlen>',
-        access: 'all'
+        access: 'operator'
       });
 
 

@@ -185,38 +185,6 @@ button.btn {
   padding-bottom: 5px;
 }
 
-.navbar.navbar-inverse {
-    font-family: $font-stack;
-    font-size: 16px;
-    background: $lcolor13;
-    border-width: 0;
-    border-radius: 10px;
-    margin-top: 10px;
-    margin-left: 15px;
-    margin-right: 15px;
-  .navbar-nav {
-    .active {
-      a {
-        color: $color00;
-        background: $lcolor11;
-      }
-    }
-    li {
-      a {
-        color: $color11;
-        &:hover {
-          color: $color00;
-        }
-      }
-    }
-
-  }
-}
-
-.navbar-toggle {
-  background: $color11;
-}
-
 ////////////////////////
 /* TABLE WITH BATCHES */
 ////////////////////////
@@ -250,23 +218,6 @@ button.btn {
   }
 }
 
-a {
-  color: $color12;
-  text-decoration: none;
-  &:hover{
-    text-decoration: none;
-  }
-  &.active{
-    text-decoration: none;
-  }
-  &.ng-binding {
-    &:hover {
-      color: $color00;
-      //background: $lcolor11;
-      text-decoration: none;
-    }
-  }
-}
 
 
 .glyphicon { // icon left in the navbar

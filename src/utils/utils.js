@@ -1,4 +1,5 @@
 import _ from 'lodash';
+import moment from 'moment';
 
 
 function reportErrorToBackend(exception, cause, $injector) {
@@ -75,4 +76,4 @@ let addField = function(schema, field) {
   return _.merge(schema, {'properties': field});
 };
 
-export {addField, reportErrorToBackend, setLocale}
+export {addField, reportErrorToBackend, setLocale};

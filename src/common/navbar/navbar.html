@@ -1,4 +1,4 @@
-<nav class="navbar navbar-inverse navbar-fixed-top">
+<nav class="navbar navbar-default navbar-fixed-top">
   <div class="container-fluid">
     <div class="navbar-header">
       <button type="button" class="navbar-toggle" ng-click="vm.isNavCollapsed=!vm.isNavCollapsed"
@@ -14,11 +14,21 @@
     </div>
     <div id="navbar" class="collapse navbar-collapse" uib-collapse="vm.isNavCollapsed">
       <ul class="nav navbar-nav">
-        <li ui-sref-active="active"><a ui-sref="home">Cockpit</a></li>
-        <li ui-sref-active="active"><a ui-sref="batches">Reporting</a></li>
-        <li ui-sref-active="active"><a ui-sref="history">History</a></li>
-        <li ui-sref-active="active"><a ui-sref="settings.defaults">Settings</a></li>
-        <li ui-sref-active="active"><a ui-sref="new">User</a></li>
+        <li ui-sref-active="active" ng-if="vm.hasAccess('user')"><a ui-sref="home">Cockpit</a></li>
+        <li ui-sref-active="active" ng-if="vm.hasAccess('user')"><a ui-sref="batches">Reporting</a></li>
+        <li ui-sref-active="active" ng-if="vm.hasAccess('user')"><a ui-sref="history">History</a></li>
+        <li ui-sref-active="active" ng-if="vm.hasAccess('operator')"><a ui-sref="settings.defaults">Settings</a></li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li uib-dropdown is-open="status.isopen" ng-if="vm.user.BOID">
+          <a href="#" uib-dropdown-toggle role="button">{{vm.user.VORNAME +' ' + vm.user.NAME}}
+            <span class="caret"></span>
+          </a>
+          <ul uib-dropdown-menu role="menu">
+            <li><a href="#" ng-click="vm.logout()">logout</a></li>
+          </ul>
+        </li>
+        <li ui-sref-active="active" ng-if="!vm.user.BOID"><a ui-sref="signin">Login</a></li>
       </ul>
     </div>
   </div>

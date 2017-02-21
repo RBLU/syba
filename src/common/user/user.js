@@ -3,13 +3,11 @@ import Base64Module from './base64';
 import _ from 'lodash';
 
 
-
-
 // Private variable for storing identity information.
 var _userRoles = {
     anonymous: 1,
     viewer: 2,
-    maintainer: 4,
+    operator: 4,
     administrator: 8,
     developer: 16,
     systemadmin: 32
@@ -18,42 +16,31 @@ var _userRoles = {
   _accessLevels = {
     all: _userRoles.anonymous | // 11111
     _userRoles.viewer |
-    _userRoles.maintainer |
+    _userRoles.operator |
     _userRoles.administrator |
     _userRoles.developer |
     _userRoles.systemadmin,
     anonymous: _userRoles.anonymous,  // 10000  nur zugänglich,  wenn nicht eingeloggt
     user: _userRoles.viewer |
-    _userRoles.orgadmin |
-    _userRoles.maintainer |
-    _userRoles.administrator |
-    _userRoles.developer |
-    _userRoles.systemadmin, // 10000  nur zugänglich,  wenn nicht eingeloggt
-    maintainer:
-    _userRoles.maintainer |
+    _userRoles.operator |
     _userRoles.administrator |
     _userRoles.developer |
     _userRoles.systemadmin,
-    administrator:
+    operator: _userRoles.operator |
     _userRoles.administrator |
     _userRoles.developer |
     _userRoles.systemadmin,
-    developer:
+    administrator: _userRoles.administrator |
     _userRoles.developer |
+    _userRoles.systemadmin,
+    developer: _userRoles.developer |
     _userRoles.systemadmin,
     systemadmin: _userRoles.systemadmin
   };
+
 let _emptyDefaultUser = {
-  avatar: 'images/default_avatar_woman.png',
-  profile: {
-    homeAddress: {
-      country: 'CH'
-    },
-    prefs: {
-      email: '',
-    }
-  }
 };
+
 let _currentUser = _.clone(_emptyDefaultUser);
 let _authenticated = false;
 
@@ -66,7 +53,7 @@ let userModule = angular.module('user', [Base64Module.name])
   .constant('accessLevels', _accessLevels)
   /* @ngInject */
   .factory('UserService',
-    function (userRoles, localStorageService, $rootScope, Restangular, $location, $http, base64codec, $q) {
+    function (userRoles, localStorageService, $rootScope, Restangular, $location, $http, base64codec, $q, $log) {
       let users = Restangular.all('users');
       let profiles = Restangular.all('profiles');
       let login = Restangular.all('login');
@@ -74,52 +61,12 @@ let userModule = angular.module('user', [Base64Module.name])
 
       let _authorize = function authorize(authenticatedUser) {
         // check argument and mandatory keys
-        if (!(authenticatedUser && ('username' in authenticatedUser) && (('roles' in authenticatedUser) || ('role' in authenticatedUser)) && ('id' in authenticatedUser))) {
+        if (!(authenticatedUser && ('USERNAME' in authenticatedUser)
+          && ('ROLES' in authenticatedUser)
+          && ('BOID' in authenticatedUser))) {
           return $q.reject('Authorize user: incorrect type: ' + angular.toJson(authenticatedUser));
         }
 
-        if (!authenticatedUser.roles || authenticatedUser.roles.length === 0) {
-          authenticatedUser.roles = [authenticatedUser.role];
-        }
-
-        // if the user is not already authenticated we need to manage data he collected on the user
-        if (!_authenticated) {
-          // the current, unauthenticated User has a campaign set, this means he clicked on a
-          // campaign welcome message "participate"-link
-          if (_currentUser.campaign) {
-            // --> we need to check whether the authenticated user has the same campaign set, and if
-            // not redirect to user the the welcome page so he can really decide whether he wants to swith
-            if (authenticatedUser.campaign && (authenticatedUser.campaign.id !== _currentUser.campaign.id)) {
-              $rootScope.nextStateAfterLogin = {
-                toState: 'welcome',
-                toParams: {campaignId: _currentUser.campaign.id}
-              };
-            }
-
-            // the authenticatedUser does not have a campaign set yet, we need to update the
-            // backend object and set the new campaign on it
-            if (!authenticatedUser.campaign) {
-              $rootScope.$log.log('need to update user');
-              authenticatedUser.campaign = _currentUser.campaign;
-              authenticatedUser.put();
-            }
-          }
-
-        }
-
-        // clean current user in order to keep the same reference
-
-        // keep the profile, if the newly authenticated user does not provide an updated populated profile
-        let hasProfilePopulated = authenticatedUser.profile && authenticatedUser.profile.id;
-        if (!hasProfilePopulated) {
-          authenticatedUser.profile = _currentUser.profile;
-        }
-
-        // keep the campaign, if the newly authenticated user does not provide an updated populated campaign
-        let hasCampaignPopulated = authenticatedUser.campaign && authenticatedUser.campaign.id;
-        if (!hasCampaignPopulated) {
-          authenticatedUser.campaign = _currentUser.campaign;
-        }
 
         _.forEach(_.keys(_currentUser), function (key) {
           delete _currentUser[key];
@@ -138,8 +85,13 @@ let userModule = angular.module('user', [Base64Module.name])
       // `deauthorize` resets the `principal` and `identity`
       let _deauthorize = function () {
         _authenticated = false;
-        _currentUser = _.clone(_emptyDefaultUser);
+        $log.log('current User before logout', _currentUser);
 
+        _.each(_currentUser, (value, key) => {
+          _.unset(_currentUser, key);
+        });
+
+        $log.log('current User after logout', _currentUser);
         // Broadcast the deauthorized event
         $rootScope.$broadcast('event:authority-deauthorized');
       };
@@ -267,11 +219,11 @@ let userModule = angular.module('user', [Base64Module.name])
               roles = _.reduce(rolesToCheck, function (sum, role) {
                 return sum | _userRoles[role];
               }, 0);
-            } else if (_currentUser && ('roles' in _currentUser) && _.isArray(_currentUser.roles)) {
-              roles = _.reduce(_currentUser.roles, function (sum, role) {
+            } else if (_currentUser && ('ROLES' in _currentUser) && _.isString(_currentUser.ROLES)) {
+              roles = _.reduce(_currentUser.ROLES.split(','), function (sum, role) {
                 return sum | _userRoles[role];
               }, 0);
-            } else if (_currentUser && ('roles' in _currentUser) && _.isNumber(_currentUser.roles)) {
+            } else if (_currentUser && ('ROLES' in _currentUser) && _.isNumber(_currentUser.ROLES)) {
               roles = _currentUser.role;
             }
 
@@ -284,7 +236,7 @@ let userModule = angular.module('user', [Base64Module.name])
             if (!user) {
               user = _currentUser;
             }
-            return _.contains(user.roles, role);
+            return _.contains(user.ROLES, role);
           }
         },
         initialized: false
