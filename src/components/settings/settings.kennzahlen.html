@@ -52,7 +52,7 @@
               Letzte Messung: {{vm.selectedkzconfig.kzstats.BIS | date}}<br>
             </div>
             <div ng-if="!vm.selectedkzconfig.kzstats || vm.selectedkzconfig.kzstats.ANZAHL == 0">
-              Kennzahl noch nicht berechnet!
+              {{vm.getKzMessage()}}
             </div>
           </div>
           <div class="col-xs-4">
