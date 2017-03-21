@@ -13,8 +13,9 @@ class HistoryController {
         .getBatchConfig(batchConfigBoid, {ignored: this.includeIgnored})
         .then((result) => {
           this.selected = result;
-          this.selectkz(this.selected.BOID, this.selected.kennzahlStats[0].BOID);
-
+          if (!$stateParams.kennzahlId) {
+            this.selectkz(this.selected.BOID, this.selected.kennzahlStats[0].BOID);
+          }
         });
     };
 

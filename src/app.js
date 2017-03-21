@@ -165,7 +165,7 @@ angular.module('myApp')
 
 
       function stateChangeStartListener(event, toState, toParams, fromState, fromParams) {
-        $log.log('stateChangeStart from: ' + (fromState && fromState.name) + ' to: ' + toState.name);
+        $log.log('stateChangeStart from: ' + (fromState && fromState.name) + ' to: ' + toState.name, toParams);
 
         toState.previous = fromState;
 
