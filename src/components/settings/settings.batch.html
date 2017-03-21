@@ -25,7 +25,7 @@
     </div>
     <div class="col-xs-4">
       <form novalidate name="vm.batchconfigform">
-        <div class="row">
+        <div class="row batch-config-form">
           <div class="col-xs-12">
             <div class="form-group">
               <label for="syrbatchname">Syrius Batch Name:</label>
@@ -41,6 +41,20 @@
               <label for="bcdesc">Kunden Batch Beschreibung:</label>
               <input ng-model="vm.selectedbatchconfig.DESCRIPTION" type="text" class="form-control" id="bcdesc"
                      placeholder="Beschreibung der Configuration">
+            </div>
+          </div>
+          <div class="col-xs-6">
+            <div class="form-group">
+              <label for="fromDate">Batch-Runs ab:</label>
+              <input ng-model="vm.selectedbatchconfig.FROMDATE" type="date" class="form-control" id="fromDate"
+                     placeholder="'Runs ab' Datum">
+            </div>
+          </div>
+          <div class="col-xs-6">
+            <div class="form-group">
+              <label for="toDate">Batch-Runs bis:</label>
+              <input ng-model="vm.selectedbatchconfig.TODATE" type="date" class="form-control" id="toDate"
+                     placeholder="'Runs bis' Datum">
             </div>
           </div>
         </div>

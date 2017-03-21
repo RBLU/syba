@@ -1,4 +1,5 @@
 import _ from 'lodash';
+import moment from 'moment';
 
 class SettingsController {
   /* @ngInject */
@@ -27,6 +28,8 @@ class SettingsController {
 
     this.selectBatchConfig = (batchConfig) => {
       this.selectedbatchconfig = _.clone(batchConfig);
+      this.selectedbatchconfig.FROMDATE = moment(batchConfig.FROMDATE).toDate();
+      this.selectedbatchconfig.TODATE = moment(batchConfig.TODATE).toDate();
       this.selectedsyrbatch = _.find(this.syriusbatches, (sb) => {
         return sb.BOID == batchConfig.ITSSYRIUSBATCH;
       });
