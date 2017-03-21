@@ -7,7 +7,7 @@
     <div class="section-bar">Batches</div>
     <ul class="list-group">
       <li ng-repeat="batch in vm.batches" class="list-group-item" ng-class="{'active': vm.selected.BOID == batch.BOID}"
-          ng-click="$root.$state.go('history', ({batchId: batch.BOID}))">
+          ng-click="vm.selectbatchconfig(batch.BOID)">
         {{batch.NAME}}
       </li>
     </ul>

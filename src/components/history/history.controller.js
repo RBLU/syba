@@ -8,14 +8,12 @@ class HistoryController {
       return moment(run.start).format('lll') + ' (' + run.BOID + ')';
     };
 
-    this.selectbatchconfig = (batchConfigBoid) => {
+    this.selectbatchconfig = (batchConfigBoid, kennzahlId) => {
       return batchConfigService
         .getBatchConfig(batchConfigBoid, {ignored: this.includeIgnored})
         .then((result) => {
           this.selected = result;
-          if (!$stateParams.kennzahlId) {
-            this.selectkz(this.selected.BOID, this.selected.kennzahlStats[0].BOID);
-          }
+          this.selectkz(this.selected.BOID, kennzahlId || this.selected.kennzahlStats[0].BOID);
         });
     };
 
@@ -47,17 +45,13 @@ class HistoryController {
 
 
     if ($stateParams && $stateParams.batchId) {
-      this.selectbatchconfig($stateParams.batchId);
+      this.selectbatchconfig($stateParams.batchId, $stateParams.kennzahlId);
     }
 
     if ($stateParams && $stateParams.runId ) {
       this.selectRun($stateParams.runId);
     }
 
-    if ($stateParams && $stateParams.kennzahlId ) {
-      this.selectkz($stateParams.batchId, $stateParams.kennzahlId);
-      this.selectedKzBoid = $stateParams.kennzahlId;
-    }
   }
 }
 
